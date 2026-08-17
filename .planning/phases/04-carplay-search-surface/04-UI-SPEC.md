@@ -1,7 +1,8 @@
 ---
 phase: 4
 slug: carplay-search-surface
-status: draft
+status: approved
+reviewed_at: 2026-08-18
 shadcn_initialized: false
 preset: none
 created: 2026-08-18
@@ -55,6 +56,7 @@ Declared values (must be multiples of 4):
 |------|------|--------|-------------|
 | Row title | 22pt | semibold (600) | 26pt (≈1.18), max 2 lines, tail truncation |
 | Row channel | 17pt | regular (400) | 20pt (≈1.18), 1 line, tail truncation |
+| Close button title | 17pt | semibold (600) | single line, default button height within ≥44×44pt target |
 | Row duration | 15pt | regular (400), monospaced digits | 18pt (1.2), 1 line |
 | Header / attribution | 13pt | regular (400) | 16pt (≈1.23), 1 line |
 
@@ -74,7 +76,7 @@ Exactly 2 weights (regular + semibold), 4 sizes (22/17/15/13). Title at 22pt sem
 | Accent (10%) | `#FF3B30` (systemRed) | Spinner tint (loading + fallback states), "Try another search" action text in empty state |
 | Destructive | none | No destructive actions this phase |
 
-Accent reserved for: **(1)** `UIActivityIndicatorView` tint in the loading row and the fallback transition row, **(2)** the "Try another search" action label in the no-results row. Never used for row selection, Close, borders, or decoration. All text/background pairs meet ≥7:1 contrast (white on black = 21:1; systemGray on black ≈ 7.4:1) — high-contrast for daylight/brightness variation in cars. *(Default — see open question Q1 in phase report.)*
+Accent reserved for: **(1)** `UIActivityIndicatorView` tint in the loading row and the fallback transition row, **(2)** the "Try another search" action label in the no-results row. Never used for row selection, Close, borders, or decoration. Text-primary/text-secondary pairs meet ≥7:1 contrast (white on black = 21:1; systemGray on black ≈ 7.4:1) — high-contrast for daylight/brightness variation in cars. The accent pair (#FF3B30 on #000000 ≈ 5.9:1) is used only for the spinner and a 17pt+ action label, where it passes WCAG AA large-text 3:1. *(Default — see open question Q1 in phase report.)* Focal point: the first result row (106×60 thumbnail + 22pt semibold title) anchors the populated screen; the red spinner anchors loading and fallback states.
 
 ---
 
@@ -83,7 +85,7 @@ Accent reserved for: **(1)** `UIActivityIndicatorView` tint in the loading row a
 | Element | Copy |
 |---------|------|
 | Primary CTA | Result row tap — plays immediately, no confirmation. (Explicit label CTA in empty state below.) |
-| Attribution (locked, UI-03) | "Results from YouTube" — header, secondary color, always visible in every populated/loading state |
+| Attribution (locked, UI-03) | "Results from YouTube" — header, secondary color, visible in ALL states (header persists in empty, loading, and fallback states) |
 | Close affordance | "Close" — header top-left button |
 | Loading state | "Searching…" (single row: spinner + label, centered) |
 | Empty state heading | "No results" |
@@ -136,10 +138,10 @@ webView → noSleepView (hidden) → keyboardView (hidden)
 
 > Populated by the ui-phase UI-consideration probe and lifted by plan-phase's `## UI Considerations` lift rule via the identical rule as SPEC `## Edge Coverage`. Shape-rooted UI *state* coverage. Empty/error COPY lives in `## Copywriting Contract` above.
 
-Applicable state considerations resolved: 8 covered, 0 backstop, 1 dismissed, 0 unresolved
+Applicable state considerations resolved: 12 covered (verification: explicit), 6 dismissed with reason, 0 backstop, 0 unresolved
 
-| Category | Element(s) | Status | Resolution / Reason |
-|----------|------------|--------|---------------------|
+| Category | Element | Status | Resolution / Reason |
+|----------|---------|--------|---------------------|
 | empty | results list | ✅ covered | Zero results render the single "No results" row with "Try another search" action; Close remains in header |
 | loading | results list | ✅ covered | "Searching…" spinner row shown from query submit until results/failure resolve (`isSearching` drives it, ARCHITECTURE.md state model) |
 | error | results list | ✅ covered | Quota/key failure renders fallback row, triggers webview fallback, auto-dismisses ≤2.0s — never a dead screen (SRCH-03) |
@@ -148,9 +150,13 @@ Applicable state considerations resolved: 8 covered, 0 backstop, 1 dismissed, 0 
 | overflow | result rows | ✅ covered | Title: 2 lines max, tail truncation; channel: 1 line, tail truncation; >8 results truncated to first 8, no pagination |
 | zero-one-many | results list | ✅ covered | Identical layout and copy at 1..8 rows; zero has the dedicated empty row — no count-dependent copy |
 | long-text | row titles / channel names | ✅ covered | 22pt/2-line and 17pt/1-line truncation rules (Typography table) handle fixture-grade long titles; `lineBreakMode = .byTruncatingTail` |
-| — | attribution label | dismissed | Static single-line system-provided-length string ("Results from YouTube"); cannot overflow its 1-line constraint |
+| loading | header | ✅ covered | Header is static chrome: Close + attribution persist unchanged in the loading state (spinner lives in the list body) |
+| error | header | ✅ covered | Header persists unchanged during the fallback/error state; fallback copy lives in the list body per Copywriting Contract |
+| overflow | header | ✅ covered | Fixed layout: Close pinned top-left at ≥44×44pt, attribution right-aligned 13pt single line; no wrap on 480–800pt units |
+| long-text | header attribution | dismissed | Static single-line system-provided-length string ("Results from YouTube"); cannot overflow its 1-line constraint |
+| empty / loading / error / populated / partial / overflow / zero-one-many | keyboard entry (E3) | dismissed | Input surface with no data states of its own — unchanged this phase (KeyboardView already shipped); every post-submit state is owned by the results-overlay rows above; submitted query length is handled by URL-encoding at the service layer (Phase 3) |
 
-<!-- Status vocabulary: ✅ covered / 🧪 backstop / ⚠ unresolved — rows replaced on probe re-run. -->
+<!-- Status vocabulary: ✅ covered (= resolved, verification: explicit) / 🧪 backstop (resolved, verification: backstop) / dismissed (reason required) / ⚠ unresolved — rows replaced on probe re-run. -->
 
 ---
 
