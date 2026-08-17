@@ -90,7 +90,21 @@ Plans:
   3. On 403/quota/key failure, search degrades automatically to the existing webview search path — the driver is never left without a working search
   4. An XCTest target exists and passes fixture-JSON tests for the search client and shared URL parsing
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 03-01-PLAN.md — Test-target tracer: CarTubeTests unit-test target, committed shared scheme with TestAction, parser input-class matrix (SRCH-04)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 03-02-PLAN.md — SearchResult model + YouTubeSearchService: typed errors, build-time key gate, two-request duration fill, fixture-JSON tests behind a URLProtocol stub (SRCH-01, SRCH-04)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 03-03-PLAN.md — LastQueryCache + SearchFallback fail-closed decision, dev-key runbook + live smoke checkpoint, Key Decisions (SRCH-02, SRCH-03)
+
 **UI hint**: no
 
 ### Phase 4: CarPlay Search Surface
@@ -147,7 +161,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. External Dependencies & Project Setup | 0/3 | Planning complete | - |
 | 2. Severance, Signing & Modernization | 0/TBD | Not started | - |
-| 3. Search Core | 0/TBD | Not started | - |
+| 3. Search Core | 0/3 | Planning complete | - |
 | 4. CarPlay Search Surface | 0/TBD | Not started | - |
 | 5. Voice Input | 0/TBD | Not started | - |
 | 6. TestFlight Submission Package | 0/TBD | Not started | - |
