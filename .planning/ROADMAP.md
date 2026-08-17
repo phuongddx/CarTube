@@ -31,7 +31,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. CarPlay entitlement application is submitted to Apple under the audio category, with the request rationale documented as a Key Decision and the submission date recorded
   2. A restricted YouTube Data API key exists in a dedicated Google Cloud project (API + bundle-ID restrictions, never committed to the repo) with a build-time delivery mechanism decided, so search work never blocks on Google
   3. If Apple grants the entitlement during this phase, the new provisioning profile is wired into the project and the CarPlay scene connection is verified; if still pending, it is tracked as a dated blocker rather than silently blocking later phases
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Build-time secret delivery: xcconfig → $(YOUTUBE_API_KEY) → Info.plist, hygiene gates
+- [ ] 01-02-PLAN.md — Apple entitlement: runbooks, bundle-ID decision gate, audio-category submission, dated blocker
+- [ ] 01-03-PLAN.md — Google restricted key provisioning, build injection verification, Key Decisions, phase close-out
 
 ### Phase 2: Severance, Signing & Modernization
 **Goal**: The binary contains no auto-detectable review violations and installs under standard App Store signing — sever before extend, because the files search must touch are the exact files losing MediaRemote/brightness code
@@ -98,7 +103,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. External Dependencies & Project Setup | 0/TBD | Not started | - |
+| 1. External Dependencies & Project Setup | 0/3 | Planning complete | - |
 | 2. Severance, Signing & Modernization | 0/TBD | Not started | - |
 | 3. Search Core | 0/TBD | Not started | - |
 | 4. CarPlay Search Surface | 0/TBD | Not started | - |
