@@ -119,7 +119,17 @@ Plans:
   3. All search inputs funnel through a single SearchCoordinator (typed input now; voice surfaces land on it in Phase 5), adding ≤3 new passthrough methods to CarPlaySingleton
   4. The results list displays "Results from YouTube" attribution
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 04-01-PLAN.md — Tracer: typed keyboard query → SearchCoordinator funnel → native results overlay over the webview → one-tap play; exactly 3 passthroughs; DurationFormatter + attribution header (UI-01, UI-02, UI-03)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 04-02-PLAN.md — State completion: fallback row + ≤2s auto-dismiss, empty-state retry, stale-response guard, coordinator test matrix, phone-side preview harness + visual checkpoint (UI-01, UI-02, UI-03)
+
 **UI hint**: yes
 
 ### Phase 5: Voice Input
@@ -162,7 +172,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. External Dependencies & Project Setup | 0/3 | Planning complete | - |
 | 2. Severance, Signing & Modernization | 0/TBD | Not started | - |
 | 3. Search Core | 0/3 | Planning complete | - |
-| 4. CarPlay Search Surface | 0/TBD | Not started | - |
+| 4. CarPlay Search Surface | 0/2 | Planning complete | - |
 | 5. Voice Input | 0/TBD | Not started | - |
 | 6. TestFlight Submission Package | 0/TBD | Not started | - |
 
