@@ -60,7 +60,22 @@ Plans:
   4. Settings contains no dead toggles for removed features, and changing settings applies the webview configuration in place instead of terminating the app
   5. A `strings` binary scan gate runs in CI on both binaries and fails the build on private-API markers
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — Entitlements emptied, ipabuild/ldid pipeline deleted, standard-signing tracer build; Key Decisions encoded, NOTES retired
+- [ ] 02-02-PLAN.md — TDD strings scan-gate script (removed-symbols markers, survivor exclusions) + CI workflow scanning both binaries
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 02-03-PLAN.md — Caller-first severance of MediaRemote/brightness code, LockScreenDimmingOn contract dead, idle-timer NoSleep, in-place settings apply
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 02-04-PLAN.md — iOS 16 deployment target, Dynamic SPM removal, hook-verification debug screen, on-simulator behavioral checkpoint
+
 **UI hint**: no
 
 ### Phase 3: Search Core
