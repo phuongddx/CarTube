@@ -1,7 +1,8 @@
 ---
 phase: 5
 slug: voice-input
-status: draft
+status: approved
+reviewed_at: 2026-08-18
 shadcn_initialized: false
 preset: none
 created: 2026-08-18
@@ -91,7 +92,7 @@ Phone surface (system semantic colors, SwiftUI convention): `systemBackground`/`
 | Recognition-error hint | "Voice search unavailable" — 1.5s pill; button hides on next visibility check |
 | Onboarding heading | "Voice Search" |
 | Onboarding explainer (not-determined state) | "Search YouTube from CarPlay without typing. Hold the mic button on the car screen, say what you want to watch, and results appear — one tap plays.\n\nYou can also say \"Hey Siri, search YouTube for …\"\n\nYour voice is recognized on your device. Recordings are not sent to Apple or stored." |
-| Ready state (authorized) | "Voice search is ready" + "Hold the mic button on CarPlay and say what you want to watch, or say \"Hey Siri, search YouTube for …\"" |
+| Ready state (authorized) | "Voice search is ready" + "Hold the mic button on CarPlay and say what you want to watch, or say \"Hey Siri, search YouTube for …\"" — rendered ONLY when `supportsOnDeviceRecognition == true`; when authorized but on-device recognition is unsupported, ready copy is replaced by "Voice search is limited on this device" + "Siri and typed search still work. On-device voice input needs a newer iOS version or downloaded language." (mic button hidden on CarPlay, identical to denied) |
 | Denied state (either permission, or partial) | "Voice search is off" + "To use voice search, CarTube needs microphone and speech recognition access. Allow both in Settings, then return to CarPlay." + button "Open Settings" (`UIApplication.openSettingsURLString`) |
 | Empty / error result states | **Inherited from Phase 4 by reference** ("No results" / "Search unavailable" / webview fallback) — voice queries render through the same overlay; no voice-specific result copy exists |
 | Siri App Shortcut metadata (VOX-03) | Phrase: "Search YouTube for ${query}"; shortTitle "Search YouTube"; systemImageName `magnifyingglass` — the only Siri-adjacent visual artifact; no custom Siri UI |
@@ -191,4 +192,4 @@ No third-party UI registries, packages, or SPM UI dependencies are introduced th
 - [ ] Dimension 5 Spacing: PASS
 - [ ] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-08-18
