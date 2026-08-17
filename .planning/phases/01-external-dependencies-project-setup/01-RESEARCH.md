@@ -297,17 +297,17 @@ The delegate exists and installs `CarPlayViewController` in a `UIWindow` on conn
 | A5 | `com.avangelista.CarTube` is registerable by team U67AKNW8PW for App Store distribution (not globally claimed) | Pitfall 1 / bundle-ID decision | High — if claimed by the upstream author's team for App Store use, the distribution bundle ID must change; hence the decision is the phase's first task |
 | A6 | Info.plist `$(VARIABLE)` substitution works for the existing hand-authored `CarTube/Info.plist` the same as for generated plists | Pattern 1 | Low — this substitution in hand-authored plists is long-standing Xcode behavior; the verification step (`plutil -extract` on the built plist) catches failure immediately |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Final distribution bundle ID** (gates both submissions)
+1. **Final distribution bundle ID** (gates both submissions) — RESOLVED: decided at the 01-02 Task 2 blocking human checkpoint before any submission; both options (keep vs. re-prefix) are pre-written in the runbook per the recommendation below.
    - What we know: current IDs are `com.avangelista.CarTube` + `com.avangelista.CarTube.PlayOnCarTube`; team `U67AKNW8PW`; repo is a public fork of the upstream author's project; `CFBundleURLName` in Info.plist is still `com.avangelista.TrollTube` [VERIFIED: CarTube/Info.plist:13]
    - What's unclear: whether the user wants to keep the upstream prefix for distribution and whether that ID is store-registerable
    - Recommendation: planner makes this an explicit user decision task with two pre-written options (keep vs. re-prefix under user's domain), sequenced before both submissions
-2. **Apple Developer account state**
+2. **Apple Developer account state** — RESOLVED: paid-program status (A2) confirmed at the same 01-02 Task 2 checkpoint, step 2; the user performs the submission there.
    - What we know: entitlement request requires Apple ID sign-in; the user's team ID exists in the project
    - What's unclear: paid-program status (A2) and who performs the submission
    - Recommendation: fold into the same human-checkpoint task as the application itself
-3. **Google project ownership and dev-key separation**
+3. **Google project ownership and dev-key separation** — RESOLVED: dev-key project deferred to Phase 3; recorded as a Key Decision row in 01-03 Task 3 so it is not forgotten.
    - What we know: milestone research recommends a dedicated shipping project and a separate dev project/key; `gcloud` is installed for verification
    - What's unclear: whether the user wants the dev project created now or in Phase 3 when dev usage starts
    - Recommendation: create the dedicated shipping project + restricted key now (success criterion 2); defer the dev-key project to Phase 3, noting it in the Key Decision so it isn't forgotten
