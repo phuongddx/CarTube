@@ -61,6 +61,7 @@ Plans:
   5. A `strings` binary scan gate runs in CI on both binaries and fails the build on private-API markers
 
 **Plans**: TBD
+**UI hint**: no
 
 ### Phase 3: Search Core
 
@@ -75,6 +76,7 @@ Plans:
   4. An XCTest target exists and passes fixture-JSON tests for the search client and shared URL parsing
 
 **Plans**: TBD
+**UI hint**: no
 
 ### Phase 4: CarPlay Search Surface
 
@@ -119,6 +121,7 @@ Plans:
   4. A final scan-clean archive of app + share extension is produced that uploads under standard signing (TestFlight-ready)
 
 **Plans**: TBD
+**UI hint**: no
 
 ## Progress
 
