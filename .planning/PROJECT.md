@@ -24,9 +24,10 @@ A driver can open any YouTube video on their car screen — by voice, search, or
 ### Active
 
 - [ ] App Store distribution: strip TrollStore entitlements, ldid re-signing, and `ipabuild.sh`; build with standard code signing
-- [ ] Private API audit: remove the riskiest private-framework usage (MediaRemote now-playing interception, screen/brightness private symbols) that automated App Review scans detect; keep the CarPlay webview video experience
-- [ ] Raise deployment target from iOS 14.0 to a current supported iOS version
-- [ ] Official CarPlay entitlement: apply for and integrate Apple's CarPlay audio/media entitlement
+- **Private API audit**: remove the riskiest private-framework usage (MediaRemote now-playing interception, brightness private symbols, springboard reads) that automated App Review scans detect; keep the CarPlay webview video experience
+- [ ] Raise deployment target from iOS 14.0 to iOS 16 minimum (AppIntents floor; enables modern speech/AppIntents APIs)
+- [ ] Official CarPlay entitlement: apply under the audio category (honest fit; video category requires parked-only + AirPlay which contradicts Core Value); submit the application day 1 — it gates all on-device CarPlay work including the simulator
+- [ ] Remove now-playing takeover feature and lock-screen dimming (both depend on severed private APIs); screen-off warning label survives
 - [ ] Voice search via Siri: "Search YouTube for X" hands-free while driving
 - [ ] Push-to-talk mic button on the CarPlay screen using on-device speech recognition
 - [ ] YouTube Data API search backend with results list on CarPlay screen; tap to play
@@ -51,7 +52,7 @@ A driver can open any YouTube video on their car screen — by voice, search, or
 
 - **App Review**: Webview video on CarPlay + remaining private APIs carry a high rejection risk — user accepted this risk explicitly; goal is TestFlight-ready, not guaranteed approval
 - **CarPlay entitlement**: Apple application process required; timeline outside our control
-- **YouTube Data API**: Requires a Google developer key; ~10k unit/day default quota (a search costs 100 units)
+- **YouTube Data API**: Requires a Google developer key; current model (2026-06 docs) is a dedicated bucket of 100 `search.list` calls/day at 1 unit each, shared across ALL installs; quota extension requires an API Compliance Audit the ad-block scripts would fail
 - **Tech stack**: Keep SwiftUI/UIKit/WebKit hybrid; no rewrite of the phone shell
 - **Behavioral contracts**: Settings "exit to apply" and single-cached-video model retained unless a phase explicitly changes them
 
