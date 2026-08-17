@@ -144,7 +144,21 @@ Plans:
   3. User can say "Search YouTube for X" via a Siri App Shortcut with zero setup, and it produces results on the CarPlay screen
   4. When speech is unavailable or denied, the mic button is hidden and typed/Siri paths remain fully usable — no dead ends
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 05-01-PLAN.md — Push-to-talk tracer: purpose strings + construction-gated SpeechRecognizerService + MicButton + funnel landing + availability/error/silence-timer tests + Debug voice preview (VOX-01, VOX-02)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 05-02-PLAN.md — Phone onboarding: VoiceSearchSetup Form (explainer/CTA/ready/limited/denied + Open Settings) + first-run auto-present + persistent row (VOX-02)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 05-03-PLAN.md — Siri App Shortcut: SearchCarTubeIntent + corrected phrase pair (app-name token + parameterless fallback) + no-dead-ends verification + phase-gate checkpoint (VOX-03, VOX-01)
+
 **UI hint**: yes
 
 ### Phase 6: TestFlight Submission Package
@@ -173,7 +187,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Severance, Signing & Modernization | 0/TBD | Not started | - |
 | 3. Search Core | 0/3 | Planning complete | - |
 | 4. CarPlay Search Surface | 0/2 | Planning complete | - |
-| 5. Voice Input | 0/TBD | Not started | - |
+| 5. Voice Input | 0/3 | Planning complete | - |
 | 6. TestFlight Submission Package | 0/TBD | Not started | - |
 
 ## Notes
