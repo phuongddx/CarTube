@@ -5,10 +5,10 @@ milestone_name: milestone
 current_phase: 03
 current_phase_name: Search Core
 status: planning
-stopped_at: "Halted at 02-04 Task 3 (checkpoint:human-verify) — Tasks 1-2 done and committed"
-last_updated: "2026-08-18T14:48:16.692Z"
+stopped_at: "Phase 02 complete — verified, security-clean, transitioned to Phase 03"
+last_updated: "2026-08-18T14:52:00.000Z"
 last_activity: 2026-08-18
-last_activity_desc: 01-03 runbook authored + Key Decisions/branch recorded; awaiting Google Cloud key checkpoint (Task 2)
+last_activity_desc: Phase 02 UAT passed (2/2), security threats closed (0 open), transitioned to Phase 03 — Search Core
 progress:
   total_phases: 6
   completed_phases: 2
@@ -20,10 +20,10 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-08-17)
+See: .planning/PROJECT.md (updated 2026-08-18)
 
 **Core value:** A driver can open any YouTube video on their car screen — by voice, search, or share — with ads and sponsors skipped automatically.
-**Current focus:** Phase 02 — severance-signing-modernization
+**Current focus:** Phase 03 — Search Core
 
 ## Current Position
 
@@ -91,12 +91,10 @@ None yet.
 
 - **Phase 1 close-out (2026-08-18): CarPlay entitlement still pending** — Submitted 2026-08-18 (Apple Case-ID 21672656, auto-acknowledgment received). Category requested: audio. App ID: `com.cartube.carplay` (registered under team K2TYLYAWMK — Apple Developer Program, paid tier; note: K2TYLYAWMK is the user's actual team, not the upstream U67AKNW8PW from the pbxproj). No SLA (community-reported days–months) — re-check the developer account periodically for the grant notification. When the grant lands, execute docs/runbooks/carplay-entitlement-grant-wiring.md (mind its entitlements-file sequencing constraint against Phase 2). Success-criterion-3 branch resolved as **still pending**: Phases 3–5 proceed on phone-side mocks; on-device CarPlay verification happens when the grant lands.
 - **Google shipping key not yet created (external, 2026-08-18)** — Runbook authored and committed (docs/runbooks/google-youtube-api-key.md); the Console actions are human-only behind Google login: dedicated project, enable YouTube Data API v3, create key, both restrictions (API: YouTube Data API v3 only; iOS: com.cartube.carplay + com.cartube.carplay.playon), quota alerting, paste the key into root Secrets.xcconfig (gitignored) replacing the sentinel. On resume: agent verifies via gcloud + plutil + git grep. Phase 3 search work blocks on this; nothing else does.
-- 02-02: CarTube.app main executable cannot be compiled locally (Xcode 26.3 SDK 26.2 vs installed simulator runtime 26.5 mismatch, same as 02-01); real-binary proof-of-detection deferred to a CI runner with a matching runtime — logged WINDOWS.md entry 4, workflow committed will run this automatically
-- 02-03: xcodebuild -scheme CarTube and target-mode -sdk iphonesimulator build both fail before a CarTube.app/CarTube binary exists — same Xcode 26.3/SDK 26.2 vs installed iOS 26.5 runtime mismatch as 02-01/02-02. Source-level scan-private-apis.sh confirms all 7 modified files clean of every marker; compiled-binary strings scan deferred to CI (WINDOWS.md entry 5).
-- 02-04 Task 3 (checkpoint:human-verify, gate=blocking): app must be launched on the iOS simulator and a human must read the Debug screen's 4 hook-status rows and exercise the 3 script re-validation rows before this plan and Phase 2 can close. Tasks 1-2 committed (aa9bb3d, 66eb281); see 02-04-SUMMARY.md for exact verification steps.
+- Phase 2 closed 2026-08-18: code review (2 of 3 critical findings fixed — idle-timer apply-in-place gap, bundle-ID/signing-team inconsistency; CR-02 HideScrollBar row + 7 warnings + 3 info left as tracked follow-up, see PROJECT.md Active), phase-goal verification passed, UAT 2/2 passed, security 0 threats open. CarPlay-connected end-to-end observation of the idle-timer fix remains deferred until the Phase 1 entitlement lands (see below).
 
 ## Session Continuity
 
-Last session: 2026-08-18T11:08:03.376Z
-Stopped at: Halted at 02-04 Task 3 (checkpoint:human-verify) — Tasks 1-2 done and committed
-Resume file: .planning/phases/02-severance-signing-modernization/02-04-PLAN.md
+Last session: 2026-08-18T14:52:00.000Z
+Stopped at: Phase 02 complete, transitioned — ready to plan Phase 03 (Search Core)
+Resume file: None
