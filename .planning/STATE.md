@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 02
 current_phase_name: severance-signing-modernization
 status: executing
-stopped_at: Completed 02-03-PLAN.md — severance + in-place settings application
-last_updated: "2026-08-18T10:08:59.402Z"
+stopped_at: "Halted at 02-04 Task 3 (checkpoint:human-verify) — Tasks 1-2 done and committed"
+last_updated: "2026-08-18T11:08:14.835Z"
 last_activity: 2026-08-18
 last_activity_desc: 01-03 runbook authored + Key Decisions/branch recorded; awaiting Google Cloud key checkpoint (Task 2)
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 18
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -58,6 +58,7 @@ Progress: [███░░░░░░░] 33%
 | Phase 01 P03 | 17m | 2 tasks | 3 files |
 | Phase 02 P02 | 14min | 2 tasks | 3 files |
 | Phase 02 P03 | 22min | 3 tasks | 7 files |
+| Phase 02 P04 | 24min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,9 @@ Recent decisions affecting current work:
 - [Phase ?]: CI gate workflow (private API scan) has zero continue-on-error steps; the scan script exit code is the only thing that can fail the job
 - [Phase ?]: 02-03: registerForUnlockNotification deleted (not kept) — its only caller (restoreBrightness) died with the brightness trio; the warning label self-hides via its own timer, so nothing needs the unlock event. Resolves the PATTERNS.md planner decision point; corroborated by scan-private-apis.sh's own header comment (written in 02-02) already documenting com.apple.springboard.lockstate as removed by plan 02-03.
 - [Phase ?]: 02-03: Settings.saveSettings() now applies configuration in place via CarPlaySingleton.applyConfiguration() -> CarPlayViewController.applyConfigurationInPlace() instead of calling exitGracefully()/exit(0); the app no longer quits on Save.
+- [Phase ?]: 02-04: Deployment target raised to iOS 16.0 (6 sites), Dynamic SPM package fully removed (5 object types + Package.resolved); restored two unrelated pbxproj attributes (dstSubfolder=PlugIns, spurious empty dependencies array) dropped/added by the xcodeproj gem's save before committing
+- [Phase ?]: 02-04: Debug.swift extended with Hook Verification (4 status rows) + Script Re-validation (3 rows); HideScrollBar detection uses IMP-vs-superclass comparison (no original_ companion selector exists for that hook)
+- [Phase ?]: 02-04: Local Xcode/simulator SDK mismatch blocking build verification since 02-01 is resolved (iOS 26.3.1 runtime installed) — first real BUILD SUCCEEDED and first actual-binary scan-private-apis.sh pass of Phase 2, run against destination id=F14D9B48-EF6B-4ACD-BB09-2D5951BF5D0A (iPhone 17e)
 
 ### Pending Todos
 
@@ -89,9 +93,10 @@ None yet.
 - **Google shipping key not yet created (external, 2026-08-18)** — Runbook authored and committed (docs/runbooks/google-youtube-api-key.md); the Console actions are human-only behind Google login: dedicated project, enable YouTube Data API v3, create key, both restrictions (API: YouTube Data API v3 only; iOS: com.cartube.carplay + com.cartube.carplay.playon), quota alerting, paste the key into root Secrets.xcconfig (gitignored) replacing the sentinel. On resume: agent verifies via gcloud + plutil + git grep. Phase 3 search work blocks on this; nothing else does.
 - 02-02: CarTube.app main executable cannot be compiled locally (Xcode 26.3 SDK 26.2 vs installed simulator runtime 26.5 mismatch, same as 02-01); real-binary proof-of-detection deferred to a CI runner with a matching runtime — logged WINDOWS.md entry 4, workflow committed will run this automatically
 - 02-03: xcodebuild -scheme CarTube and target-mode -sdk iphonesimulator build both fail before a CarTube.app/CarTube binary exists — same Xcode 26.3/SDK 26.2 vs installed iOS 26.5 runtime mismatch as 02-01/02-02. Source-level scan-private-apis.sh confirms all 7 modified files clean of every marker; compiled-binary strings scan deferred to CI (WINDOWS.md entry 5).
+- 02-04 Task 3 (checkpoint:human-verify, gate=blocking): app must be launched on the iOS simulator and a human must read the Debug screen's 4 hook-status rows and exercise the 3 script re-validation rows before this plan and Phase 2 can close. Tasks 1-2 committed (aa9bb3d, 66eb281); see 02-04-SUMMARY.md for exact verification steps.
 
 ## Session Continuity
 
-Last session: 2026-08-18T10:08:59.378Z
-Stopped at: Completed 02-03-PLAN.md — severance + in-place settings application
-Resume file: None
+Last session: 2026-08-18T11:08:03.376Z
+Stopped at: Halted at 02-04 Task 3 (checkpoint:human-verify) — Tasks 1-2 done and committed
+Resume file: .planning/phases/02-severance-signing-modernization/02-04-PLAN.md
