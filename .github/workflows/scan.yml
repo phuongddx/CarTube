@@ -1,0 +1,34 @@
+name: Private API Scan
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Provision Secrets.xcconfig from example
+        run: cp Config/Secrets.xcconfig.example Secrets.xcconfig
+
+      - name: Build CarTube + PlayOnCarTube
+        run: |
+          xcodebuild build \
+            -project CarTube.xcodeproj \
+            -scheme CarTube \
+            -destination 'platform=iOS Simulator,name=iPhone Air' \
+            -derivedDataPath build/DerivedData \
+            YOUTUBE_API_KEY=CI_PLACEHOLDER
+
+      - name: Scan app binary for private API markers
+        run: |
+          scripts/scan-private-apis.sh \
+            "build/DerivedData/Build/Products/Debug-iphonesimulator/CarTube.app/CarTube"
+
+      - name: Scan share-extension binary for private API markers
+        run: |
+          scripts/scan-private-apis.sh \
+            "build/DerivedData/Build/Products/Debug-iphonesimulator/CarTube.app/PlugIns/PlayOnCarTube.appex/PlayOnCarTube"
