@@ -36,6 +36,10 @@
 		25EED73A295F05AA00C0DF56 /* CustomLayout.js in Resources */ = {isa = PBXBuildFile; fileRef = 25EED739295F059A00C0DF56 /* CustomLayout.js */; };
 		51B344993E1A36DDAD4541E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F016D903939C697DF19634 /* Foundation.framework */; };
 		5B291321EC71906F575BDF77 /* UtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E1B837301BA308FA90283 /* UtilitiesTests.swift */; };
+		688CBDDF4E9CA2F0C67BACE6 /* YouTubeSearchServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */; };
+		8AAC392329ADE61A5710CE53 /* videos-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 54D41EF84CD76B127E5040F1 /* videos-response.json */; };
+		AC8E3F0FE62EE08C07828581 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FFBE724A4D84A3922E53C /* SearchResult.swift */; };
+		B0795DFFA0C359503ECE9E95 /* search-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 50F0AE1661E10332570072DF /* search-response.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,9 +110,13 @@
 		25A2A5922967917B004A9AB1 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		25A2A59429679BF2004A9AB1 /* HowTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowTo.swift; sourceTree = "<group>"; };
 		25EED739295F059A00C0DF56 /* CustomLayout.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = CustomLayout.js; sourceTree = "<group>"; };
+		50F0AE1661E10332570072DF /* search-response.json */ = {isa = PBXFileReference; includeInIndex = 1; path = "search-response.json"; sourceTree = "<group>"; };
+		54D41EF84CD76B127E5040F1 /* videos-response.json */ = {isa = PBXFileReference; includeInIndex = 1; path = "videos-response.json"; sourceTree = "<group>"; };
+		60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = YouTubeSearchServiceTests.swift; sourceTree = "<group>"; };
 		704E1B837301BA308FA90283 /* UtilitiesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UtilitiesTests.swift; sourceTree = "<group>"; };
 		7B49E1D589F14020616C760C /* Secrets.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		B2F016D903939C697DF19634 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		B52FFBE724A4D84A3922E53C /* SearchResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		F587664409CE07CF24DFCA16 /* CarTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -171,6 +179,7 @@
 				250B50F42953D37A00397038 /* Assets.xcassets */,
 				2583A81529663CF300EBEFB9 /* Util */,
 				250B50D52953D12800397038 /* Preview Content */,
+				38D5B632E27BAD33A7ADA801 /* Search */,
 			);
 			path = CarTube;
 			sourceTree = "<group>";
@@ -294,10 +303,21 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		38D5B632E27BAD33A7ADA801 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				B52FFBE724A4D84A3922E53C /* SearchResult.swift */,
+			);
+			name = Search;
+			path = Search;
+			sourceTree = "<group>";
+		};
 		810F135E6C4F97BC0AB4D4C4 /* CarTubeTests */ = {
 			isa = PBXGroup;
 			children = (
 				704E1B837301BA308FA90283 /* UtilitiesTests.swift */,
+				CDAF10C607E84D1D900DA01F /* Fixtures */,
+				60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */,
 			);
 			name = CarTubeTests;
 			path = CarTubeTests;
@@ -309,6 +329,16 @@
 				B2F016D903939C697DF19634 /* Foundation.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		CDAF10C607E84D1D900DA01F /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				50F0AE1661E10332570072DF /* search-response.json */,
+				54D41EF84CD76B127E5040F1 /* videos-response.json */,
+			);
+			name = Fixtures;
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,6 +440,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0795DFFA0C359503ECE9E95 /* search-response.json in Resources */,
+				8AAC392329ADE61A5710CE53 /* videos-response.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +486,7 @@
 				2582148C296559EA00610408 /* Alert++.swift in Sources */,
 				2583C1EB2966278C00E3D17C /* Utilities.swift in Sources */,
 				250B50ED2953D29100397038 /* CarPlaySceneDelegate.swift in Sources */,
+				AC8E3F0FE62EE08C07828581 /* SearchResult.swift in Sources */,
 			);
 		};
 		257D148E297A58220095689E /* Sources */ = {
@@ -467,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B291321EC71906F575BDF77 /* UtilitiesTests.swift in Sources */,
+				688CBDDF4E9CA2F0C67BACE6 /* YouTubeSearchServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,7 +784,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarTube.app/CarTube";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K2TYLYAWMK;
@@ -766,6 +799,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarTube.app/CarTube";
 			};
 			name = Debug;
 		};
@@ -773,7 +807,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarTube.app/CarTube";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K2TYLYAWMK;
@@ -789,6 +822,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarTube.app/CarTube";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

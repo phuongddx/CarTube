@@ -1,0 +1,42 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "vidsetag123",
+  "items": [
+    {
+      "kind": "youtube#video",
+      "etag": "videtag1",
+      "id": "dQw4w9WgXcQ",
+      "snippet": {
+        "title": "Lofi Beats to Study To",
+        "channelTitle": "Chillhop Music"
+      },
+      "contentDetails": {
+        "duration": "PT4M13S"
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "videtag2",
+      "id": "jNQXAC9IVRw",
+      "snippet": {
+        "title": "Focus Music for Deep Work",
+        "channelTitle": "Ambient Sounds"
+      },
+      "contentDetails": {
+        "duration": "PT1H2M9S"
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "videtag3",
+      "id": "9bZkp7q19f0",
+      "snippet": {
+        "title": "Late Night Jazz Piano",
+        "channelTitle": "Jazz Cafe"
+      },
+      "contentDetails": {
+        "duration": "PT47S"
+      }
+    }
+  ]
+}
