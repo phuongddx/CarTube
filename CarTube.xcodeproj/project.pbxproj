@@ -34,7 +34,6 @@
 		25A2A5932967917B004A9AB1 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A5922967917B004A9AB1 /* Debug.swift */; };
 		25A2A59529679BF2004A9AB1 /* HowTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A59429679BF2004A9AB1 /* HowTo.swift */; };
 		25EED73A295F05AA00C0DF56 /* CustomLayout.js in Resources */ = {isa = PBXBuildFile; fileRef = 25EED739295F059A00C0DF56 /* CustomLayout.js */; };
-		25F18067295EC2A5007B9940 /* Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 25F18066295EC2A5007B9940 /* Dynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,7 +104,6 @@
 		250B50C92953D12500397038 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				25F18067295EC2A5007B9940 /* Dynamic in Frameworks */,
 			);
 		};
 		257D148F297A58220095689E /* Frameworks */ = {
@@ -291,9 +289,6 @@
 				257D149B297A58220095689E /* PBXTargetDependency */,
 			);
 			name = CarTube;
-			packageProductDependencies = (
-				25F18066295EC2A5007B9940 /* Dynamic */,
-			);
 			productName = CarTube;
 			productReference = 250B50CC2953D12500397038 /* CarTube.app */;
 			productType = "com.apple.product-type.application";
@@ -340,9 +335,6 @@
 				Base,
 			);
 			mainGroup = 250B50C32953D12500397038;
-			packageReferences = (
-				25F18065295EC2A5007B9940 /* XCRemoteSwiftPackageReference "Dynamic" */,
-			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 250B50CD2953D12500397038 /* Products */;
 			projectDirPath = "";
@@ -468,7 +460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -525,7 +517,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -559,7 +551,7 @@
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = microphone;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeLeft;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -602,7 +594,7 @@
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = microphone;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeLeft;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -631,7 +623,7 @@
 				INFOPLIST_FILE = PlayOnCarTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Play On CarTube";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -658,7 +650,7 @@
 				INFOPLIST_FILE = PlayOnCarTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Play On CarTube";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -702,25 +694,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		25F18065295EC2A5007B9940 /* XCRemoteSwiftPackageReference "Dynamic" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mhdhejazi/Dynamic";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		25F18066295EC2A5007B9940 /* Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 25F18065295EC2A5007B9940 /* XCRemoteSwiftPackageReference "Dynamic" */;
-			productName = Dynamic;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 250B50C42953D12500397038 /* Project object */;
 }
