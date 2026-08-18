@@ -1,12 +1,12 @@
 # Temporary working notes — Phase 1 planning defaults
 
-## Bundle ID (user declined to choose; default applied)
+## Bundle ID (RESOLVED 2026-08-18)
 
-Default: re-prefix to user's own reverse-DNS (e.g. `com.<user>.cartube`). Exact value is a
-`checkpoint:human` decision inside PLAN.md task 1 — the plan prepares both App ID registrations
-but the user confirms the string before submission. Rationale: current ID is upstream author's
-(`com.avangelista.CarTube`) in a public fork; App Store distribution requires the user's own
-App ID. URL scheme `cartube://` is independent of bundle ID — unchanged.
+User chose `com.cartube.carplay` (product-brand-first, option 5 of 5 offered).
+Share extension: `com.cartube.carplay.playon`. Encoded into 01-02 (runbook +
+checkpoint) and 01-03 (Google restriction list) and PROJECT.md Key Decisions.
+The blocking checkpoint in 01-02 Task 2 now VALIDATES this choice (registerable
+under team U67AKNW8PW, user still wants brand prefix) rather than asking open-ended.
 
 ## Dev Google project
 

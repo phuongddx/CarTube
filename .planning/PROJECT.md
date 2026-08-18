@@ -60,6 +60,7 @@ A driver can open any YouTube video on their car screen — by voice, search, or
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
+| Distribution bundle ID: `com.cartube.carplay` (+ `.playon` extension) | User choice 2026-08-18 — product-brand-first prefix; replaces upstream `com.avangelista.CarTube` which belongs to the fork's original author | — Pending |
 | Keep webview video on CarPlay for App Store submission | User prioritized the core video experience over approval odds | — Pending |
 | Remove riskiest private APIs (MediaRemote, brightness symbols), keep remaining hooks | Balance functionality against automated review detection | — Pending |
 | Voice input: Siri intent + on-screen push-to-talk | Hands-free while driving plus fallback for users who haven't set up Siri | — Pending |
