@@ -79,4 +79,4 @@ created: 2026-08-18
 - [ ] Feedback latency < 150s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-08-18

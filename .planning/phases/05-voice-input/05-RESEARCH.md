@@ -381,17 +381,20 @@ if text != lastTranscript {
 | A4 | Simulator can exercise `SFSpeechRecognizer` end-to-end (classic API) enough for CI state-machine tests | Validation Architecture | If wrong: recognition tests are device-manual; state-machine/availability/intent tests remain simulator-runnable since they never start the engine |
 | A5 | Silence-detection via partial-result-change timestamps reliably finalizes within ~2s | Code Examples | If flaky: hard 10s cap bounds the session; tune constant on device |
 
-## Open Questions
+## Open Questions (RESOLVED — device-deferred, tracked in 05-VALIDATION.md Manual-Only table)
 
 1. **Does Siri capture an arbitrary spoken string into `\(\.$query)` on iOS 16/17?**
    - What we know: the interpolation compiles at 16.0; build validation allows one param + app-name token; WWDC22/23 say phrase params are for *predefined* values; community practice suggests 16.4 added String support.
    - What's unclear: the runtime behavior on the actual device/OS matrix.
    - Recommendation: ship both phrases (Pattern 2); at first on-device checkpoint, speak the full phrase and observe which path fills `query`. If only the follow-up fires, VOX-03 still succeeds (Siri asks, driver answers) — no code change needed.
+   - Disposition: resolved by design independence — the Pattern 2 phrase pair works regardless of which path fills `query`; no plan blocks on A1.
 2. **Webview audio vs. recording session on a real head unit**
    - What we know: category semantics (verified); mixing option exists.
    - What's unclear: WebKit's internal session interaction with a same-app category change during CarPlay playback.
    - Recommendation: checkpoint task on the phase's device-verification day; accepted degradation is audio pause.
+   - Disposition: resolved as accepted degradation — pause is tolerable while listening; `.notifyOthersOnDeactivation` teardown restores WebKit audio; confirmed at the device pass.
 3. **Siri availability for testing**: Siri is not usable on the simulator; App Shortcuts Preview (Xcode 15+) tests phrase *matching* only, not runtime parameter filling. Siri-path verification is device-manual — schedule it with the entitlement-era device pass.
+   - Disposition: resolved as a Manual-Only device row — recorded at the 05-03 phase-gate checkpoint against the Phase 1 entitlement blocker.
 
 ## Environment Availability
 
@@ -425,10 +428,10 @@ if text != lastTranscript {
 
 | Req ID | Behavior | Test Type | Automated Command | File Exists? |
 |--------|----------|-----------|-------------------|-------------|
-| VOX-01 | Availability gating: every (speechStatus × micStatus × onDevice) combination → correct `VoiceSearchState` | unit | `xcodebuild test … -only-testing:CarTubeTests/VoiceSearchAvailabilityTests` | ❌ Wave 0 |
+| VOX-01 | Availability gating: every (speechStatus × micStatus × onDevice) combination → correct `VoiceSearchState` | unit | `xcodebuild test … -only-testing:CarTubeTests/SpeechAvailabilityGateTests` | ❌ Wave 0 |
 | VOX-01 | Service lifecycle: start→stop emits exactly one transcript; empty transcript → `.empty` outcome, no search call | unit (protocol-mocked engine/request seams) | `xcodebuild test … -only-testing:CarTubeTests/SpeechRecognizerServiceTests` | ❌ Wave 0 |
 | VOX-01 | Silence timer: unchanged partial for ≥1.8s (injected clock) triggers finalize; hard cap at 10s; re-arm suppressed | unit | same file as above | ❌ Wave 0 |
-| VOX-03 | Intent parameter resolution: query trim/normalize; empty→ error path; perform() routes into SearchCoordinator (funnel spy) | unit | `xcodebuild test … -only-testing:CarTubeTests/SearchCarTubeIntentTests` | ❌ Wave 0 |
+| VOX-03 | Intent parameter resolution: query trim/normalize; empty→ error path; perform() routes into SearchCoordinator (funnel spy) | unit | `xcodebuild test … -only-testing:CarTubeTests/SearchIntentTests` | ❌ Wave 0 |
 | VOX-02 | Purpose strings present in built app Info.plist | build-gate (script/grep on build products) | `grep` against the built `.app/Info.plist` in the verification step | ❌ Wave 0 |
 | VOX-01/03 | Real mic + real Siri + CarPlay scene | manual-only (no mic capture in CI; Siri absent on simulator) | checkpoint:human-verify at device pass | n/a |
 
@@ -442,9 +445,9 @@ Justification for manual-only rows: `SFSpeechRecognizer` requires live audio and
 
 ### Wave 0 Gaps
 
-- [ ] `CarTubeTests/VoiceSearchAvailabilityTests.swift` — pure gating matrix (VOX-01)
+- [ ] `CarTubeTests/SpeechAvailabilityGateTests.swift` — pure gating matrix (VOX-01)
 - [ ] `CarTubeTests/SpeechRecognizerServiceTests.swift` — lifecycle + silence-timer with injected clock/seams (VOX-01)
-- [ ] `CarTubeTests/SearchCarTubeIntentTests.swift` — parameter resolution + funnel spy (VOX-03)
+- [ ] `CarTubeTests/SearchIntentTests.swift` — parameter resolution + funnel spy (VOX-03)
 - [ ] Purpose-string build-gate step (grep on built Info.plist) (VOX-02)
 - [ ] Test-target membership for the 3 new files via the Phase 3/4 ruby-gem-script convention, then delete the script
 
