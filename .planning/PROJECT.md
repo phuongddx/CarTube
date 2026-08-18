@@ -67,6 +67,9 @@ A driver can open any YouTube video on their car screen — by voice, search, or
 | Search results as tappable list on CarPlay screen | Driver glances once, taps once | — Pending |
 | YouTube Data API for search backend | Reliable structured results vs fragile scraping | — Pending |
 | Done = TestFlight-ready upload | User owns submission and handles review outcome | — Pending |
+| CarPlay entitlement requested under the audio category | App genuinely plays YouTube audio through the vehicle's system; the video category requires AirPlay video support and describes parked-only use, contradicting the milestone's core value. Residual risk: an on-screen video surface under an audio entitlement may still draw review scrutiny | — Pending |
+| API key delivered via gitignored root Secrets.xcconfig with $(YOUTUBE_API_KEY) Info.plist injection | Apple's documented substitution, zero moving parts; CI rotates via xcodebuild command-line override. Known limit: the key ships in the IPA and is public-by-design, guarded by API + iOS bundle-ID restrictions and quota alerting | — Pending |
+| Google dev-key project deferred to Phase 3 | Researcher recommendation; Phase 1 provisions only the shipping key so search work never blocks on a second project | — Pending |
 
 ## Evolution
 
