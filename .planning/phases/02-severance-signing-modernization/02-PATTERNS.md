@@ -185,7 +185,7 @@ Exact edit sites (verified by grep):
 - `IPHONEOS_DEPLOYMENT_TARGET = 14.0;` → `16.0;` at 6 locations: lines 484, 540 (project-level), 574, 617 (CarTube target Debug/Release), 646, 673 (PlayOnCarTube Debug/Release)
 - Dynamic SPM removal: `PBXBuildFile` line 37, `Frameworks` phase line 110, `PBXPackageProductDependency` line 299, `XCRemoteSwiftPackageReference` lines 351 + 722-724, `XCSwiftPackageProductDependency` lines 733-737 — remove all five object types or the project file is corrupt
 - `CODE_SIGN_ENTITLEMENTS = CarTube/CarTube.entitlements;` at lines 465, 527, 557, 600 — drop only if the entitlements file is emptied/deleted
-- Standard signing is already configured: `CODE_SIGN_STYLE = Automatic` + `DEVELOPMENT_TEAM = U67AKNW8PW` on all four target configs (lines 558/561, 601/604, 639/641, 666/668) — INFRA-02 needs no signing-setting change, only the entitlements/ldid pipeline removal
+- Standard signing: `CODE_SIGN_STYLE = Automatic` on all four target configs (lines 558/561, 601/604, 639/641, 666/668), but `DEVELOPMENT_TEAM = U67AKNW8PW` is the UPSTREAM author's team — Phase 1's entitlement submission (2026-08-18, Case-ID 21672656) confirmed the user's own team is K2TYLYAWMK, so INFRA-02 swaps the team on those same lines in addition to the entitlements/ldid pipeline removal
 - Deleting `ipabuild.sh` requires no pbxproj change (it is not referenced there)
 
 ### CI scan gate (CREATE: `.github/workflows/*.yml` + script — INFRA-05)
