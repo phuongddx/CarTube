@@ -538,7 +538,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarTube/Preview Content\"";
-				DEVELOPMENT_TEAM = 57RCRLS3QS;
+				DEVELOPMENT_TEAM = K2TYLYAWMK;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -600,7 +600,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.avangelista.CarTube;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cartube.carplay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -618,7 +618,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U67AKNW8PW;
+				DEVELOPMENT_TEAM = K2TYLYAWMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlayOnCarTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Play On CarTube";
@@ -645,7 +645,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U67AKNW8PW;
+				DEVELOPMENT_TEAM = K2TYLYAWMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlayOnCarTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Play On CarTube";
@@ -657,7 +657,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.avangelista.CarTube.PlayOnCarTube;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cartube.carplay.playon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
