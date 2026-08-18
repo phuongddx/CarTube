@@ -14,9 +14,11 @@ func isYouTubeURL(_ url: String) -> Bool {
     return extractYouTubeVideoID(url) != nil
 }
 
+private let youTubeVideoIDRegex: NSRegularExpression? = try? NSRegularExpression(pattern: "(?:youtube(?:-nocookie)?\\.com\\/(?:[^\\/\\n\\s]+\\/\\S+\\/|(?:v|e(?:mbed)?|shorts)\\/|\\S*?[?&]v=)|youtu\\.be\\/)([a-zA-Z0-9_-]{11})(?![a-zA-Z0-9_-])")
+
 /// Given a URL string, extract the YouTube video ID
 func extractYouTubeVideoID(_ url: String) -> String? {
-    let regex = try! NSRegularExpression(pattern: "(?:youtube(?:-nocookie)?\\.com\\/(?:[^\\/\\n\\s]+\\/\\S+\\/|(?:v|e(?:mbed)?)\\/|\\S*?[?&]v=)|youtu\\.be\\/)([a-zA-Z0-9_-]{11})")
+    guard let regex = youTubeVideoIDRegex else { return nil }
     guard let match = regex.firstMatch(in: url, range: NSRange(url.startIndex..., in: url)) else { return nil }
     guard let range = Range(match.range(at: 1), in: url) else { return nil }
     return String(url[range])
