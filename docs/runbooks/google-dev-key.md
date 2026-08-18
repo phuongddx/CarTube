@@ -71,9 +71,9 @@ With the dev key (or the shipping key, if the human explicitly approved spending
 - **Query used:** _(recorded at smoke time)_
 - **Result count:** _(recorded at smoke time)_
 - **Observed `videos.list` duration value (first result):** _(recorded at smoke time)_
-- **Key used:** dev key / shipping key / deferred — _(recorded at smoke time)_
+- **Key used:** deferred — no live request made
 
-**Status of this section as of 2026-08-18:** deferred. Plan 03-03's Task 4 checkpoint — the human decision on which key to spend against, or whether to skip — has not yet resolved. No live request has been made. This smoke will run and this section will be filled in on the first Phase 3 (or Phase 4) session where a real key is available and the human approves the spend.
+**Status of this section as of 2026-08-18:** deferred by explicit user decision at Task 4's checkpoint. Options presented: (1) provision the `cartube-dev` project now, (2) spend 2 units on the shipping key, (3) skip the smoke this phase. User chose (3) — no Google Cloud action taken, no key created, no network request made. Rationale: the shipping key itself doesn't exist yet either (Phase 1's Google Cloud checkpoint, Task 2, is still pending), so a smoke against either key would have required a fresh Console detour outside this phase's flow. This smoke will run on the first Phase 4 session where a real key (dev or shipping) is available and approved.
 
 ### Repo hygiene (must stay clean)
 

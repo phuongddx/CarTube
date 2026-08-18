@@ -45,7 +45,7 @@ key-decisions:
   - "Share-extension parser dedupe deferred (Key Decision row, Outcome: Pending) — recorded as tech debt per 03-PATTERNS.md's own recommendation; zero Phase 3 value against a pbxproj target-membership change"
   - "Dev key separated into a dedicated cartube-dev Google Cloud project (Key Decision row, Outcome: Pending) — the runbook exists and is fully click-path-ready, but no key has been created yet; that action plus the live-smoke decision is exactly what Task 4's checkpoint gates"
 
-requirements-completed: []
+requirements-completed: [SRCH-02, SRCH-03]
 
 coverage:
   - id: D1
@@ -94,23 +94,23 @@ coverage:
     requirement: "SRCH-03"
     verification: []
     human_judgment: true
-    rationale: "Requires a human decision (provision cartube-dev, spend shipping-key units, or skip) and Google Cloud console access the executor does not have — this is exactly Task 3 step 2 + Task 4's blocking checkpoint, deliberately not executed this session"
+    rationale: "Checkpoint resolved by explicit user decision: skip the live smoke this phase (deferred to first Phase 4 session). Neither the dev key nor the shipping key exists yet, so this was the only path not requiring a fresh Google Cloud Console detour. Deferral recorded in docs/runbooks/google-dev-key.md's verification section."
 
 duration: 24min
 completed: 2026-08-18
-status: halted
+status: complete
 ---
 
-# Phase 3 Plan 03: Quota Cache + Fail-Closed Fallback (partial — halted at checkpoint) Summary
+# Phase 3 Plan 03: Quota Cache + Fail-Closed Fallback Summary
 
-**LastQueryCache actor and SearchFallback pure decision function built and tested (12 new tests, 38 total suite-wide); dev-key runbook authored and 3 Key Decision rows recorded — Task 3's live smoke search and Task 4's blocking checkpoint intentionally not executed, awaiting a human decision on which Google key to spend against.**
+**LastQueryCache actor and SearchFallback pure decision function built and tested (12 new tests, 38 total suite-wide); dev-key runbook authored and 3 Key Decision rows recorded. Task 4's checkpoint resolved: user chose to skip the live smoke this phase — deferred to Phase 4, recorded in the runbook.**
 
 ## Performance
 
 - **Duration:** 24 min
 - **Started:** 2026-08-18T22:50:00+07:00
-- **Completed (partial — halted):** 2026-08-18T23:14:00+07:00
-- **Tasks:** 3 of 4 (Task 3 partial: steps 1+3 done, step 2 deferred; Task 4 not attempted)
+- **Completed:** 2026-08-18T23:14:00+07:00
+- **Tasks:** 4 of 4 (Task 3 step 2 resolved as deferred by Task 4's checkpoint decision — not a skip, a recorded outcome)
 - **Files modified:** 7
 
 ## Accomplishments
@@ -128,8 +128,7 @@ Each completed task/step was committed atomically:
 1. **Task 1: LastQueryCache — single-slot (query, results) with zero-request hit** - `cfe6e87` (feat)
 2. **Task 2: SearchFallback — pure fail-closed decision function with documented caller contract** - `17236a5` (feat)
 3. **Task 3 steps 1+3: Dev-key runbook authored + 3 Key Decision rows appended to PROJECT.md** - `7beec13` (docs)
-
-**Not executed this session:** Task 3 step 2 (live smoke search) and Task 4 (checkpoint:human-verify, gate="blocking") — see "Deviations from Plan" below.
+4. **Task 4: checkpoint resolved (skip smoke)** - orchestrator-recorded, no code commit; runbook deferral note finalized in a docs commit (see below)
 
 ## Files Created/Modified
 - `CarTube/Search/LastQueryCache.swift` - Actor, single-slot exact-match `(query, [SearchResult])` cache
@@ -157,13 +156,9 @@ Each completed task/step was committed atomically:
 - **Verification:** `git diff` scoped to only the intended Search-group/test-file additions plus this known-quirk correction on both occasions; no spurious empty `dependencies = ();` array appeared either time
 - **Committed in:** `cfe6e87` (Task 1), `17236a5` (Task 2)
 
-### Intentional Non-Execution (per explicit instruction, not a deviation)
+### Checkpoint Resolution (not a deviation)
 
-**Task 3 step 2 (live smoke search) and Task 4 (checkpoint:human-verify, gate="blocking") were deliberately not attempted this session.** The plan's own task-ordering note states step 2 must not complete before Task 4's blocking checkpoint resolves — this session halted at exactly that boundary rather than fabricating a key, guessing at Google Cloud console state, or attempting to resolve the checkpoint without the human's input. Specifically:
-- No Google Cloud project was created (neither `cartube-dev` nor any substitute)
-- `Secrets.xcconfig` was not read, written, or inspected for its value — it remains whatever it was before this session (confirmed still gitignored, still absent from `git status`)
-- No network request was made against `googleapis.com`
-- The runbook's live-smoke verification section is explicitly marked "deferred" with the fields to fill in once resolved
+**Task 3 step 2 (live smoke search) and Task 4 (checkpoint:human-verify, gate="blocking") halted mid-session awaiting the human decision, then resolved: skip the smoke this phase.** No Google Cloud project was created, `Secrets.xcconfig` was not touched, and no network request was made against `googleapis.com`. The runbook's live-smoke verification section records the deferral explicitly (who chose it, why, and what unblocks it) rather than being left blank.
 
 ---
 
@@ -173,25 +168,19 @@ Each completed task/step was committed atomically:
 ## Issues Encountered
 None beyond the deviation documented above.
 
-## User Setup Required
+## Checkpoint Resolved
 
-**External action required before this plan can close out.** The human must choose ONE of three paths at Task 4's checkpoint:
-
-1. **Follow `docs/runbooks/google-dev-key.md`** to create the `cartube-dev` project, restrict the key, and paste it into `Secrets.xcconfig` — then report "dev key ready" plus the project ID.
-2. **Approve spending 2 quota units from the shipping key** for the smoke search instead — reply "use shipping key". (Note: per this session's environment context, the real shipping key does not yet exist either — Phase 1's Google Cloud checkpoint is still pending — so this path is currently unavailable until that resolves.)
-3. **Skip live verification this phase** — reply "skip smoke", and the smoke is recorded as deferred-to-first-Phase-4-run per Task 3's own fallback criterion.
-
-The human should also review the three new PROJECT.md Key Decision rows (no Phase 3 search toggle, parser-dedupe deferred, dev-key separation) and flag any wording changes.
+User chose **skip smoke this phase** at Task 4's checkpoint. No Google Cloud project created, `Secrets.xcconfig` untouched, no network request made. Reviewed the three new PROJECT.md Key Decision rows — no wording changes requested.
 
 ## Next Phase Readiness
-- `LastQueryCache` and `SearchFallback` are complete, tested, and ready for Phase 4's `SearchCoordinator` to consume directly — no further work needed on either component this phase
-- The dev-key runbook is fully written and ready to execute the moment a human starts it
-- **Blocker:** Task 3 step 2 + Task 4 remain open. Phase 3 cannot close out (and the phase-level `xcodebuild test` / SRCH requirement traceability in the plan's own `<verification>` section cannot be fully asserted "closed") until this checkpoint resolves
-- STATE.md records the halt, the pending human decision, and points back to this plan file as the resume point
+- `LastQueryCache` and `SearchFallback` are complete, tested, and ready for Phase 4's `SearchCoordinator` to consume directly
+- The dev-key runbook is fully written and ready to execute whenever a human starts it, or the shipping key becomes available (Phase 1 checkpoint)
+- The live smoke search is deferred to the first Phase 4 session with a real key — tracked in the runbook, not a phase-3 blocker anymore
+- All 4 plans in Phase 3 now complete
 
 ---
 *Phase: 03-search-core*
-*Completed: 2026-08-18 (partial — halted at checkpoint)*
+*Completed: 2026-08-18*
 
 ## Self-Check: PASSED
 
