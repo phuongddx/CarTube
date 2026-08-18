@@ -3,17 +3,17 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_phase: 03
-current_phase_name: Search Core
-status: planning
-stopped_at: "Phase 02 complete — verified, security-clean, transitioned to Phase 03"
-last_updated: "2026-08-18T14:52:00.000Z"
+current_phase_name: search-core
+status: executing
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-08-18T15:30:27.183Z"
 last_activity: 2026-08-18
 last_activity_desc: Phase 02 UAT passed (2/2), security threats closed (0 open), transitioned to Phase 03 — Search Core
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 18
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -23,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18)
 
 **Core value:** A driver can open any YouTube video on their car screen — by voice, search, or share — with ads and sponsors skipped automatically.
-**Current focus:** Phase 03 — Search Core
+**Current focus:** Phase 03 — search-core
 
 ## Current Position
 
-Phase: 03 — Search Core
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-08-18 — Phase 02 complete, transitioned to Phase 03
+Phase: 03 (search-core) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-08-18 — Phase 03 execution started
 
-Progress: [███░░░░░░░] 33%
+Progress: [████░░░░░░] 44%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [███░░░░░░░] 33%
 | Phase 02 P02 | 14min | 2 tasks | 3 files |
 | Phase 02 P03 | 22min | 3 tasks | 7 files |
 | Phase 02 P04 | 24min | 2 tasks | 3 files |
+| Phase 03 P01 | 18min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,9 @@ Recent decisions affecting current work:
 - [Phase ?]: 02-04: Deployment target raised to iOS 16.0 (6 sites), Dynamic SPM package fully removed (5 object types + Package.resolved); restored two unrelated pbxproj attributes (dstSubfolder=PlugIns, spurious empty dependencies array) dropped/added by the xcodeproj gem's save before committing
 - [Phase ?]: 02-04: Debug.swift extended with Hook Verification (4 status rows) + Script Re-validation (3 rows); HideScrollBar detection uses IMP-vs-superclass comparison (no original_ companion selector exists for that hook)
 - [Phase ?]: 02-04: Local Xcode/simulator SDK mismatch blocking build verification since 02-01 is resolved (iOS 26.3.1 runtime installed) — first real BUILD SUCCEEDED and first actual-binary scan-private-apis.sh pass of Phase 2, run against destination id=F14D9B48-EF6B-4ACD-BB09-2D5951BF5D0A (iPhone 17e)
+- [Phase ?]: 03-01: BUNDLE_LOADER-only test linking failed against this Xcode toolchain's Debug-dylib split (CarTube trampoline + CarTube.debug.dylib); switched to TEST_HOST + BUNDLE_LOADER=$(TEST_HOST), the plan's own sanctioned fallback
+- [Phase ?]: 03-01: xcodeproj gem's new_target left PRODUCT_NAME unset on CarTubeTests configs (bare .xctest product path collided with CarTube's own output) — added PRODUCT_NAME = $(TARGET_NAME) explicitly
+- [Phase ?]: 03-01: repeated Phase 2 fix — restored dstSubfolder=PlugIns and removed spurious empty dependencies array the xcodeproj gem's save introduced on unrelated targets
 
 ### Pending Todos
 
@@ -95,6 +99,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-18T14:52:00.000Z
-Stopped at: Phase 02 complete, transitioned — ready to plan Phase 03 (Search Core)
+Last session: 2026-08-18T15:30:16.855Z
+Stopped at: Completed 03-01-PLAN.md
 Resume file: None
