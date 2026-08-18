@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 02
 current_phase_name: severance-signing-modernization
 status: executing
-stopped_at: Completed 02-02-PLAN.md private API scan CI gate; TDD-verified, app-binary compile proof deferred to a matching CI runner per WINDOWS.md entry 4; next up 02-03
-last_updated: "2026-08-18T09:57:23.304Z"
+stopped_at: Completed 02-03-PLAN.md — severance + in-place settings application
+last_updated: "2026-08-18T10:08:59.402Z"
 last_activity: 2026-08-18
 last_activity_desc: 01-03 runbook authored + Key Decisions/branch recorded; awaiting Google Cloud key checkpoint (Task 2)
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 18
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-08-17)
 ## Current Position
 
 Phase: 02 (severance-signing-modernization) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-08-18 — Phase 02 execution started
 
-Progress: [███░░░░░░░] 28%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [███░░░░░░░] 28%
 | Phase 01 P02 | 95m | 3 tasks | 3 files |
 | Phase 01 P03 | 17m | 2 tasks | 3 files |
 | Phase 02 P02 | 14min | 2 tasks | 3 files |
+| Phase 02 P03 | 22min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Google iOS key restriction lists the future com.cartube.carplay + com.cartube.carplay.playon IDs (what the signed App Store build carries), not the upstream com.avangelista.* strings still in the pbxproj
 - [Phase ?]: Phase 2: strings-scan gate marker array holds exactly the 15 removed-symbol strings; the 4 survivor strings (_simulateTextEntered, _hasSleepDisabler, hasBlankedScreen, lockstate) are excluded by design so surviving features never fail their own gate
 - [Phase ?]: CI gate workflow (private API scan) has zero continue-on-error steps; the scan script exit code is the only thing that can fail the job
+- [Phase ?]: 02-03: registerForUnlockNotification deleted (not kept) — its only caller (restoreBrightness) died with the brightness trio; the warning label self-hides via its own timer, so nothing needs the unlock event. Resolves the PATTERNS.md planner decision point; corroborated by scan-private-apis.sh's own header comment (written in 02-02) already documenting com.apple.springboard.lockstate as removed by plan 02-03.
+- [Phase ?]: 02-03: Settings.saveSettings() now applies configuration in place via CarPlaySingleton.applyConfiguration() -> CarPlayViewController.applyConfigurationInPlace() instead of calling exitGracefully()/exit(0); the app no longer quits on Save.
 
 ### Pending Todos
 
@@ -85,9 +88,10 @@ None yet.
 - **Phase 1 close-out (2026-08-18): CarPlay entitlement still pending** — Submitted 2026-08-18 (Apple Case-ID 21672656, auto-acknowledgment received). Category requested: audio. App ID: `com.cartube.carplay` (registered under team K2TYLYAWMK — Apple Developer Program, paid tier; note: K2TYLYAWMK is the user's actual team, not the upstream U67AKNW8PW from the pbxproj). No SLA (community-reported days–months) — re-check the developer account periodically for the grant notification. When the grant lands, execute docs/runbooks/carplay-entitlement-grant-wiring.md (mind its entitlements-file sequencing constraint against Phase 2). Success-criterion-3 branch resolved as **still pending**: Phases 3–5 proceed on phone-side mocks; on-device CarPlay verification happens when the grant lands.
 - **Google shipping key not yet created (external, 2026-08-18)** — Runbook authored and committed (docs/runbooks/google-youtube-api-key.md); the Console actions are human-only behind Google login: dedicated project, enable YouTube Data API v3, create key, both restrictions (API: YouTube Data API v3 only; iOS: com.cartube.carplay + com.cartube.carplay.playon), quota alerting, paste the key into root Secrets.xcconfig (gitignored) replacing the sentinel. On resume: agent verifies via gcloud + plutil + git grep. Phase 3 search work blocks on this; nothing else does.
 - 02-02: CarTube.app main executable cannot be compiled locally (Xcode 26.3 SDK 26.2 vs installed simulator runtime 26.5 mismatch, same as 02-01); real-binary proof-of-detection deferred to a CI runner with a matching runtime — logged WINDOWS.md entry 4, workflow committed will run this automatically
+- 02-03: xcodebuild -scheme CarTube and target-mode -sdk iphonesimulator build both fail before a CarTube.app/CarTube binary exists — same Xcode 26.3/SDK 26.2 vs installed iOS 26.5 runtime mismatch as 02-01/02-02. Source-level scan-private-apis.sh confirms all 7 modified files clean of every marker; compiled-binary strings scan deferred to CI (WINDOWS.md entry 5).
 
 ## Session Continuity
 
-Last session: 2026-08-18T09:57:15.007Z
-Stopped at: Completed 02-02-PLAN.md private API scan CI gate; TDD-verified, app-binary compile proof deferred to a matching CI runner per WINDOWS.md entry 4; next up 02-03
+Last session: 2026-08-18T10:08:59.378Z
+Stopped at: Completed 02-03-PLAN.md — severance + in-place settings application
 Resume file: None

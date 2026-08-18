@@ -11,10 +11,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **INFRA-01**: CarPlay entitlement application submitted under the audio category on day 1, with documented rationale and dated record; new provisioning profile wired when granted
 - [ ] **INFRA-02**: All TrollStore artifacts removed (private entitlement keys, `ipabuild.sh`, ldid pipeline) and the app builds with standard App Store code signing
-- [ ] **INFRA-03**: Riskiest private APIs removed with callers mapped first — MediaRemote now-playing interception (feature removed), BackBoardServices brightness/lock-screen dimming (feature removed), SpringBoard reads — screen-off warning label survives
+- [x] **INFRA-03**: Riskiest private APIs removed with callers mapped first — MediaRemote now-playing interception (feature removed), BackBoardServices brightness/lock-screen dimming (feature removed), SpringBoard reads — screen-off warning label survives
 - [ ] **INFRA-04**: Deployment target raised to iOS 16.0 with hook behavioral re-validation (hook-verification debug screen) and Settings toggles updated (no dead toggles for removed features)
 - [x] **INFRA-05**: `strings` binary scan gate runs on app + share-extension binaries in CI, failing the build on private-API markers
-- [ ] **INFRA-06**: Settings no longer terminates via `exit(0)` — webview configuration is recreated in place
+- [x] **INFRA-06**: Settings no longer terminates via `exit(0)` — webview configuration is recreated in place
 
 ### Search Core
 
@@ -76,10 +76,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | INFRA-01 | Phase 1 | Pending |
 | INFRA-02 | Phase 2 | Pending |
-| INFRA-03 | Phase 2 | Pending |
+| INFRA-03 | Phase 2 | Complete |
 | INFRA-04 | Phase 2 | Pending |
 | INFRA-05 | Phase 2 | Complete |
-| INFRA-06 | Phase 2 | Pending |
+| INFRA-06 | Phase 2 | Complete |
 | SRCH-01 | Phase 3 | Pending |
 | SRCH-02 | Phase 3 | Pending |
 | SRCH-03 | Phase 3 | Pending |
