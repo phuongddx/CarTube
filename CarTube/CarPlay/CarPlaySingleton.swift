@@ -79,6 +79,11 @@ class CarPlaySingleton {
     /// Apply the current settings to the CarPlay browser in place (no restart)
     func applyConfiguration() {
         controller?.applyConfigurationInPlace()
+        if UserDefaults.standard.bool(forKey: "ScreenPersistenceOn") {
+            controller?.enablePersistence()
+        } else {
+            controller?.disablePersistence()
+        }
     }
     
     func getCachedVideo() -> String? {
