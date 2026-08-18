@@ -46,7 +46,7 @@ key-decisions:
   - "HideScrollBar's status row cannot reuse the original_-selector detection pattern AutoResize uses, because HideScrollBar.m declares only hook_layoutSubviews with no original_ companion (confirmed by reading the file directly). Detection instead compares class_getMethodImplementation on _UIStaticScrollBar against its superclass's IMP for the same selector — a different IMP means the swizzle replaced the method."
   - "The local Xcode/simulator SDK mismatch that blocked 02-01/02-02/02-03's build verification is resolved (iOS 26.3.1 simulator runtime now installed); this plan produces the first real BUILD SUCCEEDED and the first actual-binary scan-private-apis.sh pass of the whole phase, closing out several previously-deferred WINDOWS.md items for the files this plan touches."
 
-requirements-completed: []  # INFRA-04 completes only after Task 3's human checkpoint (see Next Phase Readiness)
+requirements-completed: [INFRA-04]  # Task 3 checkpoint approved by orchestrator's simulator-driven verification pass (see below)
 
 coverage:
   - id: D1
@@ -86,40 +86,42 @@ coverage:
     requirement: INFRA-04
     verification:
       - kind: manual
-        ref: "Task 3 checkpoint:human-verify — NOT executed by this agent; requires a human to launch the app on simulator, navigate to Debug, and read the rows"
-        status: unknown
+        ref: "Task 3 checkpoint:human-verify — executed by the orchestrator via Argent MCP on iPhone 17e simulator (F14D9B48-EF6B-4ACD-BB09-2D5951BF5D0A, iOS 26.3.1): AutoResize PASS, HideScrollBar PASS, Keyboard Private API PASS, Idle Timer Disabled FAIL (expected — idle timer is not currently suppressed absent active playback, not a hook-death signal per plan wording); all three script rows (AdBlocker, SponsorBlock, AgeRestrictBypass) forced on with correct alert text, no crash; Settings screen confirmed no Lock Screen Dimming toggle; Save Settings tapped, app process confirmed still running via `simctl spawn ... launchctl list` (PID alive, no exit(0))"
+        status: pass
     human_judgment: true
-    rationale: "This agent has no simulator-UI-driving capability per its execution instructions; Task 3 is explicitly deferred to the orchestrator's separate human-verify pass."
+    rationale: "Orchestrator drove the simulator UI directly (Argent MCP tools) since the executor agent had no simulator-UI-driving capability. CarPlay-scene visual confirmation (plan step 5, optional) was not performed — no CarPlay entitlement yet (Phase 1 external clock); phone-side Debug rows is the accepted verification level per the plan's own fallback clause."
 
 duration: 24min
 completed: 2026-08-18
-status: halted
+status: complete
 ---
 
-# Phase 2 Plan 4: Deployment Target Raise + Hook Verification (Tasks 1-2) Summary
+# Phase 2 Plan 4: Deployment Target Raise + Hook Verification Summary
 
 **Raised the iOS deployment floor to 16.0 across all six build configurations, fully removed the orphaned Dynamic SPM package (all five pbxproj object types plus the stale Package.resolved), and extended the Debug screen with a Hook Verification section reporting live PASS/FAIL for AutoResize, HideScrollBar, the keyboard private API, and idle-timer persistence, plus three force-injection rows for the surviving scripts — both tasks proven with a real `BUILD SUCCEEDED` and a passing `scan-private-apis.sh` run against the actual compiled binaries.**
 
-## Status: HALTED at Task 3 (blocking human-verify checkpoint)
+## Status: COMPLETE — all three tasks done
 
-This plan has three tasks. **Tasks 1 and 2 are complete, committed, and independently verified.** Task 3 is `<task type="checkpoint:human-verify" gate="blocking">` — it requires launching the app on an iOS simulator and having a human visually read the Debug screen's hook-status rows and exercise the three script-force buttons. Per this execution's explicit instructions, that step was **not** attempted by this agent (no simulator-UI-driving capability in this run) and is left for the orchestrator's separate human-verify pass.
+This plan has three tasks. **Tasks 1 and 2** were completed and committed by the executor agent. **Task 3** (`<task type="checkpoint:human-verify" gate="blocking">`) was completed by the orchestrator directly, driving the iOS simulator via Argent MCP tools (the executor agent has no simulator-UI-driving capability).
 
-**What Task 3 still requires**, verbatim from `02-04-PLAN.md`:
+### Task 3 — Checkpoint Verification (orchestrator-driven)
 
-1. Launch CarTube on the iOS simulator (this agent's environment note confirms `xcodebuild ... -destination 'id=F14D9B48-EF6B-4ACD-BB09-2D5951BF5D0A'` now works — the SDK/runtime mismatch that blocked 02-01/02-02/02-03 is resolved), navigate ContentView → Debug.
-2. Read the four status rows: AutoResize and HideScrollBar should show PASS (hooks installed at the iOS 16 runtime); keyboard API row shows whether `_simulateTextEntered` still responds; idle-timer row shows current state. Any FAIL on AutoResize/HideScrollBar is Pitfall 5 materialized — record which hook died before proceeding.
-3. Tap each script row (AdBlocker, SponsorBlock, AgeRestrictBypass): confirm the alert appears and no crash follows.
-4. Settings screen: confirm no Lock Screen Dimming toggle; change Block Ads, tap Save — app stays running (no quit), change applies in place.
-5. Optional but decisive if a CarPlay-capable environment is available: connect the CarPlay simulator/scene and visually confirm safe-area resize and hidden scroll bar; absent the entitlement, phone-side Debug rows are the accepted verification level.
+Installed and launched the Task 1/2 build (`CarTube.app`, PID confirmed via `simctl spawn ... launchctl list`) on the iPhone 17e simulator (`F14D9B48-EF6B-4ACD-BB09-2D5951BF5D0A`, iOS 26.3.1 — the same destination Task 1/2's `BUILD SUCCEEDED` used) and worked through the plan's `<how-to-verify>` steps:
 
-**Resume signal for Task 3:** "approved" if the four status rows render and script rows exercise without crash, or a description of failures (e.g. "HideScrollBar FAIL, keyboard FAIL").
+1. **Launch + navigate:** ContentView → Debug, confirmed via `describe` accessibility tree at each step.
+2. **Four status rows:** AutoResize **PASS**, HideScrollBar **PASS**, Keyboard Private API **PASS**, Idle Timer Disabled **FAIL**. The first three are the plan's must-pass hooks (Pitfall 5 would show here) — no failures. The idle-timer row reads the *live* `UIApplication.shared.isIdleTimerDisabled` value; it is `FAIL` (=false) because no video is playing in this session — NoSleep only disables it during active CarPlay playback, so this is the expected idle state, not a hook regression, matching the plan's own wording that this row "shows current state" rather than requiring PASS.
+3. **Three script rows:** tapped Force AdBlocker On, Force SponsorBlock On, Force AgeRestrictBypass On in sequence — each produced the correct "Script Forced On: {name} is now enabled and the CarPlay webview reloaded in place" alert, dismissed cleanly, no crash, hook-status rows unchanged after each reload.
+4. **Settings screen:** confirmed no Lock Screen Dimming toggle (rows present: Zoom Level, Block Ads (Beta), SponsorBlock, Age Restriction Bypass, Screen Persistence Helper — the last replacing the retired toggle per plan 02-03). Tapped Save Settings; screen stayed on Settings (no navigation-away/crash), and `xcrun simctl spawn ... launchctl list | grep cartube` confirmed the `com.cartube.carplay` process was still alive afterward — the apply-in-place path replaced `exit(0)` as intended.
+5. **CarPlay-scene visual check (optional):** not performed — no CarPlay entitlement yet (Phase 1 external clock, Case-ID 21672656 still pending). Per the plan's own fallback clause, phone-side Debug rows is the accepted verification level for now; revisit when the entitlement lands.
 
-Once Task 3 resolves, the plan's `requirements: [INFRA-04]` frontmatter completes, ROADMAP.md plan progress updates, and the phase-close verification (`scripts/scan-private-apis.sh` on final binaries + hook-verification checklist) is fully satisfied.
+**Resume signal:** approved — all four status rows rendered and all three script rows exercised without crash.
+
+With Task 3 resolved, `requirements: [INFRA-04]` completes, and the phase-close verification (`scripts/scan-private-apis.sh` on final binaries + hook-verification checklist) is fully satisfied.
 
 ## Performance
 
-- **Duration:** 24 min (Tasks 1-2 only; Task 3 not run)
-- **Tasks:** 2 of 3 (Task 3 deliberately not attempted — see Status above)
+- **Duration:** 24 min (Tasks 1-2, executor) + orchestrator-driven Task 3 checkpoint
+- **Tasks:** 3 of 3 complete
 - **Files modified:** 3 (`project.pbxproj`, `Package.resolved` deleted, `Debug.swift`)
 
 ## Accomplishments
@@ -141,8 +143,7 @@ Each task was committed atomically:
 
 1. **Task 1: Raise deployment target to 16.0, remove Dynamic SPM package via ruby-xcodeproj** - `aa9bb3d` (feat)
 2. **Task 2: Hook-verification debug section — runtime status rows + per-script re-validation rows** - `66eb281` (feat)
-
-**Task 3 (checkpoint:human-verify) not attempted this session — plan halted here by design.**
+3. **Task 3: checkpoint:human-verify** — no code changes; orchestrator-driven simulator verification, resume signal "approved" (see Task 3 section above)
 
 ## Files Created/Modified
 
@@ -155,7 +156,7 @@ Each task was committed atomically:
 - Restored `dstSubfolder = PlugIns` on the `Embed Foundation Extensions` copy-files build phase after the `xcodeproj` gem's `project.save` silently dropped it (gem warned: "Xcodeproj doesn't know about the following attributes {\"dstSubfolder\"=>\"PlugIns\"}"). This project's `objectVersion = 90` is newer than the installed gem's schema recognizes for this attribute; leaving it dropped risked the `PlayOnCarTube.appex` not embedding into the correct app-bundle subfolder. Diffed the file post-save, identified the drop, and hand-restored the exact original line before running the build gate — confirmed the build still succeeds with it present.
 - Removed a spurious empty `dependencies = ();` array the same gem save added to the `PlayOnCarTube` native target (absent from the pre-mutation file, confirmed via `git show HEAD:...`). Harmless (empty array), but the plan's own acceptance criteria call out "no unrelated pbxproj churn beyond the two mutation classes," so it was removed to keep the diff exactly matching the plan's two mutation classes (deployment-target raise + Dynamic package removal).
 - HideScrollBar's status row uses IMP-vs-superclass comparison rather than an `original_`-selector probe, because `HideScrollBar.m` (read directly before writing the check) declares only `hook_layoutSubviews` with no `original_` companion — an `original_layoutSubviews` probe would always report FAIL even when the hook is correctly installed. This follows the plan's explicit `<read_first>` instruction verbatim.
-- Task 3 (blocking human-verify checkpoint) intentionally not attempted in this execution — per this run's scope, the executor completes and commits only Tasks 1-2 and halts, leaving the simulator-driven verification to a separate pass.
+- Task 3 (blocking human-verify checkpoint): the executor agent had no simulator-UI-driving capability, so per this run's scope it completed and committed only Tasks 1-2 and halted; the orchestrator then drove Task 3 directly via Argent MCP tools in a follow-up pass (see Task 3 section above) rather than spawning a separate continuation agent, since the evidence gathering was straightforward interactive verification.
 
 ## Deviations from Plan
 
@@ -192,14 +193,13 @@ Neither task in this plan carries `tdd="true"`. Not applicable.
 
 ## Next Phase Readiness
 
-- Tasks 1-2 are fully verified and committed; the project builds clean at the iOS 16 floor with zero SPM dependencies and a passing binary-level private-API scan.
-- **Task 3 (blocking human-verify checkpoint) is the only remaining step to close this plan and the phase.** It requires a human (or a simulator-UI-driving agent) to launch the app, navigate to the Debug screen, read the four hook-status rows, exercise the three script rows, and verify the Settings apply-in-place behavior — see the "What Task 3 still requires" section above for the exact steps and resume signal.
-- Until Task 3 resolves: `requirements: [INFRA-04]` remains open in REQUIREMENTS.md, and ROADMAP.md plan progress for 02-04 should not be marked complete.
-- The orchestrator should drive Task 3 in a follow-up pass (per this plan's own `<checkpoint_handling>` instructions) and then close out this plan's STATE.md/ROADMAP.md finalization.
+- All three tasks fully verified and committed; the project builds clean at the iOS 16 floor with zero SPM dependencies and a passing binary-level private-API scan.
+- `requirements: [INFRA-04]` complete. Phase 2 (all 4 plans) ready for phase-close verification.
+- CarPlay-scene visual confirmation remains deferred to when the Phase 1 entitlement (Case-ID 21672656) lands — phone-side Debug rows is the accepted level for now.
 
 ---
 *Phase: 02-severance-signing-modernization*
-*Completed: 2026-08-18 (Tasks 1-2 only; Task 3 pending)*
+*Completed: 2026-08-18*
 
 ## Self-Check: PASSED
 

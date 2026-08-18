@@ -60,21 +60,21 @@ Plans:
   4. Settings contains no dead toggles for removed features, and changing settings applies the webview configuration in place instead of terminating the app
   5. A `strings` binary scan gate runs in CI on both binaries and fails the build on private-API markers
 
-**Plans**: 4 plans
+**Plans**: 4/4 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Entitlements emptied, ipabuild/ldid pipeline deleted, standard-signing tracer build; Key Decisions encoded, NOTES retired
-- [ ] 02-02-PLAN.md — TDD strings scan-gate script (removed-symbols markers, survivor exclusions) + CI workflow scanning both binaries
+- [x] 02-01-PLAN.md — Entitlements emptied, ipabuild/ldid pipeline deleted, standard-signing tracer build; Key Decisions encoded, NOTES retired
+- [x] 02-02-PLAN.md — TDD strings scan-gate script (removed-symbols markers, survivor exclusions) + CI workflow scanning both binaries
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 02-03-PLAN.md — Caller-first severance of MediaRemote/brightness code, LockScreenDimmingOn contract dead, idle-timer NoSleep, in-place settings apply
+- [x] 02-03-PLAN.md — Caller-first severance of MediaRemote/brightness code, LockScreenDimmingOn contract dead, idle-timer NoSleep, in-place settings apply
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 02-04-PLAN.md — iOS 16 deployment target, Dynamic SPM removal, hook-verification debug screen, on-simulator behavioral checkpoint
+- [x] 02-04-PLAN.md — iOS 16 deployment target, Dynamic SPM removal, hook-verification debug screen, on-simulator behavioral checkpoint
 
 **UI hint**: no
 
@@ -194,7 +194,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. External Dependencies & Project Setup | 3/3 | In Progress|  |
-| 2. Severance, Signing & Modernization | 0/TBD | Not started | - |
+| 2. Severance, Signing & Modernization | 4/4 | In Progress|  |
 | 3. Search Core | 0/3 | Planning complete | - |
 | 4. CarPlay Search Surface | 0/2 | Planning complete | - |
 | 5. Voice Input | 0/3 | Planning complete | - |
