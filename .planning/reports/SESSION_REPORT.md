@@ -1,0 +1,67 @@
+# GSD Session Report
+
+**Generated:** 2026-08-18T16:08:00Z
+**Project:** CarTube
+**Milestone:** v1.0 — milestone
+
+---
+
+## Session Summary
+
+**Duration:** Single session (~7 hours, spanning Phase 1 checkpoint handoff through Phase 3 completion)
+**Phase Progress:** Phase 1 unchanged (external clocks still pending); Phase 2 complete and transitioned; Phase 3 all 3 plans complete, awaiting phase-close pipeline (code review/verify/security/UAT)
+**Plans Executed:** 7 (02-01, 02-02, 02-03, 02-04, 03-01, 03-02, 03-03)
+**Commits Made:** 45
+
+## Work Performed
+
+### Phases Touched
+
+- **Phase 1 (External Dependencies)** — no new work; confirmed still blocked on two external clocks (Apple CarPlay entitlement Case-ID 21672656, Google shipping-key Console checkpoint), both untouched by user choice this session.
+- **Phase 2 (Severance, Signing & Modernization)** — executed all 4 plans (TrollStore/private-API removal, CI scan gate, MediaRemote/brightness severance + in-place Settings, iOS 16 floor + hook-verification Debug screen). Fixed a local Xcode/Simulator SDK-runtime mismatch that had blocked real builds since plan 02-01. Ran a deep code review (3 critical + 7 warning + 3 info findings), fixed 2 of the 3 critical bugs (idle-timer apply-in-place gap; bundle-ID/signing-team inconsistency across Debug/Release). Ran phase-goal verification, UAT (2/2 passed), and a security threat audit (0 threats open). Transitioned the phase to complete.
+- **Phase 3 (Search Core)** — executed all 3 pre-existing plans (CarTubeTests unit-test target + parser hardening; YouTubeSearchService with fixture-based TDD; LastQueryCache + SearchFallback + dev-key runbook). Resolved a live-smoke-search checkpoint by user decision (skip, deferred to Phase 4). Phase-close pipeline (code review, regression gate, verification, security, UAT, transition) not yet run — paused here due to context budget.
+
+### Key Outcomes
+
+- Fixed a genuine local-environment blocker (Xcode 26.3 iphonesimulator SDK 26.2 vs. only-installed iOS 26.5 runtime) by installing a matching iOS 26.3.1 runtime — unblocked real `BUILD SUCCEEDED` verification for the rest of the session.
+- Fixed 2 confirmed critical bugs found by code review: Settings' idle-timer resync gap (CR-01) and a bundle-ID/signing-team inconsistency across build configs (CR-03) that would have shipped a Release build under the wrong bundle ID.
+- Delivered the project's first test target and first 38 passing unit tests (`CarTubeTests`).
+- Delivered a stateless `YouTubeSearchService`, `LastQueryCache`, and `SearchFallback` — all TDD, zero real network calls in tests.
+- Phase 2 fully closed: verified, security-audited (0 open threats), UAT-passed, transitioned.
+- Corrected a `.planning/WINDOWS.md` ledger (5 build-environment entries marked fixed) and closed a leftover uncommitted `Secrets.xcconfig` gap discovered mid-session (accidentally wiped, likely by an earlier agent's environment troubleshooting — restored from the documented sentinel value).
+
+### Decisions Made
+
+- K2TYLYAWMK confirmed as the correct signing team across all 4 build configs (Phase 2).
+- Settings apply-in-place must resync idle-timer state, not just webview config (Phase 2 fix).
+- No user-visible search toggle ships in Phase 3; quota budget stays code-enforced (Phase 3).
+- Share-extension parser dedupe deferred as tech debt (Phase 3).
+- Dev key separated into its own `cartube-dev` Google Cloud project, but not yet provisioned — live smoke search deferred to Phase 4 by explicit user choice.
+
+## Files Changed
+
+58 files changed, 3744 insertions(+), 559 deletions(-) across 45 commits (`git diff --stat` since session start).
+
+## Blockers & Open Items
+
+- **CarPlay entitlement (Apple, Case-ID 21672656)** — still pending, no SLA. Blocks on-device/CarPlay-scene verification for Phases 3-5.
+- **Google shipping key** — Console checkpoint (Task 2 of Phase 1's plan 01-03) still not completed by the user; the real key has never been created. Blocks the live smoke search and any real network search.
+- **CR-02 (HideScrollBar Debug-row false-PASS risk)** — left unfixed by explicit user decision; tracked in `02-REVIEW.md` and `PROJECT.md` Active.
+- **7 Warning + 3 Info code-review findings** — left unfixed by explicit user decision; tracked in `02-REVIEW.md` and `PROJECT.md` Active (stale AGENTS.md/README.md, scan-gate marker-list gaps, dead code, force-unwrap).
+- **Phase 3 phase-close pipeline** — code review, regression gate, phase-goal verification, security audit, UAT, and transition to Phase 4 have not run yet. Resume with `/gsd-execute-phase 3`.
+
+## Estimated Resource Usage
+
+| Metric | Estimate |
+|--------|----------|
+| Commits | 45 |
+| Files changed | 58 |
+| Plans executed | 7 |
+| Subagents spawned | ~12 (7 executors, 1 code reviewer, 1 phase-goal verifier, plus orchestrator-driven simulator/security work) |
+
+> **Note:** Token and cost estimates require API-level instrumentation.
+> These metrics reflect observable session activity only.
+
+---
+
+*Generated by `/gsd-pause-work --report`*

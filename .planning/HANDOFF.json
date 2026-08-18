@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-08-18T16:09:26.019Z",
+  "phase": "03",
+  "phase_name": "search-core",
+  "phase_dir": ".planning/phases/03-search-core",
+  "plan": 3,
+  "task": null,
+  "total_tasks": null,
+  "status": "paused",
+  "completed_tasks": [
+    {"id": "03-01", "name": "CarTubeTests unit-test target + parser hardening", "status": "done", "commit": "8a0117b"},
+    {"id": "03-02", "name": "YouTubeSearchService (TDD, fixture-based)", "status": "done", "commit": "be4d1fc"},
+    {"id": "03-03", "name": "LastQueryCache + SearchFallback + dev-key runbook", "status": "done", "commit": "22165f8"}
+  ],
+  "remaining_tasks": [
+    {"id": "phase-close-1", "name": "Code review (deep depth, gsd-code-reviewer)", "status": "not_started"},
+    {"id": "phase-close-2", "name": "Regression gate (run Phase 2's test files against Phase 3's changes)", "status": "not_started"},
+    {"id": "phase-close-3", "name": "verify_phase_goal (spawn gsd-verifier against SRCH-01..04)", "status": "not_started"},
+    {"id": "phase-close-4", "name": "Security threat audit (gsd-secure-phase)", "status": "not_started"},
+    {"id": "phase-close-5", "name": "UAT (gsd-verify-work 3, if verifier reports human_needed)", "status": "not_started"},
+    {"id": "phase-close-6", "name": "Transition Phase 3 -> Phase 4 (PROJECT.md/ROADMAP.md/STATE.md)", "status": "not_started"}
+  ],
+  "blockers": [
+    {"description": "Apple CarPlay entitlement (Case-ID 21672656) still pending, no SLA", "type": "external", "workaround": "Phases 3-5 develop on phone-side mocks; on-device CarPlay verification deferred until grant lands"},
+    {"description": "Google shipping key never created (Phase 1 plan 01-03 Task 2 checkpoint still open)", "type": "human_action", "workaround": "Secrets.xcconfig holds sentinel BUILD_TIME_SENTINEL_REPLACE_WITH_REAL_KEY; fixture-based tests never touch network so this doesn't block Phase 3 test suites"},
+    {"description": "Phase 3's live smoke search deferred to Phase 4 by explicit user choice at 03-03's Task 4 checkpoint", "type": "human_action", "workaround": "docs/runbooks/google-dev-key.md is fully written and ready to execute when a human starts it, or when the shipping key becomes available"}
+  ],
+  "async_jobs": [],
+  "human_actions_pending": [
+    {"action": "Resolve Google Cloud checkpoint (docs/runbooks/google-youtube-api-key.md Task 2) or the dev-key runbook (docs/runbooks/google-dev-key.md)", "context": "Needed before any real network search can run; not required for Phase 3's own completion", "blocking": false},
+    {"action": "Monitor Apple Developer account for CarPlay entitlement grant (Case-ID 21672656)", "context": "When granted, execute docs/runbooks/carplay-entitlement-grant-wiring.md", "blocking": false}
+  ],
+  "decisions": [
+    {"decision": "Fixed 2 of 3 critical code-review findings (CR-01 idle-timer resync, CR-03 bundle-ID/team consistency); left CR-02 (HideScrollBar false-PASS risk) and all warnings/info unfixed", "rationale": "User explicit choice — the 2 fixed were independently confirmed as real regressions; CR-02 needs a live device test to settle and was deferred with the rest as tracked follow-up in PROJECT.md Active", "phase": "02"},
+    {"decision": "Installed a matching iOS 26.3.1 simulator runtime to fix Xcode 26.3/SDK 26.2 vs. iOS 26.5-only environment mismatch", "rationale": "Blocked real BUILD SUCCEEDED verification since plan 02-01; user explicitly approved after I stopped a riskier `xcodebuild -downloadPlatform` attempt mid-flight", "phase": "02"},
+    {"decision": "Skip Phase 3's live smoke search this phase, defer to Phase 4", "rationale": "Neither the dev key nor the shipping key exists yet; avoids a fresh Google Cloud Console detour outside this phase's flow", "phase": "03"}
+  ],
+  "uncommitted_files": [],
+  "next_action": "Run /gsd-execute-phase 3 — it will detect all 3 plans summarized with no VERIFICATION.md and resume directly at the phase-close gates (aggregate_results -> code_review_gate -> regression_gate -> verify_phase_goal -> update_roadmap), matching the #2868 'all plans summarized but no VERIFICATION.md' resume path already exercised for Phase 2.",
+  "context_notes": "Acting as orchestrator for /gsd-manager this whole session. FLATTEN=true (Claude Code top-level) so plan/execute run inline, not backgrounded. Worktree isolation is degraded to sequential ('none') for the whole gsd/v1.0-milestone branch because local HEAD is far ahead of unpushed origin/HEAD (#683 auto-degrade) -- this is expected, not a bug, and will keep happening until the branch is pushed. Paused mid-Phase-3 specifically because of a harness context-usage warning (68%), not because of any technical blocker -- everything is committed and clean."
+}
