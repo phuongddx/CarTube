@@ -34,6 +34,8 @@
 		25A2A5932967917B004A9AB1 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A5922967917B004A9AB1 /* Debug.swift */; };
 		25A2A59529679BF2004A9AB1 /* HowTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A59429679BF2004A9AB1 /* HowTo.swift */; };
 		25EED73A295F05AA00C0DF56 /* CustomLayout.js in Resources */ = {isa = PBXBuildFile; fileRef = 25EED739295F059A00C0DF56 /* CustomLayout.js */; };
+		51B344993E1A36DDAD4541E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F016D903939C697DF19634 /* Foundation.framework */; };
+		5B291321EC71906F575BDF77 /* UtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E1B837301BA308FA90283 /* UtilitiesTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 257D1491297A58220095689E;
 			remoteInfo = PlayOnCarTube;
+		};
+		5FE076C98AEAF3C9E881D8D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 250B50C42953D12500397038 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 250B50CB2953D12500397038;
+			remoteInfo = CarTube;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -97,7 +106,10 @@
 		25A2A5922967917B004A9AB1 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		25A2A59429679BF2004A9AB1 /* HowTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowTo.swift; sourceTree = "<group>"; };
 		25EED739295F059A00C0DF56 /* CustomLayout.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = CustomLayout.js; sourceTree = "<group>"; };
+		704E1B837301BA308FA90283 /* UtilitiesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UtilitiesTests.swift; sourceTree = "<group>"; };
 		7B49E1D589F14020616C760C /* Secrets.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		B2F016D903939C697DF19634 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		F587664409CE07CF24DFCA16 /* CarTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +123,14 @@
 			files = (
 			);
 		};
+		63FB68A6B83666BDDC2C0BE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51B344993E1A36DDAD4541E7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -122,6 +142,7 @@
 				250B50FC2953D59B00397038 /* Frameworks */,
 				250B50CD2953D12500397038 /* Products */,
 				7B49E1D589F14020616C760C /* Secrets.xcconfig */,
+				810F135E6C4F97BC0AB4D4C4 /* CarTubeTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +151,7 @@
 			children = (
 				250B50CC2953D12500397038 /* CarTube.app */,
 				257D1492297A58220095689E /* PlayOnCarTube.appex */,
+				F587664409CE07CF24DFCA16 /* CarTubeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				250B50FD2953D59B00397038 /* UniformTypeIdentifiers.framework */,
+				951867F3865CC597A970CB0B /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -271,9 +294,44 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		810F135E6C4F97BC0AB4D4C4 /* CarTubeTests */ = {
+			isa = PBXGroup;
+			children = (
+				704E1B837301BA308FA90283 /* UtilitiesTests.swift */,
+			);
+			name = CarTubeTests;
+			path = CarTubeTests;
+			sourceTree = "<group>";
+		};
+		951867F3865CC597A970CB0B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				B2F016D903939C697DF19634 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		08C8CE0409BC3699EFC743A9 /* CarTubeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 609660AD72215C94C3D2FC8F /* Build configuration list for PBXNativeTarget "CarTubeTests" */;
+			buildPhases = (
+				3AF0A114E24731E8424202F2 /* Sources */,
+				63FB68A6B83666BDDC2C0BE0 /* Frameworks */,
+				177E6DC0E9F4BDF3532DE4BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D3753449568CA7FD3027FD15 /* PBXTargetDependency */,
+			);
+			name = CarTubeTests;
+			productName = CarTubeTests;
+			productReference = F587664409CE07CF24DFCA16 /* CarTubeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		250B50CB2953D12500397038 /* CarTube */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 250B50DA2953D12800397038 /* Build configuration list for PBXNativeTarget "CarTube" */;
@@ -342,11 +400,19 @@
 			targets = (
 				250B50CB2953D12500397038 /* CarTube */,
 				257D1491297A58220095689E /* PlayOnCarTube */,
+				08C8CE0409BC3699EFC743A9 /* CarTubeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		177E6DC0E9F4BDF3532DE4BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		250B50CA2953D12500397038 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
@@ -396,6 +462,14 @@
 				257D1495297A58220095689E /* ShareViewController.swift in Sources */,
 			);
 		};
+		3AF0A114E24731E8424202F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B291321EC71906F575BDF77 /* UtilitiesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -403,6 +477,12 @@
 			isa = PBXTargetDependency;
 			target = 257D1491297A58220095689E /* PlayOnCarTube */;
 			targetProxy = 257D149A297A58220095689E /* PBXContainerItemProxy */;
+		};
+		D3753449568CA7FD3027FD15 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CarTube;
+			target = 250B50CB2953D12500397038 /* CarTube */;
+			targetProxy = 5FE076C98AEAF3C9E881D8D4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -666,6 +746,53 @@
 			};
 			name = Release;
 		};
+		ADCF53AF25183D9AF7AC4DB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarTube.app/CarTube";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K2TYLYAWMK;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.avangelista.CarTubeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C17D7BE8B050E005C833E454 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarTube.app/CarTube";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K2TYLYAWMK;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.avangelista.CarTubeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -691,6 +818,15 @@
 				257D149E297A58220095689E /* Debug */,
 				257D149F297A58220095689E /* Release */,
 			);
+			defaultConfigurationName = Release;
+		};
+		609660AD72215C94C3D2FC8F /* Build configuration list for PBXNativeTarget "CarTubeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C17D7BE8B050E005C833E454 /* Release */,
+				ADCF53AF25183D9AF7AC4DB4 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
