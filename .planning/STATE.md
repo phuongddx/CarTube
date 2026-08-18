@@ -5,8 +5,8 @@ milestone_name: milestone
 current_phase: 03
 current_phase_name: search-core
 status: executing
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-08-18T15:48:04.076Z"
+stopped_at: "Halted mid 03-03-PLAN.md: Tasks 1-2 complete + Task 3 steps 1+3 complete; Task 3 step 2 (live smoke) and Task 4 (checkpoint) await human decision"
+last_updated: "2026-08-18T15:57:56.908Z"
 last_activity: 2026-08-18
 last_activity_desc: Phase 02 UAT passed (2/2), security threats closed (0 open), transitioned to Phase 03 — Search Core
 progress:
@@ -29,8 +29,8 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 
 Phase: 03 (search-core) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
-Last activity: 2026-08-18 — Phase 03 execution started
+Status: Halted at checkpoint — Tasks 1-2 done, Task 3 steps 1+3 done, Task 3 step 2 + Task 4 await human decision
+Last activity: 2026-08-18 — 03-03 Tasks 1-2 + Task 3 steps 1+3 executed and committed
 
 Progress: [█████░░░░░] 50%
 
@@ -91,6 +91,9 @@ Recent decisions affecting current work:
 - [Phase ?]: 03-02: Custom percent-encoding CharacterSet (.urlQueryAllowed minus &=+) for query values — the default set leaves & unescaped in a value, corrupting multi-word queries containing an ampersand
 - [Phase ?]: 03-02: Repeated the 03-01 xcodeproj gem quirk fix (restored dstSubfolder=PlugIns on the Embed Foundation Extensions phase) on both gem invocations this plan; a spurious empty dependencies array recurred only on the first
 - [Phase ?]: 03-02: SearchError distinguishes apiKeyMissing/apiKeyInvalid/quotaExceeded/other(String) so the SRCH-03 degrade decision (plan 03-03) reads typed data, never string-matches
+- [Phase ?]: 03-03: LastQueryCache (actor, single-slot, exact-string match, no UserDefaults) built and tested (6 tests) — SRCH-02's cache half
+- [Phase ?]: 03-03: SearchFallback.decide pure function built and tested (6 tests) — every SearchError kind degrades to webview search; only empty success is showNoResults; caller contract documents CarPlay singleton's searchVideo(query) as the Phase-4-wired edge, in comments only (zero executable CarPlay references in Search/)
+- [Phase ?]: 03-03: docs/runbooks/google-dev-key.md authored (cartube-dev project, mirrors shipping-key runbook) and 3 Key Decision rows appended to PROJECT.md (no Phase 3 search toggle, parser-dedupe deferred, dev-key project separation) — all Outcome: Pending
 
 ### Pending Todos
 
@@ -101,9 +104,10 @@ None yet.
 - **Phase 1 close-out (2026-08-18): CarPlay entitlement still pending** — Submitted 2026-08-18 (Apple Case-ID 21672656, auto-acknowledgment received). Category requested: audio. App ID: `com.cartube.carplay` (registered under team K2TYLYAWMK — Apple Developer Program, paid tier; note: K2TYLYAWMK is the user's actual team, not the upstream U67AKNW8PW from the pbxproj). No SLA (community-reported days–months) — re-check the developer account periodically for the grant notification. When the grant lands, execute docs/runbooks/carplay-entitlement-grant-wiring.md (mind its entitlements-file sequencing constraint against Phase 2). Success-criterion-3 branch resolved as **still pending**: Phases 3–5 proceed on phone-side mocks; on-device CarPlay verification happens when the grant lands.
 - **Google shipping key not yet created (external, 2026-08-18)** — Runbook authored and committed (docs/runbooks/google-youtube-api-key.md); the Console actions are human-only behind Google login: dedicated project, enable YouTube Data API v3, create key, both restrictions (API: YouTube Data API v3 only; iOS: com.cartube.carplay + com.cartube.carplay.playon), quota alerting, paste the key into root Secrets.xcconfig (gitignored) replacing the sentinel. On resume: agent verifies via gcloud + plutil + git grep. Phase 3 search work blocks on this; nothing else does.
 - Phase 2 closed 2026-08-18: code review (2 of 3 critical findings fixed — idle-timer apply-in-place gap, bundle-ID/signing-team inconsistency; CR-02 HideScrollBar row + 7 warnings + 3 info left as tracked follow-up, see PROJECT.md Active), phase-goal verification passed, UAT 2/2 passed, security 0 threats open. CarPlay-connected end-to-end observation of the idle-timer fix remains deferred until the Phase 1 entitlement lands (see below).
+- 03-03 halted at Task 3 step 2 / Task 4: live smoke search and its blocking checkpoint need a human decision (provision cartube-dev key, spend 2 units on the shipping key, or skip smoke entirely) plus review of the 3 new Key Decision rows — see docs/runbooks/google-dev-key.md Section 4 'Status of this section' and PLAN.md Task 4
 
 ## Session Continuity
 
-Last session: 2026-08-18T15:47:54.757Z
-Stopped at: Completed 03-02-PLAN.md
-Resume file: None
+Last session: 2026-08-18T15:57:56.896Z
+Stopped at: Halted mid 03-03-PLAN.md: Tasks 1-2 complete + Task 3 steps 1+3 complete; Task 3 step 2 (live smoke) and Task 4 (checkpoint) await human decision
+Resume file: .planning/phases/03-search-core/03-03-PLAN.md
