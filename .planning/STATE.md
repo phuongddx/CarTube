@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: External Dependencies & Project Setup
 status: executing
-stopped_at: "Completed 01-02-PLAN.md (CarPlay entitlement application submitted, dated blocker recorded)"
-last_updated: "2026-08-18T06:40:16.000Z"
+stopped_at: Completed 01-02-PLAN.md (CarPlay entitlement submitted, dated blocker recorded)
+last_updated: "2026-08-18T06:46:23.047Z"
 last_activity: 2026-08-18
 last_activity_desc: CarPlay entitlement application submitted (Case-ID 21672656, audio category, com.cartube.carplay)
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 18
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-08-17)
 ## Current Position
 
 Phase: 01 (External Dependencies & Project Setup) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-08-18 — Phase 01 execution started
 
-Progress: [█░░░░░░░░░] 6%
+Progress: [█░░░░░░░░░] 11%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [█░░░░░░░░░] 6%
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 01 P01 | 25m | 2 tasks | 4 files |
+| Phase 01 P02 | 95m | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ Recent decisions affecting current work:
 - Phase 1: User's actual Apple team is K2TYLYAWMK (paid Apple Developer Program), not the upstream author's U67AKNW8PW from the pbxproj — CarPlay entitlement Case-ID 21672656 submitted 2026-08-18 under team K2TYLYAWMK with App ID com.cartube.carplay, category audio
 - [Phase ?]: xcconfig secret injection attached at project level (Debug+Release baseConfigurationReference) — no target-level definition, so layering is unambiguous
 - [Phase ?]: Fresh-clone failure is intentional and documented: missing root Secrets.xcconfig fails build with 'Unable to open base configuration reference file'; CI bypasses disk via xcodebuild YOUTUBE_API_KEY=... override
+- [Phase ?]: CarPlay entitlement submitted 2026-08-18 (Case-ID 21672656, audio category, App ID com.cartube.carplay) under user's actual team K2TYLYAWMK — not upstream U67AKNW8PW from pbxproj
+- [Phase ?]: Entitlement request framed as audio playback of YouTube via vehicle audio system; on-screen/driver wording excluded from paste block, residual category-fit risk deferred to plan 01-03
 
 ### Pending Todos
 
@@ -78,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-18T06:40:16.000Z
-Stopped at: Completed 01-02-PLAN.md (CarPlay entitlement application submitted, dated blocker recorded)
+Last session: 2026-08-18T06:46:23.030Z
+Stopped at: Completed 01-02-PLAN.md (CarPlay entitlement submitted, dated blocker recorded)
 Resume file: None

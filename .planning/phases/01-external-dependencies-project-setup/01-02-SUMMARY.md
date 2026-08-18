@@ -1,3 +1,49 @@
+---
+phase: 01-external-dependencies-project-setup
+plan: 02
+subsystem: infra
+tags: [carplay, entitlements, apple-developer-portal, runbook, external-dependency]
+
+requires: []
+provides:
+  - "docs/runbooks/apple-carplay-entitlement-request.md — paste-ready audio-category submission runbook (REQUEST-TEXT markers, portal click path, post-submission recording)"
+  - "docs/runbooks/carplay-entitlement-grant-wiring.md — numbered post-grant procedure incl. entitlements-file sequencing constraint (7 ungrantable keys)"
+  - "CarPlay entitlement clock started: submitted 2026-08-18, Case-ID 21672656, App ID com.cartube.carplay, category audio, team K2TYLYAWMK"
+  - "Dated STATE.md blocker record pointing at the grant-wiring runbook"
+affects:
+  - Phase 02 (INFRA-02 entitlements cleanup — grant-wiring runbook sequenced against it)
+  - Phases 03-05 (develop behind phone-side mocks until grant lands)
+  - plan 01-03 (Key Decision rows: audio-category framing risk, team-ID correction)
+
+actuals:
+  tokens: 4600
+  tasks: 3
+  commits: 2
+
+tech-stack:
+  added: []
+  patterns:
+    - "dated external-clock blocker record in STATE.md (date + case ID + category + bundle ID + runbook pointer) replacing generic seed lines"
+
+key-files:
+  created:
+    - docs/runbooks/apple-carplay-entitlement-request.md
+    - docs/runbooks/carplay-entitlement-grant-wiring.md
+  modified:
+    - .planning/STATE.md
+
+key-decisions:
+  - "Request text positions the app as audio playback of YouTube content through the vehicle audio system; on-screen-viewing/driver-context wording excluded from the paste block (audio-category design criteria) — residual category-fit risk deferred to plan 01-03 Key Decision"
+  - "Distribution bundle ID confirmed and registered as com.cartube.carplay (share extension com.cartube.carplay.playon); pbxproj PRODUCT_BUNDLE_IDENTIFIER change remains Phase 2 scope"
+  - "Submission made under the user's actual team K2TYLYAWMK (paid Apple Developer Program), not the upstream author's U67AKNW8PW found in the pbxproj — team-ID correction recorded in STATE.md"
+
+requirements-completed: []  # INFRA-01 not yet fully met: submission + dated record done; profile wiring closes at grant time
+
+duration: 95m
+completed: 2026-08-18
+status: complete
+---
+
 # Phase 01 Plan 02: CarPlay Entitlement Application Summary
 
 Apple external clock started: audio-category CarPlay entitlement submitted 2026-08-18 (Case-ID 21672656, App ID `com.cartube.carplay`, team K2TYLYAWMK) with paste-ready request and grant-wiring runbooks committed and a dated STATE.md blocker record replacing the generic seed line.
@@ -74,8 +120,7 @@ None beyond the team-ID fact above.
 ## Self-Check: PASSED
 
 - Files exist: docs/runbooks/apple-carplay-entitlement-request.md, docs/runbooks/carplay-entitlement-grant-wiring.md, .planning/STATE.md — FOUND
-- Commit ab022a0 (Task 1) — FOUND in git log
-- Task 3 + SUMMARY commit — created in this plan's final commit
+- Commits ab022a0 (Task 1), 0f2d2a4 (Task 3 + initial SUMMARY) — FOUND in git log
 
 ---
 *Phase: 01-external-dependencies-project-setup*
