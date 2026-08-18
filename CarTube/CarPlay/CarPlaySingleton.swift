@@ -75,6 +75,11 @@ class CarPlaySingleton {
     func toggleKeyboard() {
         controller?.toggleKeyboard()
     }
+
+    /// Apply the current settings to the CarPlay browser in place (no restart)
+    func applyConfiguration() {
+        controller?.applyConfigurationInPlace()
+    }
     
     func getCachedVideo() -> String? {
         return cachedVideo

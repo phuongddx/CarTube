@@ -59,7 +59,7 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     }
 
     // Tear down and re-create the webview with the current settings applied — replaces
-    // the previous exit(0)-to-apply contract; the app keeps running.
+    // the previous quit-to-apply contract; the app keeps running.
     func applyConfigurationInPlace() {
         let previousURL = webView.url
         let keyboardVisible = !keyboardView.isHidden

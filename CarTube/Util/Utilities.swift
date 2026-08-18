@@ -22,14 +22,6 @@ func extractYouTubeVideoID(_ url: String) -> String? {
     return String(url[range])
 }
 
-/// Minimise the app and close it
-func exitGracefully() {
-    UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
-    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-        exit(0)
-    }
-}
-
 /// Register a specified function to be run when the screen turns off
 func registerForScreenOffNotification(callback: @escaping () -> Void) {
     var notify_token: Int32 = 0
