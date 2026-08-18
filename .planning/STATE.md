@@ -5,7 +5,7 @@ milestone_name: milestone
 current_phase: 03
 current_phase_name: search-core
 status: executing
-stopped_at: "Halted mid 03-03-PLAN.md: Tasks 1-2 complete + Task 3 steps 1+3 complete; Task 3 step 2 (live smoke) and Task 4 (checkpoint) await human decision"
+stopped_at: "All 3 plans of Phase 3 complete (03-03's checkpoint resolved: skip smoke, deferred to Phase 4). Ready for phase-close: code review, regression gate, phase-goal verification, security audit, UAT, transition to Phase 4."
 last_updated: "2026-08-18T15:57:56.908Z"
 last_activity: 2026-08-18
 last_activity_desc: Phase 02 UAT passed (2/2), security threats closed (0 open), transitioned to Phase 03 — Search Core
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 
 Phase: 03 (search-core) — EXECUTING
 Plan: 3 of 3
-Status: Halted at checkpoint — Tasks 1-2 done, Task 3 steps 1+3 done, Task 3 step 2 + Task 4 await human decision
+Status: All plans complete — ready for phase-close pipeline (code review → regression gate → verify → security → UAT → transition)
 Last activity: 2026-08-18 — 03-03 Tasks 1-2 + Task 3 steps 1+3 executed and committed
 
 Progress: [█████░░░░░] 50%
@@ -110,4 +110,4 @@ None yet.
 
 Last session: 2026-08-18T15:57:56.896Z
 Stopped at: Halted mid 03-03-PLAN.md: Tasks 1-2 complete + Task 3 steps 1+3 complete; Task 3 step 2 (live smoke) and Task 4 (checkpoint) await human decision
-Resume file: .planning/phases/03-search-core/03-03-PLAN.md
+Resume file: none — run `/gsd-execute-phase 3` again to resume the phase-close pipeline (code review, regression gate, verify_phase_goal, security, UAT, transition); all 3 plans are already committed
