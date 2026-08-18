@@ -12,11 +12,8 @@ class CarPlaySingleton {
     static let shared = CarPlaySingleton()
     private var controller: CarPlayViewController?
     private var cachedVideo: String?
-    private var initialBrightness: Float?
-    private var initialAutoBrightness: Bool?
     private var isCPWindowActive: Bool = false
-    private var askAboutLastPlaying: Bool = true
-    
+
     /// Load a YouTube URL string into the player
     func loadUrl(_ urlString: String) {
         if AVExternalDevice.currentCarPlay() == nil {
@@ -28,10 +25,6 @@ class CarPlaySingleton {
         }
     }
     
-    func dontAskAboutLastPlaying() {
-        self.askAboutLastPlaying = false
-    }
-    
     /// Search for a YouTube video in the player
     func searchVideo(_ search: String) {
         let searchString = YT_SEARCH + search
@@ -41,29 +34,6 @@ class CarPlaySingleton {
     
     func setCPWindowActive(_ active: Bool) {
         self.isCPWindowActive = active
-    }
-    
-    func saveInitialBrightness() {
-        initialBrightness = getSettingsBrightness()
-        initialAutoBrightness = isAutoBrightnessEnabled()
-    }
-    
-    func setLowBrightness() {
-        if UserDefaults.standard.bool(forKey: "LockScreenDimmingOn"), isCPWindowActive {
-            if isAutoBrightnessEnabled() {
-                setAutoBrightness(false)
-            }
-            setScreenBrightness(0.0001)
-        }
-    }
-    
-    func restoreBrightness() {
-        if UserDefaults.standard.bool(forKey: "LockScreenDimmingOn"), isCPWindowActive {
-            if initialAutoBrightness ?? false && !isAutoBrightnessEnabled() {
-                setAutoBrightness(true)
-            }
-            setScreenBrightness(initialBrightness ?? 0.5)
-        }
     }
     
     func disablePersistence() {
@@ -124,21 +94,5 @@ class CarPlaySingleton {
     
     func removeCPVC() {
         self.controller = nil
-    }
-    
-    func checkIfYouTubePlaying() {
-        if !askAboutLastPlaying { return }
-        getNowPlaying { result in
-            switch result {
-            case .success(let nowPlaying):
-                if nowPlaying.bundleID == "com.google.ios.youtube" {
-                    UIApplication.shared.confirmAlert(title: "\(nowPlaying.title) - \(nowPlaying.artist)", body: "You were watching this video on the YouTube app. Play it on CarPlay?", onOK: {
-                        CarPlaySingleton.shared.searchVideo("\(nowPlaying.title) \(nowPlaying.artist)")
-                    }, noCancel: false, window: .carPlay)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 }

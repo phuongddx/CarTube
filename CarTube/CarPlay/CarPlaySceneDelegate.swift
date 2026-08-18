@@ -24,20 +24,9 @@ class CarPlaySceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         CarPlaySingleton.shared.setCPWindowActive(true)
         CarPlaySingleton.shared.enablePersistence()
-        // if the screen is off or locked we should dim it in preparation
-        if isScreenLocked() {
-            if getScreenBrightness() == 0 {
-                CarPlaySingleton.shared.showScreenOffWarning()
-            }
-            CarPlaySingleton.shared.setLowBrightness()
-        }
     }
-    
+
     func sceneWillResignActive(_ scene: UIScene) {
-        // if the screen is locked we should undim it
-        if isScreenLocked() {
-            CarPlaySingleton.shared.restoreBrightness()
-        }
         CarPlaySingleton.shared.disablePersistence()
         CarPlaySingleton.shared.setCPWindowActive(false)
     }

@@ -21,7 +21,6 @@ struct ContentView: View {
     
     func playVideo() {
         if let urlID = extractYouTubeVideoID(urlString) {
-            CarPlaySingleton.shared.dontAskAboutLastPlaying()
             let youtube = YT_EMBED + urlID
             CarPlaySingleton.shared.loadUrl(youtube)
         } else {
