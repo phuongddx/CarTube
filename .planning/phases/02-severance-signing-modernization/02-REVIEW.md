@@ -278,8 +278,20 @@ functional break today, but the pattern doesn't express the intended match and w
 `cartub://<id>` URL as if it were valid.
 **Fix:** `"^cartube://"` (drop the `?`), or escape it if an optional character was genuinely intended.
 
+## Fixes Applied (orchestrator, post-review)
+
+User decision: fix the 2 confirmed critical bugs now; leave CR-02, all Warnings, and all Info findings as tracked follow-up.
+
+- **CR-01 fixed** (`d45b686`): `CarPlaySingleton.applyConfiguration()` now also calls `controller?.enablePersistence()` / `controller?.disablePersistence()` based on the current `ScreenPersistenceOn` value, immediately after `applyConfigurationInPlace()`. Rebuilt and re-verified `BUILD SUCCEEDED` + `scan-private-apis.sh` clean on both binaries. Behavioral confirmation is limited to the same environment constraint plan 02-04's checkpoint already accepted: `controller` is only non-nil when a live CarPlay scene is connected, and no CarPlay entitlement/scene is available in this sandbox — the fix is architecturally verified (mirrors the exact gating `CarPlaySceneDelegate` already uses) but not end-to-end simulator-observed.
+- **CR-03 fixed** (`e615e7f`): all 4 build configs (CarTube Debug/Release, PlayOnCarTube Debug/Release) now consistently use `com.cartube.carplay` / `com.cartube.carplay.playon` bundle IDs and `DEVELOPMENT_TEAM = K2TYLYAWMK` — verified against `.planning/STATE.md`'s record that K2TYLYAWMK is the user's actual (paid) Apple Developer team, not the stale `U67AKNW8PW` upstream value or the unexplained `57RCRLS3QS`. Rebuilt clean.
+- **CR-02 (HideScrollBar false-PASS) — not fixed**, tracked as open follow-up.
+- **Warnings/Info (WR-01…WR-07, IN-01…IN-03) — not fixed**, tracked as open follow-up.
+
+Updated counts after this pass: 1 critical (CR-02) + 7 warning + 3 info = 11 open findings (2 critical resolved).
+
 ---
 
 _Reviewed: 2026-08-18T11:30:12Z_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: deep_
+_Fixes applied: 2026-08-18 (orchestrator, CR-01 + CR-03)_
