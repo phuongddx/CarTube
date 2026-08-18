@@ -35,7 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. A restricted YouTube Data API key exists in a dedicated Google Cloud project (API + bundle-ID restrictions, never committed to the repo) with a build-time delivery mechanism decided, so search work never blocks on Google
   3. If Apple grants the entitlement during this phase, the new provisioning profile is wired into the project and the CarPlay scene connection is verified; if still pending, it is tracked as a dated blocker rather than silently blocking later phases
 
-**Plans**: 2/3 plans executed
+**Plans**: 3/3 plans executed
 
 Plans:
 **Wave 1**
@@ -45,7 +45,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-03-PLAN.md — Google restricted key provisioning, build injection verification, Key Decisions, phase close-out
+- [x] 01-03-PLAN.md — Google restricted key provisioning, build injection verification, Key Decisions, phase close-out
 
 ### Phase 2: Severance, Signing & Modernization
 
@@ -193,7 +193,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. External Dependencies & Project Setup | 2/3 | In Progress|  |
+| 1. External Dependencies & Project Setup | 3/3 | In Progress|  |
 | 2. Severance, Signing & Modernization | 0/TBD | Not started | - |
 | 3. Search Core | 0/3 | Planning complete | - |
 | 4. CarPlay Search Surface | 0/2 | Planning complete | - |

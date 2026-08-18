@@ -1,10 +1,10 @@
 ---
 schema_version: 1
-open_count: 1
+open_count: 2
 waived_count: 0
 fixed_count: 0
-total_count: 1
-last_updated: 2026-08-18T05:00:28.300Z
+total_count: 2
+last_updated: 2026-08-18T07:07:02.911Z
 ---
 
 # Broken Windows Ledger
@@ -16,6 +16,7 @@ last_updated: 2026-08-18T05:00:28.300Z
 | id | phase | kind | file | line | description | status | reason | recorded_at | resolved_at |
 |----|-------|------|------|------|-------------|--------|--------|-------------|-------------|
 | 1 | 01 | deviation | .planning/REQUIREMENTS.md |  | INFRA-01 completion reverted: plan 01-01 delivered only the build-time key delivery; entitlement application (plans 01-02/01-03) still pending | open |  | 2026-08-18T05:00:28.300Z |  |
+| 2 | 01 | unrun-verify | Secrets.xcconfig |  | 01-03 Task 2 checkpoint open: restricted Google key not yet created/injected; plutil+gcloud verification unrun until user completes console runbook | open |  | 2026-08-18T07:07:02.911Z |  |
 
 ````json
 [
@@ -29,6 +30,18 @@ last_updated: 2026-08-18T05:00:28.300Z
     "status": "open",
     "reason": "",
     "recorded_at": "2026-08-18T05:00:28.300Z",
+    "resolved_at": null
+  },
+  {
+    "id": 2,
+    "kind": "unrun-verify",
+    "phase": "01",
+    "file": "Secrets.xcconfig",
+    "line": null,
+    "description": "01-03 Task 2 checkpoint open: restricted Google key not yet created/injected; plutil+gcloud verification unrun until user completes console runbook",
+    "status": "open",
+    "reason": "",
+    "recorded_at": "2026-08-18T07:07:02.911Z",
     "resolved_at": null
   }
 ]

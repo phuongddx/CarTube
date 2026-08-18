@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: External Dependencies & Project Setup
 status: executing
-stopped_at: Awaiting Google Cloud key checkpoint in 01-03-PLAN.md (Task 2); Tasks 1+3 committed
-last_updated: "2026-08-18T06:54:55.866Z"
+stopped_at: 01-03 Task 2 checkpoint — awaiting Google Cloud key creation + project ID report (Tasks 1+3 committed)
+last_updated: "2026-08-18T07:07:02.730Z"
 last_activity: 2026-08-18
 last_activity_desc: 01-03 runbook authored + Key Decisions/branch recorded; awaiting Google Cloud key checkpoint (Task 2)
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 18
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -32,7 +32,7 @@ Plan: 3 of 3 (Tasks 1+3 committed; Task 2 — Google Cloud key — awaiting user
 Status: Agent-side work done; blocked only on the Google Cloud Console actions in docs/runbooks/google-youtube-api-key.md
 Last activity: 2026-08-18 — Phase 1 close-out recorded
 
-Progress: [██░░░░░░░░] 15%
+Progress: [██░░░░░░░░] 17%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [██░░░░░░░░] 15%
 |------|----------|-------|-------|
 | Phase 01 P01 | 25m | 2 tasks | 4 files |
 | Phase 01 P02 | 95m | 3 tasks | 3 files |
+| Phase 01 P03 | 17m | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,7 @@ Recent decisions affecting current work:
 - [Phase ?]: Fresh-clone failure is intentional and documented: missing root Secrets.xcconfig fails build with 'Unable to open base configuration reference file'; CI bypasses disk via xcodebuild YOUTUBE_API_KEY=... override
 - [Phase ?]: CarPlay entitlement submitted 2026-08-18 (Case-ID 21672656, audio category, App ID com.cartube.carplay) under user's actual team K2TYLYAWMK — not upstream U67AKNW8PW from pbxproj
 - [Phase ?]: Entitlement request framed as audio playback of YouTube via vehicle audio system; on-screen/driver wording excluded from paste block, residual category-fit risk deferred to plan 01-03
+- [Phase ?]: Google iOS key restriction lists the future com.cartube.carplay + com.cartube.carplay.playon IDs (what the signed App Store build carries), not the upstream com.avangelista.* strings still in the pbxproj
 
 ### Pending Todos
 
@@ -82,6 +84,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-18T06:48:54Z
-Stopped at: 01-03-PLAN.md Task 2 checkpoint — awaiting user's Google Cloud key creation + report of the project ID (Tasks 1+3 committed)
+Last session: 2026-08-18T07:07:02.719Z
+Stopped at: 01-03 Task 2 checkpoint — awaiting Google Cloud key creation + project ID report (Tasks 1+3 committed)
 Resume file: docs/runbooks/google-youtube-api-key.md
