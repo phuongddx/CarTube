@@ -177,8 +177,13 @@ Plans:
 **UI hint**: no
 
 Plans:
+**Wave 1**
+
 - [ ] 06-01-PLAN.md — Tracer: hardening fixes (typed fork-targeted GitHubRelease update check + PasteButton replacing activation pasteboard read) with MockURLProtocol tests and dual-binary scan proof (SHIP-03)
 - [ ] 06-02-PLAN.md — Submission docs: honest App Review notes under audio category with 2.3.1 disclosure, ad-block-free App Store metadata, fallback ladder rungs 0–2 (SHIP-01, SHIP-02)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 06-03-PLAN.md — Entitlement-branch checkpoint → standard-signing Release archive → dual-binary scan gate → altool upload with ASC key hygiene + submission notes (SHIP-01, SHIP-03)
 
 ## Progress
