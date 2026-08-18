@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 03
 current_phase_name: search-core
 status: executing
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-08-18T15:30:27.183Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-08-18T15:48:04.076Z"
 last_activity: 2026-08-18
 last_activity_desc: Phase 02 UAT passed (2/2), security threats closed (0 open), transitioned to Phase 03 — Search Core
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 18
-  completed_plans: 8
+  completed_plans: 9
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 03 (search-core) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-08-18 — Phase 03 execution started
 
-Progress: [████░░░░░░] 44%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -60,6 +60,7 @@ Progress: [████░░░░░░] 44%
 | Phase 02 P03 | 22min | 3 tasks | 7 files |
 | Phase 02 P04 | 24min | 2 tasks | 3 files |
 | Phase 03 P01 | 18min | 2 tasks | 4 files |
+| Phase 03 P02 | 15min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,10 @@ Recent decisions affecting current work:
 - [Phase ?]: 03-01: BUNDLE_LOADER-only test linking failed against this Xcode toolchain's Debug-dylib split (CarTube trampoline + CarTube.debug.dylib); switched to TEST_HOST + BUNDLE_LOADER=$(TEST_HOST), the plan's own sanctioned fallback
 - [Phase ?]: 03-01: xcodeproj gem's new_target left PRODUCT_NAME unset on CarTubeTests configs (bare .xctest product path collided with CarTube's own output) — added PRODUCT_NAME = $(TARGET_NAME) explicitly
 - [Phase ?]: 03-01: repeated Phase 2 fix — restored dstSubfolder=PlugIns and removed spurious empty dependencies array the xcodeproj gem's save introduced on unrelated targets
+- [Phase ?]: 03-02: Fixture loading via Bundle(for:).path(forResource:ofType:) without inDirectory: — xcodeproj gem's flat group-reference resource wiring puts fixtures at test bundle root regardless of pbxproj group nesting
+- [Phase ?]: 03-02: Custom percent-encoding CharacterSet (.urlQueryAllowed minus &=+) for query values — the default set leaves & unescaped in a value, corrupting multi-word queries containing an ampersand
+- [Phase ?]: 03-02: Repeated the 03-01 xcodeproj gem quirk fix (restored dstSubfolder=PlugIns on the Embed Foundation Extensions phase) on both gem invocations this plan; a spurious empty dependencies array recurred only on the first
+- [Phase ?]: 03-02: SearchError distinguishes apiKeyMissing/apiKeyInvalid/quotaExceeded/other(String) so the SRCH-03 degrade decision (plan 03-03) reads typed data, never string-matches
 
 ### Pending Todos
 
@@ -99,6 +104,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-18T15:30:16.855Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-08-18T15:47:54.757Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None

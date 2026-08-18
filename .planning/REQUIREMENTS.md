@@ -18,7 +18,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Search Core
 
-- [ ] **SRCH-01**: User can search YouTube from the car via `YouTubeSearchService` (Data API v3, build-time-injected key, never committed to the repo)
+- [x] **SRCH-01**: User can search YouTube from the car via `YouTubeSearchService` (Data API v3, build-time-injected key, never committed to the repo)
 - [ ] **SRCH-02**: Search respects the 100 calls/day shared budget — explicit-submit only, one page of results, last-query cache
 - [ ] **SRCH-03**: On quota/key failure (403), search degrades automatically to the existing webview search path — never a dead screen
 - [x] **SRCH-04**: XCTest target exists with fixture-JSON tests for the search client and shared URL parsing
@@ -80,7 +80,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INFRA-04 | Phase 2 | Complete |
 | INFRA-05 | Phase 2 | Complete |
 | INFRA-06 | Phase 2 | Complete |
-| SRCH-01 | Phase 3 | Pending |
+| SRCH-01 | Phase 3 | Complete |
 | SRCH-02 | Phase 3 | Pending |
 | SRCH-03 | Phase 3 | Pending |
 | SRCH-04 | Phase 3 | Complete |
