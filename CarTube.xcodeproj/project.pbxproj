@@ -100,6 +100,7 @@
 		25A2A5922967917B004A9AB1 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		25A2A59429679BF2004A9AB1 /* HowTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowTo.swift; sourceTree = "<group>"; };
 		25EED739295F059A00C0DF56 /* CustomLayout.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = CustomLayout.js; sourceTree = "<group>"; };
+		7B49E1D589F14020616C760C /* Secrets.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +129,7 @@
 				257D1493297A58220095689E /* PlayOnCarTube */,
 				250B50FC2953D59B00397038 /* Frameworks */,
 				250B50CD2953D12500397038 /* Products */,
+				7B49E1D589F14020616C760C /* Secrets.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -431,6 +433,7 @@
 /* Begin XCBuildConfiguration section */
 		250B50D82953D12800397038 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B49E1D589F14020616C760C /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -493,6 +496,7 @@
 		};
 		250B50D92953D12800397038 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B49E1D589F14020616C760C /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
