@@ -34,12 +34,16 @@
 		25A2A5932967917B004A9AB1 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A5922967917B004A9AB1 /* Debug.swift */; };
 		25A2A59529679BF2004A9AB1 /* HowTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A2A59429679BF2004A9AB1 /* HowTo.swift */; };
 		25EED73A295F05AA00C0DF56 /* CustomLayout.js in Resources */ = {isa = PBXBuildFile; fileRef = 25EED739295F059A00C0DF56 /* CustomLayout.js */; };
+		49A2773FF013DCB2685B37E5 /* search-response-empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DC64A6F764078D52D28B553 /* search-response-empty.json */; };
 		51B344993E1A36DDAD4541E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F016D903939C697DF19634 /* Foundation.framework */; };
 		5B291321EC71906F575BDF77 /* UtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E1B837301BA308FA90283 /* UtilitiesTests.swift */; };
 		688CBDDF4E9CA2F0C67BACE6 /* YouTubeSearchServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */; };
 		8AAC392329ADE61A5710CE53 /* videos-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 54D41EF84CD76B127E5040F1 /* videos-response.json */; };
+		8DE3E5A628DFBA1131F75B5D /* YouTubeSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B68141E9A01F1DB7444137 /* YouTubeSearchService.swift */; };
+		992A0473455E1F83CE355B52 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1563B69A66BE62E3C62F10 /* MockURLProtocol.swift */; };
 		AC8E3F0FE62EE08C07828581 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FFBE724A4D84A3922E53C /* SearchResult.swift */; };
 		B0795DFFA0C359503ECE9E95 /* search-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 50F0AE1661E10332570072DF /* search-response.json */; };
+		B0E3E1ED70EEBCB81D923560 /* error-403-quota.json in Resources */ = {isa = PBXBuildFile; fileRef = AD7D34E537DBC05176F4EE1E /* error-403-quota.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,8 +119,12 @@
 		60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = YouTubeSearchServiceTests.swift; sourceTree = "<group>"; };
 		704E1B837301BA308FA90283 /* UtilitiesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UtilitiesTests.swift; sourceTree = "<group>"; };
 		7B49E1D589F14020616C760C /* Secrets.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		89B68141E9A01F1DB7444137 /* YouTubeSearchService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = YouTubeSearchService.swift; sourceTree = "<group>"; };
+		8DC64A6F764078D52D28B553 /* search-response-empty.json */ = {isa = PBXFileReference; includeInIndex = 1; path = "search-response-empty.json"; sourceTree = "<group>"; };
+		AD7D34E537DBC05176F4EE1E /* error-403-quota.json */ = {isa = PBXFileReference; includeInIndex = 1; path = "error-403-quota.json"; sourceTree = "<group>"; };
 		B2F016D903939C697DF19634 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		B52FFBE724A4D84A3922E53C /* SearchResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		BC1563B69A66BE62E3C62F10 /* MockURLProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		F587664409CE07CF24DFCA16 /* CarTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -307,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				B52FFBE724A4D84A3922E53C /* SearchResult.swift */,
+				89B68141E9A01F1DB7444137 /* YouTubeSearchService.swift */,
 			);
 			name = Search;
 			path = Search;
@@ -318,6 +327,7 @@
 				704E1B837301BA308FA90283 /* UtilitiesTests.swift */,
 				CDAF10C607E84D1D900DA01F /* Fixtures */,
 				60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */,
+				BC1563B69A66BE62E3C62F10 /* MockURLProtocol.swift */,
 			);
 			name = CarTubeTests;
 			path = CarTubeTests;
@@ -336,6 +346,8 @@
 			children = (
 				50F0AE1661E10332570072DF /* search-response.json */,
 				54D41EF84CD76B127E5040F1 /* videos-response.json */,
+				AD7D34E537DBC05176F4EE1E /* error-403-quota.json */,
+				8DC64A6F764078D52D28B553 /* search-response-empty.json */,
 			);
 			name = Fixtures;
 			path = Fixtures;
@@ -391,6 +403,8 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+			);
 			name = PlayOnCarTube;
 			productName = PlayOnCarTube;
 			productReference = 257D1492297A58220095689E /* PlayOnCarTube.appex */;
@@ -442,6 +456,8 @@
 			files = (
 				B0795DFFA0C359503ECE9E95 /* search-response.json in Resources */,
 				8AAC392329ADE61A5710CE53 /* videos-response.json in Resources */,
+				B0E3E1ED70EEBCB81D923560 /* error-403-quota.json in Resources */,
+				49A2773FF013DCB2685B37E5 /* search-response-empty.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +503,7 @@
 				2583C1EB2966278C00E3D17C /* Utilities.swift in Sources */,
 				250B50ED2953D29100397038 /* CarPlaySceneDelegate.swift in Sources */,
 				AC8E3F0FE62EE08C07828581 /* SearchResult.swift in Sources */,
+				8DE3E5A628DFBA1131F75B5D /* YouTubeSearchService.swift in Sources */,
 			);
 		};
 		257D148E297A58220095689E /* Sources */ = {
@@ -501,6 +518,7 @@
 			files = (
 				5B291321EC71906F575BDF77 /* UtilitiesTests.swift in Sources */,
 				688CBDDF4E9CA2F0C67BACE6 /* YouTubeSearchServiceTests.swift in Sources */,
+				992A0473455E1F83CE355B52 /* MockURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

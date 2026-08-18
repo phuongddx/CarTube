@@ -10,3 +10,6 @@ import Foundation
 let YT_HOME = "https://m.youtube.com/"
 let YT_EMBED = "https://m.youtube.com/watch?v="
 let YT_SEARCH = "https://m.youtube.com/results?search_query="
+
+let YOUTUBE_SEARCH_ENDPOINT = "https://www.googleapis.com/youtube/v3/search"
+let YOUTUBE_VIDEOS_ENDPOINT = "https://www.googleapis.com/youtube/v3/videos"
