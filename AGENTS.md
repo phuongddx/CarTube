@@ -27,8 +27,8 @@ CarTube is an iOS app that plays YouTube videos on CarPlay screens by rendering 
 - Swift 5 — SwiftUI app scenes/views and UIKit/WebKit CarPlay controller (`CarTube/CarTubeApp.swift`, `CarTube/Views/*.swift`, `CarTube/CarPlay/*.swift`)
 - Objective-C — UIKit runtime method hooks and private API declarations (`CarTube/Hooks/*.m`, `CarTube/Headers/*.h`)
 - JavaScript — browser-side layout, ad blocking, age restriction bypass, SponsorBlock, and wake-lock behavior (`CarTube/Scripts/*.js`)
-- iOS application targeting iOS 14.0 (`CarTube.xcodeproj/project.pbxproj`)
-- Product is designed for iOS 14.0–15.4.1 and TrollStore installation (`README.md`)
+- iOS application targeting iOS 16 minimum (Phase 2 baseline; deployment-target bump lands in plan 02-04)
+- Product is built for standard App Store / TestFlight distribution with Automatic code signing (`README.md`)
 - Main app targets iPhone (`TARGETED_DEVICE_FAMILY = 1`); share extension targets iPhone/iPad (`TARGETED_DEVICE_FAMILY = "1,2"`)
 
 ## Frameworks
@@ -46,18 +46,16 @@ CarTube is an iOS app that plays YouTube videos on CarPlay screens by rendering 
 - Xcode project: `CarTube.xcodeproj/project.pbxproj`
 - Targets: `CarTube` main app and `PlayOnCarTube` share extension
 - Swift bridging header: `CarTube/CarTube-Bridging-Header.h`
-- Builds a generic iOS Debug product without code signing.
-- Copies the `.app`, removes existing signature/provisioning data.
-- Re-signs the executable with `ldid` and `CarTube/CarTube.entitlements`.
-- Packages `build/CarTube.ipa`.
-- Requires local `xcodebuild`, `codesign`, `ldid`, and `zip`.
+- `CODE_SIGN_STYLE = Automatic` on all target build configurations.
+- `CarTube/CarTube.entitlements` is retained as an empty plist dict — no private entitlement keys — reserved for the future CarPlay entitlement key once Apple grants it (Phase 1 application).
+- No separate packaging script; standard `xcodebuild`/Xcode archive and upload flow.
 
 ## Configuration
 
 - Bundle identifier: `com.avangelista.CarTube`
 - URL scheme: `cartube://` (`CarTube/Info.plist`)
 - CarPlay scene delegate: `$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate` (`CarTube/Info.plist`)
-- Entitlements requiring TrollStore/platform-application installation (`CarTube/CarTube.entitlements`)
+- Entitlements file retained for the future CarPlay entitlement key (emptied in Phase 2)
 - Bundle identifier: `com.avangelista.CarTube.PlayOnCarTube`
 - Activation rule accepts extension items whose attachments all conform to `public.url` (`PlayOnCarTube/Info.plist`)
 - Stored in `UserDefaults.standard`
@@ -143,7 +141,7 @@ CarTube is an iOS app that plays YouTube videos on CarPlay screens by rendering 
 - Optional user actions use `confirmAlert` with an OK handler.
 - URL conversion and regex parsing contain force-unwraps/force-tries.
 - WebKit script loading silently skips unavailable resources with `guard ... else { return }`.
-- Private symbol calls generally assume the expected iOS 14–15.4 symbols exist.
+- Phase 2 removed the private-API surface; no code should assume private iOS 14–15.4 symbols exist.
 - Guard optional URLs instead of force-unwrapping.
 - Create the YouTube regex once or use a throwing initializer rather than duplicating `try!`.
 - Report failed bundle-script loading in development builds rather than silently returning.
@@ -158,9 +156,8 @@ CarTube is an iOS app that plays YouTube videos on CarPlay screens by rendering 
 
 ## Build and Release
 
-- Preserve iOS 14 deployment compatibility for project code.
-- Treat iOS 14–15.4 private API assumptions as intentional compatibility constraints.
-- Do not enable standard App Store signing assumptions; `ipabuild.sh` is a TrollStore packaging path.
+- Target the iOS 16 minimum deployment baseline (plan 02-04 raises it from 14.0).
+- Standard App Store / TestFlight signing with `CODE_SIGN_STYLE = Automatic`; no sideload re-signing or packaging path remains.
 - When changing target membership or adding resources, update `CarTube.xcodeproj/project.pbxproj` carefully and verify both target builds.
 
 <!-- GSD:conventions-end -->

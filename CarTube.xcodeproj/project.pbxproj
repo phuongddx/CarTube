@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -50,14 +50,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		250B510E2953D59B00397038 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 13;
+			dstSubfolder = PlugIns;
 			files = (
 				257D149C297A58220095689E /* PlayOnCarTube.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -71,7 +69,7 @@
 		250B50EA2953D29100397038 /* CarPlaySceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
 		250B50EB2953D29100397038 /* CarPlaySingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarPlaySingleton.swift; sourceTree = "<group>"; };
 		250B50F12953D2F600397038 /* SponsorBlock.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SponsorBlock.js; sourceTree = "<group>"; };
-		250B50F42953D37A00397038 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../TrollTube/TrollTube/Assets.xcassets; sourceTree = "<group>"; };
+		250B50F42953D37A00397038 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		250B50FD2953D59B00397038 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 		255396952967BA8B00E49F9E /* String++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String++.swift"; sourceTree = "<group>"; };
 		2578407829540CC900357803 /* Alert++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert++.swift"; sourceTree = "<group>"; };
@@ -106,18 +104,14 @@
 /* Begin PBXFrameworksBuildPhase section */
 		250B50C92953D12500397038 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				25F18067295EC2A5007B9940 /* Dynamic in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		257D148F297A58220095689E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -314,8 +308,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = PlayOnCarTube;
 			productName = PlayOnCarTube;
 			productReference = 257D1492297A58220095689E /* PlayOnCarTube.appex */;
@@ -341,7 +333,6 @@
 				};
 			};
 			buildConfigurationList = 250B50C72953D12500397038 /* Build configuration list for PBXProject "CarTube" */;
-			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -352,6 +343,7 @@
 			packageReferences = (
 				25F18065295EC2A5007B9940 /* XCRemoteSwiftPackageReference "Dynamic" */,
 			);
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 250B50CD2953D12500397038 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -365,7 +357,6 @@
 /* Begin PBXResourcesBuildPhase section */
 		250B50CA2953D12500397038 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				2587378A2964F03D009EAA2A /* NoSleepEnable.js in Resources */,
 				250B50D72953D12800397038 /* Preview Assets.xcassets in Resources */,
@@ -375,21 +366,17 @@
 				25838A35297C00D400B3990A /* AdBlocker.js in Resources */,
 				25EED73A295F05AA00C0DF56 /* CustomLayout.js in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		257D1490297A58220095689E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		250B50C82953D12500397038 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				25838A37297C01A700B3990A /* SplashScreen.swift in Sources */,
 				25838A2A297BD69600B3990A /* AutoResize.m in Sources */,
@@ -410,15 +397,12 @@
 				2583C1EB2966278C00E3D17C /* Utilities.swift in Sources */,
 				250B50ED2953D29100397038 /* CarPlaySceneDelegate.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		257D148E297A58220095689E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				257D1495297A58220095689E /* ShareViewController.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -562,7 +546,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarTube/Preview Content\"";
-				DEVELOPMENT_TEAM = U67AKNW8PW;
+				DEVELOPMENT_TEAM = 57RCRLS3QS;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -581,7 +565,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.avangelista.CarTube;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cartube.carplay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -605,7 +589,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarTube/Preview Content\"";
-				DEVELOPMENT_TEAM = U67AKNW8PW;
+				DEVELOPMENT_TEAM = K2TYLYAWMK;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -654,7 +638,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.avangelista.CarTube.PlayOnCarTube;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cartube.carplay.playon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -699,7 +683,6 @@
 				250B50D82953D12800397038 /* Debug */,
 				250B50D92953D12800397038 /* Release */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		250B50DA2953D12800397038 /* Build configuration list for PBXNativeTarget "CarTube" */ = {
@@ -708,7 +691,6 @@
 				250B50DB2953D12800397038 /* Debug */,
 				250B50DC2953D12800397038 /* Release */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		257D149D297A58220095689E /* Build configuration list for PBXNativeTarget "PlayOnCarTube" */ = {
@@ -717,7 +699,6 @@
 				257D149E297A58220095689E /* Debug */,
 				257D149F297A58220095689E /* Release */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */

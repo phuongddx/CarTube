@@ -12,7 +12,7 @@
 
 ## Features
 - A full-feature app for YouTube - browse, search, watch videos and more in the car!
-- Works on any device supporting [TrollStore](https://github.com/opa334/TrollStore), no jailbreak required
+- Distributed via the App Store / TestFlight with standard code signing
 - Block ads
 - Skip sponsored segments with SponsorBlock
 - Bypass age restriction

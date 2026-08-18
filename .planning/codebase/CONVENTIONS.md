@@ -83,7 +83,7 @@
 - Optional user actions use `confirmAlert` with an OK handler.
 - URL conversion and regex parsing contain force-unwraps/force-tries.
 - WebKit script loading silently skips unavailable resources with `guard ... else { return }`.
-- Private symbol calls generally assume the expected iOS 14–15.4 symbols exist.
+- Phase 2 removed the private-API surface; no code should assume private iOS 14–15.4 symbols exist.
 
 **Recommended for new code:**
 - Guard optional URLs instead of force-unwrapping.
@@ -100,9 +100,8 @@
 
 ## Build and Release
 
-- Preserve iOS 14 deployment compatibility for project code.
-- Treat iOS 14–15.4 private API assumptions as intentional compatibility constraints.
-- Do not enable standard App Store signing assumptions; `ipabuild.sh` is a TrollStore packaging path.
+- Target the iOS 16 minimum deployment baseline (plan 02-04 raises it from 14.0).
+- Standard App Store / TestFlight signing with `CODE_SIGN_STYLE = Automatic`; no sideload re-signing or packaging path remains.
 - When changing target membership or adding resources, update `CarTube.xcodeproj/project.pbxproj` carefully and verify both target builds.
 
 ---

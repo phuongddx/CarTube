@@ -8,29 +8,9 @@
 
 ## ⚠️ Sequencing constraint — read before step 1
 
-The current `CarTube/CarTube.entitlements` file contains **only** TrollStore private keys, none of which are grantable by a real provisioning profile:
+**Resolved (Phase 2, INFRA-02):** `CarTube/CarTube.entitlements` was emptied to a bare plist dict — the seven private keys once listed here (`SBStarkCapable`, `com.apple.runningboard.assertions.webkit`, `com.apple.multitasking.systemappassertions`, `com.apple.backboard.displaybrightness`, `platform-application`, `com.apple.private.security.no-container`, `com.apple.private.security.container-manager`) are gone, and the private-signing packaging pipeline that required them was deleted in the same phase. The file now holds no keys at all, so it is ready for the CarPlay key to be added directly — no cleanup step is needed before step 8 below.
 
-| # | Ungrantable key currently in `CarTube/CarTube.entitlements` |
-|---|---|
-| 1 | `SBStarkCapable` |
-| 2 | `com.apple.runningboard.assertions.webkit` |
-| 3 | `com.apple.multitasking.systemappassertions` |
-| 4 | `com.apple.backboard.displaybrightness` |
-| 5 | `platform-application` |
-| 6 | `com.apple.private.security.no-container` |
-| 7 | `com.apple.private.security.container-manager` |
-
-A standard-profile build signs against the entitlements file as-is, so **signing fails until the file holds only grantable keys**. Stripping these keys is Phase 2 (INFRA-02) scope and must not be pulled forward casually — the TrollStore `ipabuild.sh` path still needs them until Phase 2 removes it. Therefore, before step 8 below:
-
-- **If Phase 2 is already complete:** the entitlements file is clean; just add the CarPlay key per step 8.
-- **If the grant lands before Phase 2 completes:** either finish Phase 2's entitlements cleanup first, or — as part of executing this runbook — swap in a clean entitlements file (back up the TrollStore file if the `ipabuild.sh` path is still needed) containing only:
-
-```xml
-<key>com.apple.developer.carplay-audio</key>
-<true/>
-```
-
-Then rebuild and verify per steps 10–11. Any other keys desired later (e.g., app-group identifiers used by real signing) must each be individually grantable by the provisioning profile.
+If this runbook is ever executed against an older checkout where that phase has not yet run, finish that cleanup first: a standard-profile build signs against the entitlements file as-is, so signing fails until the file holds only grantable keys.
 
 ## Post-grant sequence
 

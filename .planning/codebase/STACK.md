@@ -10,8 +10,8 @@
 - JavaScript — browser-side layout, ad blocking, age restriction bypass, SponsorBlock, and wake-lock behavior (`CarTube/Scripts/*.js`)
 
 **Runtime:**
-- iOS application targeting iOS 14.0 (`CarTube.xcodeproj/project.pbxproj`)
-- Product is designed for iOS 14.0–15.4.1 and TrollStore installation (`README.md`)
+- iOS application targeting iOS 16 minimum (Phase 2 baseline; deployment-target bump lands in plan 02-04)
+- Product is built for standard App Store / TestFlight distribution with Automatic code signing (`README.md`)
 - Main app targets iPhone (`TARGETED_DEVICE_FAMILY = 1`); share extension targets iPhone/iPad (`TARGETED_DEVICE_FAMILY = "1,2"`)
 
 ## Frameworks
@@ -39,15 +39,10 @@
 xcodebuild -project CarTube.xcodeproj -scheme CarTube build
 ```
 
-**TrollStore IPA build:**
-```bash
-./ipabuild.sh
-```
-- Builds a generic iOS Debug product without code signing.
-- Copies the `.app`, removes existing signature/provisioning data.
-- Re-signs the executable with `ldid` and `CarTube/CarTube.entitlements`.
-- Packages `build/CarTube.ipa`.
-- Requires local `xcodebuild`, `codesign`, `ldid`, and `zip`.
+**Standard signing (App Store / TestFlight):**
+- `CODE_SIGN_STYLE = Automatic` on all target build configurations.
+- `CarTube/CarTube.entitlements` is retained as an empty plist dict — no private entitlement keys — reserved for the future CarPlay entitlement key once Apple grants it (Phase 1 application).
+- No separate packaging script; standard `xcodebuild`/Xcode archive and upload flow.
 
 ## Configuration
 
@@ -55,7 +50,7 @@ xcodebuild -project CarTube.xcodeproj -scheme CarTube build
 - Bundle identifier: `com.avangelista.CarTube`
 - URL scheme: `cartube://` (`CarTube/Info.plist`)
 - CarPlay scene delegate: `$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate` (`CarTube/Info.plist`)
-- Entitlements requiring TrollStore/platform-application installation (`CarTube/CarTube.entitlements`)
+- Entitlements file retained for the future CarPlay entitlement key (emptied in Phase 2)
 
 **Share Extension:**
 - Bundle identifier: `com.avangelista.CarTube.PlayOnCarTube`
