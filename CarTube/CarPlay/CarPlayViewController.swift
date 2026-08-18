@@ -13,21 +13,11 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     
     private var webView: WKWebView = WKWebView()
     private var keyboardView: UIView = UIView()
-    private var noSleepView: WKWebView = WKWebView()
     private var screenOffLabel: UIView = UIView()
-    private var timer: Timer?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Register self as the CarPlay view controller
-        CarPlaySingleton.shared.setCPVC(controller: self)
-        
-        // Check if the user was watching YouTube before they got in the car
-        CarPlaySingleton.shared.checkIfYouTubePlaying()
-        
-        // Set up the main webview
-        
+    // Build the WKWebViewConfiguration reflecting current settings — used by both
+    // initial load (viewDidLoad) and in-place reconfiguration (applyConfigurationInPlace).
+    func applyConfiguration() -> WKWebViewConfiguration {
         // Add any enabled scripts
         let sponsorBlockOn = UserDefaults.standard.bool(forKey: "SponsorBlockOn")
         let ageRestrictBypassOn = UserDefaults.standard.bool(forKey: "AgeRestrictBypassOn")
@@ -46,7 +36,7 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
 
         // Add our custom CSS and JS
         enabledScripts.append("CustomLayout")
-        
+
         enabledScripts.forEach { item in
             guard let scriptPath = Bundle.main.path(forResource: item, ofType: "js"),
                   let scriptSource = try? String(contentsOfFile: scriptPath) else { return }
@@ -64,19 +54,69 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         webConfiguration.allowsPictureInPictureMediaPlayback = false
         webConfiguration.allowsAirPlayForMediaPlayback = false
         webConfiguration.requiresUserActionForMediaPlayback = false
-        webView = WKWebView(frame: view.frame, configuration: webConfiguration)
+
+        return webConfiguration
+    }
+
+    // Tear down and re-create the webview with the current settings applied — replaces
+    // the previous exit(0)-to-apply contract; the app keeps running.
+    func applyConfigurationInPlace() {
+        let previousURL = webView.url
+        let keyboardVisible = !keyboardView.isHidden
+
+        webView.navigationDelegate = nil
+        webView.uiDelegate = nil
+        webView.removeFromSuperview()
+
+        let newWebView = WKWebView(frame: view.frame, configuration: applyConfiguration())
+        newWebView.allowsLinkPreview = false
+        newWebView.allowsBackForwardNavigationGestures = false
+        newWebView.scrollView.minimumZoomScale = 1
+        newWebView.scrollView.maximumZoomScale = 1
+        newWebView.navigationDelegate = self
+        newWebView.uiDelegate = self
+
+        let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
+        let swipeRightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
+        swipeLeftRecognizer.direction = .left
+        swipeRightRecognizer.direction = .right
+        newWebView.addGestureRecognizer(swipeLeftRecognizer)
+        newWebView.addGestureRecognizer(swipeRightRecognizer)
+
+        if keyboardVisible {
+            newWebView.frame.size.height = view.bounds.size.height - keyboardView.frame.size.height
+        }
+
+        webView = newWebView
+        view.insertSubview(webView, belowSubview: keyboardView)
+
+        if let previousURL = previousURL {
+            webView.load(URLRequest(url: previousURL))
+        } else {
+            goHome()
+        }
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Register self as the CarPlay view controller
+        CarPlaySingleton.shared.setCPVC(controller: self)
+
+        // Set up the main webview
+        webView = WKWebView(frame: view.frame, configuration: applyConfiguration())
         webView.allowsLinkPreview = false
         webView.allowsBackForwardNavigationGestures = false
         webView.scrollView.minimumZoomScale = 1
         webView.scrollView.maximumZoomScale = 1
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        
+
         // Add recogniser for refreshing
 //        let refreshControl = UIRefreshControl()
 //        refreshControl.addTarget(self, action: #selector(reloadWebView(_:)), for: .valueChanged)
 //        webView.scrollView.addSubview(refreshControl)
-        
+
         // Add recognisers for back and forward
         let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
         let swipeRightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(recognizer:)))
@@ -84,7 +124,7 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         swipeRightRecognizer.direction = .right
         webView.addGestureRecognizer(swipeLeftRecognizer)
         webView.addGestureRecognizer(swipeRightRecognizer)
-        
+
         // Check if the user tried to play something before CarPlay was loaded, otherwise load homepage
         if let urlString = CarPlaySingleton.shared.getCachedVideo() {
             CarPlaySingleton.shared.clearCachedVideo()
@@ -92,22 +132,9 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         } else {
             goHome()
         }
-        
+
         self.view.addSubview(webView)
-        
-        // Add a separate hidden webview to disable screen sleep
-        let noSleepViewConfig = WKWebViewConfiguration()
-        guard let scriptPath = Bundle.main.path(forResource: "NoSleepEnable", ofType: "js"),
-              let scriptSource = try? String(contentsOfFile: scriptPath) else { return }
-        let userScript = WKUserScript(source: scriptSource, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-        noSleepViewConfig.userContentController.addUserScript(userScript)
-        noSleepViewConfig.allowsInlineMediaPlayback = true
-        noSleepViewConfig.requiresUserActionForMediaPlayback = false
-        noSleepView = WKWebView(frame: view.bounds, configuration: noSleepViewConfig)
-        noSleepView.load(URLRequest(url: URL(string: "about:blank")!))
-        view.addSubview(noSleepView)
-        noSleepView.isHidden = true
-        
+
         // Add a view for our keyboard
         let keyboardController = UIHostingController(rootView: KeyboardView(width: view.bounds.width))
         self.addChild(keyboardController)
@@ -210,28 +237,11 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     }
     
     func disablePersistence() {
-        timer?.invalidate()
-        timer = nil
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
-            self.noSleepView.evaluateJavaScript("noSleep.disable()")
-        }
+        UIApplication.shared.isIdleTimerDisabled = false
     }
-    
+
     func enablePersistence() {
-        // I don't love using timers, I'll fix this up later with play/pause event listeners
-        if timer == nil {
-            self.noSleepView.evaluateJavaScript("noSleep.enable()")
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-                let sleepDisabledNoSleepView = self.noSleepView._hasSleepDisabler()
-                let sleepDisabledWebView = self.webView._hasSleepDisabler()
-                if sleepDisabledWebView {
-                    self.noSleepView.evaluateJavaScript("noSleep.disable()")
-                }
-                if !sleepDisabledNoSleepView && !sleepDisabledWebView {
-                    self.noSleepView.evaluateJavaScript("noSleep.enable()")
-                }
-            }
-        }
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     // Warn the user to tap their screen
