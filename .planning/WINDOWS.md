@@ -1,10 +1,10 @@
 ---
 schema_version: 1
-open_count: 5
+open_count: 2
 waived_count: 0
-fixed_count: 0
+fixed_count: 3
 total_count: 5
-last_updated: 2026-08-18T10:06:58.725Z
+last_updated: 2026-08-18T10:58:23.870Z
 ---
 
 # Broken Windows Ledger
@@ -17,9 +17,9 @@ last_updated: 2026-08-18T10:06:58.725Z
 |----|-------|------|------|------|-------------|--------|--------|-------------|-------------|
 | 1 | 01 | deviation | .planning/REQUIREMENTS.md |  | INFRA-01 completion reverted: plan 01-01 delivered only the build-time key delivery; entitlement application (plans 01-02/01-03) still pending | open |  | 2026-08-18T05:00:28.300Z |  |
 | 2 | 01 | unrun-verify | Secrets.xcconfig |  | 01-03 Task 2 checkpoint open: restricted Google key not yet created/injected; plutil+gcloud verification unrun until user completes console runbook | open |  | 2026-08-18T07:07:02.911Z |  |
-| 3 | 02 | unrun-verify | CarTube.xcodeproj/project.pbxproj |  | 02-01 tracer <verify> could not complete a literal simulator BUILD SUCCEEDED + codesign entitlements dump — local sandbox Xcode 26.3 SDK (iphonesimulator26.2/23C57) has no matching installed simulator runtime (only iOS 26.5/23F77 present); actool CompileAssetCatalogVariant fails on runtime/SDK version mismatch, reproduced on unrelated Dynamic SPM scheme too. Entitlements confirmed empty via plutil and via compiled .xcent during partial build (zero private keys). | open |  | 2026-08-18T09:40:18.811Z |  |
-| 4 | 02 | unrun-verify | .github/workflows/scan.yml |  | 02-02 Task 2 real-binary proof-of-detection on the CarTube app executable could not run locally — same Xcode 26.3 SDK 26.2 vs installed-runtime 26.5 mismatch as 02-01: CompileAssetCatalogVariant aborts before the CarTube target's own Swift compile/link, even in target-mode builds bypassing scheme resolution. The real PlayOnCarTube.appex extension binary DID link and was scanned clean (exit 0, genuine Mach-O, not a fixture). Supplementary source-level scan of the real pre-severance CarTube/Util/Utilities.swift confirms MRMediaRemote, BKSDisplayBrightness, SBGetScreenLockStatus, SBSSpringBoardServerPort, PrivateFrameworks/, platform-application markers are present and detected. CI on a matching runtime (or a real device/CI runner) will complete the binary-level proof. | open |  | 2026-08-18T09:54:35.125Z |  |
-| 5 | 02 | unrun-verify | CarTube.xcodeproj |  | 02-03: xcodebuild -scheme CarTube (and target-mode -sdk iphonesimulator) both fail before a CarTube.app/CarTube binary is produced — same Xcode 26.3/iphonesimulator SDK 26.2 vs installed iOS 26.5 runtime mismatch logged in WINDOWS entries 1-4 (02-01, 02-02). Source-level scan-private-apis.sh run against every file this plan modified (Utilities.swift, CarPlaySingleton.swift, CarPlayViewController.swift, CarPlaySceneDelegate.swift, CarTubeApp.swift, Settings.swift, ContentView.swift) is clean of all 15 markers, but the compiled-binary strings scan (must_haves.truths item 2) remains unrun locally; deferred to a CI runner with a matching simulator runtime. | open |  | 2026-08-18T10:06:58.725Z |  |
+| 3 | 02 | unrun-verify | CarTube.xcodeproj/project.pbxproj |  | 02-01 tracer <verify> could not complete a literal simulator BUILD SUCCEEDED + codesign entitlements dump — local sandbox Xcode 26.3 SDK (iphonesimulator26.2/23C57) has no matching installed simulator runtime (only iOS 26.5/23F77 present); actool CompileAssetCatalogVariant fails on runtime/SDK version mismatch, reproduced on unrelated Dynamic SPM scheme too. Entitlements confirmed empty via plutil and via compiled .xcent during partial build (zero private keys). | fixed |  | 2026-08-18T09:40:18.811Z | 2026-08-18T10:58:12.298Z |
+| 4 | 02 | unrun-verify | .github/workflows/scan.yml |  | 02-02 Task 2 real-binary proof-of-detection on the CarTube app executable could not run locally — same Xcode 26.3 SDK 26.2 vs installed-runtime 26.5 mismatch as 02-01: CompileAssetCatalogVariant aborts before the CarTube target's own Swift compile/link, even in target-mode builds bypassing scheme resolution. The real PlayOnCarTube.appex extension binary DID link and was scanned clean (exit 0, genuine Mach-O, not a fixture). Supplementary source-level scan of the real pre-severance CarTube/Util/Utilities.swift confirms MRMediaRemote, BKSDisplayBrightness, SBGetScreenLockStatus, SBSSpringBoardServerPort, PrivateFrameworks/, platform-application markers are present and detected. CI on a matching runtime (or a real device/CI runner) will complete the binary-level proof. | fixed |  | 2026-08-18T09:54:35.125Z | 2026-08-18T10:58:23.780Z |
+| 5 | 02 | unrun-verify | CarTube.xcodeproj |  | 02-03: xcodebuild -scheme CarTube (and target-mode -sdk iphonesimulator) both fail before a CarTube.app/CarTube binary is produced — same Xcode 26.3/iphonesimulator SDK 26.2 vs installed iOS 26.5 runtime mismatch logged in WINDOWS entries 1-4 (02-01, 02-02). Source-level scan-private-apis.sh run against every file this plan modified (Utilities.swift, CarPlaySingleton.swift, CarPlayViewController.swift, CarPlaySceneDelegate.swift, CarTubeApp.swift, Settings.swift, ContentView.swift) is clean of all 15 markers, but the compiled-binary strings scan (must_haves.truths item 2) remains unrun locally; deferred to a CI runner with a matching simulator runtime. | fixed |  | 2026-08-18T10:06:58.725Z | 2026-08-18T10:58:23.870Z |
 
 ````json
 [
@@ -54,10 +54,10 @@ last_updated: 2026-08-18T10:06:58.725Z
     "file": "CarTube.xcodeproj/project.pbxproj",
     "line": null,
     "description": "02-01 tracer <verify> could not complete a literal simulator BUILD SUCCEEDED + codesign entitlements dump — local sandbox Xcode 26.3 SDK (iphonesimulator26.2/23C57) has no matching installed simulator runtime (only iOS 26.5/23F77 present); actool CompileAssetCatalogVariant fails on runtime/SDK version mismatch, reproduced on unrelated Dynamic SPM scheme too. Entitlements confirmed empty via plutil and via compiled .xcent during partial build (zero private keys).",
-    "status": "open",
+    "status": "fixed",
     "reason": "",
     "recorded_at": "2026-08-18T09:40:18.811Z",
-    "resolved_at": null
+    "resolved_at": "2026-08-18T10:58:12.298Z"
   },
   {
     "id": 4,
@@ -66,10 +66,10 @@ last_updated: 2026-08-18T10:06:58.725Z
     "file": ".github/workflows/scan.yml",
     "line": null,
     "description": "02-02 Task 2 real-binary proof-of-detection on the CarTube app executable could not run locally — same Xcode 26.3 SDK 26.2 vs installed-runtime 26.5 mismatch as 02-01: CompileAssetCatalogVariant aborts before the CarTube target's own Swift compile/link, even in target-mode builds bypassing scheme resolution. The real PlayOnCarTube.appex extension binary DID link and was scanned clean (exit 0, genuine Mach-O, not a fixture). Supplementary source-level scan of the real pre-severance CarTube/Util/Utilities.swift confirms MRMediaRemote, BKSDisplayBrightness, SBGetScreenLockStatus, SBSSpringBoardServerPort, PrivateFrameworks/, platform-application markers are present and detected. CI on a matching runtime (or a real device/CI runner) will complete the binary-level proof.",
-    "status": "open",
+    "status": "fixed",
     "reason": "",
     "recorded_at": "2026-08-18T09:54:35.125Z",
-    "resolved_at": null
+    "resolved_at": "2026-08-18T10:58:23.780Z"
   },
   {
     "id": 5,
@@ -78,10 +78,10 @@ last_updated: 2026-08-18T10:06:58.725Z
     "file": "CarTube.xcodeproj",
     "line": null,
     "description": "02-03: xcodebuild -scheme CarTube (and target-mode -sdk iphonesimulator) both fail before a CarTube.app/CarTube binary is produced — same Xcode 26.3/iphonesimulator SDK 26.2 vs installed iOS 26.5 runtime mismatch logged in WINDOWS entries 1-4 (02-01, 02-02). Source-level scan-private-apis.sh run against every file this plan modified (Utilities.swift, CarPlaySingleton.swift, CarPlayViewController.swift, CarPlaySceneDelegate.swift, CarTubeApp.swift, Settings.swift, ContentView.swift) is clean of all 15 markers, but the compiled-binary strings scan (must_haves.truths item 2) remains unrun locally; deferred to a CI runner with a matching simulator runtime.",
-    "status": "open",
+    "status": "fixed",
     "reason": "",
     "recorded_at": "2026-08-18T10:06:58.725Z",
-    "resolved_at": null
+    "resolved_at": "2026-08-18T10:58:23.870Z"
   }
 ]
 ````
