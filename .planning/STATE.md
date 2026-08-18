@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: External Dependencies & Project Setup
 status: executing
-stopped_at: Phase 5 UI-SPEC approved
-last_updated: "2026-08-18T04:25:29.683Z"
+stopped_at: Completed 01-01-PLAN.md (build-time secret injection)
+last_updated: "2026-08-18T04:59:01.479Z"
 last_activity: 2026-08-18
 last_activity_desc: Roadmap created (6 phases, 19/19 requirements mapped)
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 18
-  completed_plans: 0
+  completed_plans: 1
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-08-17)
 ## Current Position
 
 Phase: 01 (External Dependencies & Project Setup) — EXECUTING
-Plan: 1 of 3
-Status: Executing Phase 01
+Plan: 2 of 3
+Status: Ready to execute
 Last activity: 2026-08-18 — Phase 01 execution started
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 6%
 
 ## Performance Metrics
 
@@ -49,6 +49,11 @@ Progress: [░░░░░░░░░░] 0%
 | - | - | - | - |
 
 *Updated after each plan completion*
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 01 P01 | 25m | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -59,6 +64,8 @@ Recent decisions affecting current work:
 
 - Roadmap: Horizontal-layer phase order (external deps → severance → search core → UI → voice → submission) follows research dependency order; severance precedes search (same files touched)
 - Roadmap: INFRA-01 (CarPlay entitlement) isolated in Phase 1 — external clock started day 1; phases 3–5 develop behind phone-side mocks until granted
+- [Phase ?]: xcconfig secret injection attached at project level (Debug+Release baseConfigurationReference) — no target-level definition, so layering is unambiguous
+- [Phase ?]: Fresh-clone failure is intentional and documented: missing root Secrets.xcconfig fails build with 'Unable to open base configuration reference file'; CI bypasses disk via xcodebuild YOUTUBE_API_KEY=... override
 
 ### Pending Todos
 
@@ -70,6 +77,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-17T23:11:05.824Z
-Stopped at: Phase 5 UI-SPEC approved
-Resume file: .planning/phases/05-voice-input/05-UI-SPEC.md
+Last session: 2026-08-18T04:59:01.469Z
+Stopped at: Completed 01-01-PLAN.md (build-time secret injection)
+Resume file: None
