@@ -104,15 +104,14 @@ struct VoiceSearchSetup: View {
         }
     }
 
-    // Order per UI-SPEC/research: speech first, then mic on completion. Both callbacks
-    // arrive off-main — hop before touching state.
+    // Always moves both permissions forward regardless of the speech result: if the
+    // mic request were skipped after a speech denial, recordPermission would remain
+    // .undetermined forever and evaluate() would report .needsOnboarding instead of
+    // .denied — stranding the user with no "Open Settings" recovery path. Both
+    // callbacks arrive off-main — hop before touching state.
     private func enableVoiceSearch() {
-        SFSpeechRecognizer.requestAuthorization { speechStatus in
+        SFSpeechRecognizer.requestAuthorization { _ in
             DispatchQueue.main.async {
-                guard speechStatus == .authorized else {
-                    refresh()
-                    return
-                }
                 AVAudioSession.sharedInstance().requestRecordPermission { _ in
                     DispatchQueue.main.async {
                         refresh()
