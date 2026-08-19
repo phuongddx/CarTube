@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05147BDEB4CFCA208D69DE47 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C061FF86FFD24B71489A41 /* SearchCoordinator.swift */; };
 		250B50D02953D12500397038 /* CarTubeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B50CF2953D12500397038 /* CarTubeApp.swift */; };
 		250B50D22953D12500397038 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B50D12953D12500397038 /* ContentView.swift */; };
 		250B50D72953D12800397038 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250B50D62953D12800397038 /* Preview Assets.xcassets */; };
@@ -39,9 +40,11 @@
 		49A2773FF013DCB2685B37E5 /* search-response-empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DC64A6F764078D52D28B553 /* search-response-empty.json */; };
 		505A3D505C9743F373B334BE /* SearchFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1498B80E5337C77D0990DCB /* SearchFallback.swift */; };
 		51B344993E1A36DDAD4541E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F016D903939C697DF19634 /* Foundation.framework */; };
+		54FFB0CCDC14D2A36CB823D6 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40824D2652873ED55A6921D /* SearchResultsViewController.swift */; };
 		5B291321EC71906F575BDF77 /* UtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E1B837301BA308FA90283 /* UtilitiesTests.swift */; };
 		5C3BB9D3CF9481CC52293EEB /* LastQueryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8516C03DA45E4929A33FE20F /* LastQueryCache.swift */; };
 		688CBDDF4E9CA2F0C67BACE6 /* YouTubeSearchServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */; };
+		6F29D4574E0E574EF4AF6A2E /* SearchCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDEA05CF9DF56FEEC96D129E /* SearchCoordinatorTests.swift */; };
 		8AAC392329ADE61A5710CE53 /* videos-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 54D41EF84CD76B127E5040F1 /* videos-response.json */; };
 		8DE3E5A628DFBA1131F75B5D /* YouTubeSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B68141E9A01F1DB7444137 /* YouTubeSearchService.swift */; };
 		8F4A56C0ADB89FED357F8428 /* DurationFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78357C19619ED0FE8900BE40 /* DurationFormatterTests.swift */; };
@@ -137,6 +140,9 @@
 		B2F016D903939C697DF19634 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		B52FFBE724A4D84A3922E53C /* SearchResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		BC1563B69A66BE62E3C62F10 /* MockURLProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		CDEA05CF9DF56FEEC96D129E /* SearchCoordinatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorTests.swift; sourceTree = "<group>"; };
+		D40824D2652873ED55A6921D /* SearchResultsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		E4C061FF86FFD24B71489A41 /* SearchCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		F587664409CE07CF24DFCA16 /* CarTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -230,6 +236,7 @@
 				250B50E92953D29100397038 /* CarPlayViewController.swift */,
 				250B50EA2953D29100397038 /* CarPlaySceneDelegate.swift */,
 				250B50EB2953D29100397038 /* CarPlaySingleton.swift */,
+				D40824D2652873ED55A6921D /* SearchResultsViewController.swift */,
 			);
 			path = CarPlay;
 			sourceTree = "<group>";
@@ -331,6 +338,7 @@
 				8516C03DA45E4929A33FE20F /* LastQueryCache.swift */,
 				A1498B80E5337C77D0990DCB /* SearchFallback.swift */,
 				4E1A7056CCD3B525E1770C8A /* DurationFormatter.swift */,
+				E4C061FF86FFD24B71489A41 /* SearchCoordinator.swift */,
 			);
 			name = Search;
 			path = Search;
@@ -346,6 +354,7 @@
 				62365F91ACA32CB20C2C19D2 /* LastQueryCacheTests.swift */,
 				18A5BBEEBF80A1A29369D0D1 /* SearchFallbackTests.swift */,
 				78357C19619ED0FE8900BE40 /* DurationFormatterTests.swift */,
+				CDEA05CF9DF56FEEC96D129E /* SearchCoordinatorTests.swift */,
 			);
 			name = CarTubeTests;
 			path = CarTubeTests;
@@ -525,6 +534,8 @@
 				5C3BB9D3CF9481CC52293EEB /* LastQueryCache.swift in Sources */,
 				505A3D505C9743F373B334BE /* SearchFallback.swift in Sources */,
 				B443B82B13F8CBE7E509EF00 /* DurationFormatter.swift in Sources */,
+				54FFB0CCDC14D2A36CB823D6 /* SearchResultsViewController.swift in Sources */,
+				05147BDEB4CFCA208D69DE47 /* SearchCoordinator.swift in Sources */,
 			);
 		};
 		257D148E297A58220095689E /* Sources */ = {
@@ -543,6 +554,7 @@
 				2B6FB4E1A33C6809681F2019 /* LastQueryCacheTests.swift in Sources */,
 				4488EF7C0D4D682107E96B88 /* SearchFallbackTests.swift in Sources */,
 				8F4A56C0ADB89FED357F8428 /* DurationFormatterTests.swift in Sources */,
+				6F29D4574E0E574EF4AF6A2E /* SearchCoordinatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

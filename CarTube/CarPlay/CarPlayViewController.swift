@@ -14,6 +14,7 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     private var webView: WKWebView = WKWebView()
     private var keyboardView: UIView = UIView()
     private var screenOffLabel: UIView = UIView()
+    private var resultsController: SearchResultsViewController!
 
     // Build the WKWebViewConfiguration reflecting current settings — used by both
     // initial load (viewDidLoad) and in-place reconfiguration (applyConfigurationInPlace).
@@ -154,7 +155,27 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         label.textAlignment = .center
         label.textColor = .black
         screenOffLabel.addSubview(label)
-        
+
+        // Add the search results overlay, below screenOffLabel so it never blocks the wake warning
+        resultsController = SearchResultsViewController(
+            onSelect: { [weak self] videoId in
+                CarPlaySingleton.shared.loadUrl(YT_EMBED + videoId)
+                CarPlaySingleton.shared.dismissSearchResults()
+            },
+            onClose: { [weak self] in
+                CarPlaySingleton.shared.dismissSearchResults()
+            },
+            onRetry: { [weak self] in
+                CarPlaySingleton.shared.dismissSearchResults()
+                CarPlaySingleton.shared.toggleKeyboard()
+            }
+        )
+        self.addChild(resultsController)
+        resultsController.view.frame = view.bounds
+        resultsController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        resultsController.view.isHidden = true
+        view.insertSubview(resultsController.view, belowSubview: screenOffLabel)
+
         let splashController = UIHostingController(rootView: SplashScreen())
         self.addChild(splashController)
         splashController.view.frame = view.bounds
@@ -294,6 +315,17 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         }
     }
     
+    // Show search results in the overlay — never touches the webview (UI-01)
+    func showSearchResults(_ state: SearchResultsState) {
+        resultsController.update(state)
+        resultsController.view.isHidden = false
+    }
+
+    // Dismiss the search results overlay — never touches the webview (UI-01)
+    func dismissSearchResults() {
+        resultsController.view.isHidden = true
+    }
+
     // Helper func for JS to show or hide the keyboard
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "keyboard" {

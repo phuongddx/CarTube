@@ -76,6 +76,22 @@ class CarPlaySingleton {
         controller?.toggleKeyboard()
     }
 
+    /// Show search results in the overlay
+    func showSearchResults(_ state: SearchResultsState) {
+        controller?.showSearchResults(state)
+    }
+
+    /// Dismiss the search results overlay
+    func dismissSearchResults() {
+        controller?.dismissSearchResults()
+    }
+
+    /// Submit a typed search query through the coordinator funnel
+    @MainActor
+    func submitSearchQuery(_ query: String) {
+        SearchCoordinator.shared.search(query)
+    }
+
     /// Apply the current settings to the CarPlay browser in place (no restart)
     func applyConfiguration() {
         controller?.applyConfigurationInPlace()
