@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_phase: 05
-current_phase_name: Voice Input
-status: planning
-stopped_at: Halted 04-02-PLAN.md at Task 3 checkpoint (visual verification, gate=blocking)
-last_updated: "2026-08-19T04:00:22.945Z"
+current_phase_name: voice-input
+status: executing
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-08-19T05:12:26.055Z"
 last_activity: 2026-08-19
 last_activity_desc: Phase 03 complete, transitioned to Phase 04
 progress:
@@ -23,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18)
 
 **Core value:** A driver can open any YouTube video on their car screen — by voice, search, or share — with ads and sponsors skipped automatically.
-**Current focus:** Phase 03 — search-core
+**Current focus:** Phase 05 — voice-input
 
 ## Current Position
 
-Phase: 05 — Voice Input
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-08-19 — Phase 04 complete, transitioned to Phase 05
+Phase: 05 (voice-input) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-08-19 — Phase 05 execution started
 
-Progress: [██████░░░░] 61%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Progress: [██████░░░░] 61%
 | Phase 03 P02 | 15min | 2 tasks | 10 files |
 | Phase 04 P01 | 55min | 2 tasks | 9 files |
 | Phase 04 P02 | 20min | 2 tasks | 4 files |
+| Phase 05 P01 | 45min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,8 @@ Recent decisions affecting current work:
 - [Phase ?]: 04-01: .fallback state and MessageCell.configureFallback() are implemented for switch-exhaustiveness but unreachable this plan — SearchCoordinator's degrade branch calls degrade(query) then dismissOverlay() immediately; 04-02 wires the fallback-row presentation with its own auto-dismiss timer
 - [Phase ?]: 04-01: visual end-to-end pass (keyboard submit -> overlay -> tap -> play -> dismiss) deferred to 04-02's phone-preview harness — no CarPlay entitlement/simulator scene available in this environment; funnel is fully unit-proven (46/46 tests) instead
 - [Phase ?]: 04-02: SearchCoordinator generation guard checked at top of run() means a superseded query issues zero network requests (stronger than late-response discard); autoDismissDelay is an injectable Duration seam (default .seconds(2)) so tests avoid awaiting real wall-clock time
+- [Phase 05]: 05-01: SpeechRecognizerService is construction-gated on SFSpeechRecognizer.supportsOnDeviceRecognition (checked at init and re-asserted at startListening()) with an audio-engine + audio-session + recognition-task-factory seam trio plus an injectable clock -- a request is never built past a failed gate, so no server-based recognition path exists anywhere. — Research Pitfall 5 verified that requiresOnDeviceRecognition alone fails silently to server recognition when unsupported; the three-protocol seam design lets the full push-to-talk lifecycle (including the 1.8s/10.0s silence timer and teardown ordering) be proven with zero live audio in CarTubeTests.
+- [Phase 05]: 05-01: Built MicButton's full idle/listening/hint surface and CarPlayViewController's complete wiring (transcript submit, hint display, availability re-check) in Task 1 rather than splitting hint-display wiring into Task 2 -- Task 2 and Task 3 touch neither CarPlayViewController.swift nor add new MicButton API, only pinning behavior with tests (SpeechAvailabilityGateTests, SilenceTimerTests) and hardening SpeechRecognizerService (Pitfall-6 error table, silence timer, interruption observer). — Task 2/3's file lists never include CarPlayViewController.swift, and CarPlayViewController is the only file wiring the mic button into production -- deferring hint-pill wiring to a later task would have left the UI-SPEC's 'Didn't catch that' / 'Voice search unavailable' hints unreachable in the shipped app for this plan. Building the complete vertical slice in the tracer task (Task 1) keeps VoiceSearchAvailability + MicButton + SpeechRecognizerService as a genuinely finished contract for 05-02/05-03 to build on.
 
 ### Pending Todos
 
@@ -117,6 +120,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-19T03:07:38.254Z
-Stopped at: Halted 04-02-PLAN.md at Task 3 checkpoint (visual verification, gate=blocking)
+Last session: 2026-08-19T05:12:26.035Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None
