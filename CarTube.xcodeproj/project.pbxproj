@@ -62,6 +62,7 @@
 		B443B82B13F8CBE7E509EF00 /* DurationFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A7056CCD3B525E1770C8A /* DurationFormatter.swift */; };
 		BAC9F378ACD1CB5C45889445 /* MicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72606373E18FF27210291BD9 /* MicButton.swift */; };
 		F47924C8D6E56CC9FE464D50 /* SpeechAvailabilityGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */; };
+		FB3D205057056D36BACD8933 /* CarTubeShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6E22AEA7CACE652B5AEC46 /* CarTubeShortcuts.swift */; };
 		FC3030C2AACC03B040C8706F /* SilenceTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E374288C8BED1CD14D5834ED /* SilenceTimerTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +97,7 @@
 
 /* Begin PBXFileReference section */
 		03FBA2D17C2AEB4215CE6F45 /* VoiceSearchSetup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VoiceSearchSetup.swift; sourceTree = "<group>"; };
+		0E6E22AEA7CACE652B5AEC46 /* CarTubeShortcuts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CarTubeShortcuts.swift; sourceTree = "<group>"; };
 		0E85E4159DA334E9ABB14D53 /* SpeechRecognizerServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerServiceTests.swift; sourceTree = "<group>"; };
 		0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpeechAvailabilityGateTests.swift; sourceTree = "<group>"; };
 		18A5BBEEBF80A1A29369D0D1 /* SearchFallbackTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SearchFallbackTests.swift; path = SearchFallbackTests.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				4E1A7056CCD3B525E1770C8A /* DurationFormatter.swift */,
 				E4C061FF86FFD24B71489A41 /* SearchCoordinator.swift */,
 				584C9874C4A897868A091995 /* SearchCarTubeIntent.swift */,
+				0E6E22AEA7CACE652B5AEC46 /* CarTubeShortcuts.swift */,
 			);
 			name = Search;
 			path = Search;
@@ -580,6 +583,7 @@
 				BAC9F378ACD1CB5C45889445 /* MicButton.swift in Sources */,
 				7DEEECE19B7F849158153F80 /* VoiceSearchSetup.swift in Sources */,
 				3D138195D961A48465B44A24 /* SearchCarTubeIntent.swift in Sources */,
+				FB3D205057056D36BACD8933 /* CarTubeShortcuts.swift in Sources */,
 			);
 		};
 		257D148E297A58220095689E /* Sources */ = {
