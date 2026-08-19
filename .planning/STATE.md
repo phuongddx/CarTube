@@ -4,16 +4,16 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 04
 current_phase_name: CarPlay Search Surface
-status: planning
-stopped_at: "Halted mid 03-03-PLAN.md: Tasks 1-2 complete + Task 3 steps 1+3 complete; Task 3 step 2 (live smoke) and Task 4 (checkpoint) await human decision"
-last_updated: "2026-08-19T02:06:22.437Z"
+status: executing
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-08-19T02:50:56.333Z"
 last_activity: 2026-08-19
 last_activity_desc: Phase 03 complete, transitioned to Phase 04
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 18
-  completed_plans: 10
+  completed_plans: 11
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 04 — CarPlay Search Surface
-Plan: Not started
-Status: Ready to plan
+Plan: 2 of 2
+Status: Ready to execute
 Last activity: 2026-08-19 — Phase 03 complete, transitioned to Phase 04
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 61%
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Progress: [█████░░░░░] 50%
 | Phase 02 P04 | 24min | 2 tasks | 3 files |
 | Phase 03 P01 | 18min | 2 tasks | 4 files |
 | Phase 03 P02 | 15min | 2 tasks | 10 files |
+| Phase 04 P01 | 55min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,9 @@ Recent decisions affecting current work:
 - [Phase ?]: 03-03: LastQueryCache (actor, single-slot, exact-string match, no UserDefaults) built and tested (6 tests) — SRCH-02's cache half
 - [Phase ?]: 03-03: SearchFallback.decide pure function built and tested (6 tests) — every SearchError kind degrades to webview search; only empty success is showNoResults; caller contract documents CarPlay singleton's searchVideo(query) as the Phase-4-wired edge, in comments only (zero executable CarPlay references in Search/)
 - [Phase ?]: 03-03: docs/runbooks/google-dev-key.md authored (cartube-dev project, mirrors shipping-key runbook) and 3 Key Decision rows appended to PROJECT.md (no Phase 3 search toggle, parser-dedupe deferred, dev-key project separation) — all Outcome: Pending
+- [Phase ?]: 04-01: submitSearchQuery(_:) on CarPlaySingleton individually marked @MainActor (not the whole class) to bridge synchronously into the @MainActor-isolated SearchCoordinator.shared.search(_:) — compiler's own suggested fix, honors the patterns doc's 'do NOT retrofit @MainActor onto CarPlaySingleton' rule since only one bridging method is annotated
+- [Phase ?]: 04-01: .fallback state and MessageCell.configureFallback() are implemented for switch-exhaustiveness but unreachable this plan — SearchCoordinator's degrade branch calls degrade(query) then dismissOverlay() immediately; 04-02 wires the fallback-row presentation with its own auto-dismiss timer
+- [Phase ?]: 04-01: visual end-to-end pass (keyboard submit -> overlay -> tap -> play -> dismiss) deferred to 04-02's phone-preview harness — no CarPlay entitlement/simulator scene available in this environment; funnel is fully unit-proven (46/46 tests) instead
 
 ### Pending Todos
 
@@ -109,6 +113,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-18T15:57:56.896Z
-Stopped at: Halted mid 03-03-PLAN.md: Tasks 1-2 complete + Task 3 steps 1+3 complete; Task 3 step 2 (live smoke) and Task 4 (checkpoint) await human decision
-Resume file: none — run `/gsd-execute-phase 3` again to resume the phase-close pipeline (code review, regression gate, verify_phase_goal, security, UAT, transition); all 3 plans are already committed
+Last session: 2026-08-19T02:50:56.260Z
+Stopped at: Completed 04-01-PLAN.md
+Resume file: None

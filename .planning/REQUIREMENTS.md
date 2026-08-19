@@ -25,9 +25,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### CarPlay Search Surface
 
-- [ ] **UI-01**: Driver sees search results as a native tappable list on the CarPlay screen (≤8 rows, ≥60pt rows, thumbnail + title + channel + duration; one tap plays; playback continues beneath without webview resize)
-- [ ] **UI-02**: Siri, mic, and fallback inputs all funnel through one `SearchCoordinator` with ≤3 new `CarPlaySingleton` passthrough methods
-- [ ] **UI-03**: Results list shows "Results from YouTube" attribution
+- [x] **UI-01**: Driver sees search results as a native tappable list on the CarPlay screen (≤8 rows, ≥60pt rows, thumbnail + title + channel + duration; one tap plays; playback continues beneath without webview resize)
+- [x] **UI-02**: Siri, mic, and fallback inputs all funnel through one `SearchCoordinator` with ≤3 new `CarPlaySingleton` passthrough methods
+- [x] **UI-03**: Results list shows "Results from YouTube" attribution
 
 ### Voice Input
 
@@ -84,9 +84,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SRCH-02 | Phase 3 | Complete |
 | SRCH-03 | Phase 3 | Complete |
 | SRCH-04 | Phase 3 | Complete |
-| UI-01 | Phase 4 | Pending |
-| UI-02 | Phase 4 | Pending |
-| UI-03 | Phase 4 | Pending |
+| UI-01 | Phase 4 | Complete |
+| UI-02 | Phase 4 | Complete |
+| UI-03 | Phase 4 | Complete |
 | VOX-01 | Phase 5 | Pending |
 | VOX-02 | Phase 5 | Pending |
 | VOX-03 | Phase 5 | Pending |
