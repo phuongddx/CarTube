@@ -15,6 +15,9 @@ struct Debug: View {
     @State private var keyboardAPIAvailable = false
     @State private var idleTimerDisabled = false
 
+    @State private var isSearchPreviewPresented = false
+    @State private var searchPreviewState: SearchResultsState = .loading
+
     var body: some View {
         Form {
             List {
@@ -49,13 +52,64 @@ struct Debug: View {
                         forceScriptOn(key: "AgeRestrictBypassOn", name: "AgeRestrictBypass")
                     }
                 }
+                Section(header: Text("Search Overlay Preview"), footer: Text("Drives the production SearchResultsViewController through every state using synthetic fixtures — zero network, zero quota. The last row runs the real search funnel and is key-gated.")) {
+                    Button("Preview: Loading") { presentSearchPreview(.loading) }
+                    Button("Preview: 1 Result") { presentSearchPreview(.results(Array(Self.previewResults.prefix(1)))) }
+                    Button("Preview: 8 Results") { presentSearchPreview(.results(Self.previewResults)) }
+                    Button("Preview: Empty") { presentSearchPreview(.results([])) }
+                    Button("Preview: Fallback") { presentSearchPreview(.fallback) }
+                    Button("Run Real Funnel (console-only, key-gated)") {
+                        runRealFunnelIfKeyConfigured()
+                    }
+                }
             }
         }
         .navigationBarTitle("Debug", displayMode: .inline)
         .onAppear {
             refreshHookStatus()
         }
+        .fullScreenCover(isPresented: $isSearchPreviewPresented) {
+            SearchResultsPreviewHost(state: searchPreviewState) {
+                isSearchPreviewPresented = false
+            }
+        }
     }
+
+    private func presentSearchPreview(_ state: SearchResultsState) {
+        searchPreviewState = state
+        isSearchPreviewPresented = true
+    }
+
+    // Real-funnel proof is execution-only (console/request log), never visual on the
+    // phone: the default SearchCoordinator presenter targets CarPlaySingleton, which
+    // no-ops with no CarPlay controller attached. State previews above carry the visuals.
+    private func runRealFunnelIfKeyConfigured() {
+        let rawKey = Bundle.main.object(forInfoDictionaryKey: "YOUTUBE_API_KEY") as? String
+        guard YouTubeSearchService.normalizedKey(rawKey) != nil else {
+            UIApplication.shared.alert(
+                title: "Dev Key Required",
+                body: "Configure a YouTube API key in Secrets.xcconfig to run the real search funnel (see docs/runbooks/google-dev-key.md).",
+                window: .main
+            )
+            return
+        }
+        print("[Search Overlay Preview] running the real funnel via SearchCoordinator.shared.search(_:) — watch the console/request log for the funnel trace")
+        SearchCoordinator.shared.search("lofi hip hop radio")
+    }
+
+    // Synthetic fixtures only — realistic 11-char videoIds, one nil-duration row
+    // (Despacito), one nil-thumbnail row (Gangnam Style), and one deliberately
+    // long title (Bohemian Rhapsody) to exercise 2-line truncation.
+    private static let previewResults: [SearchResult] = [
+        SearchResult(videoId: "dQw4w9WgXcQ", title: "Never Gonna Give You Up", channel: "Rick Astley", thumbnail: URL(string: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"), duration: "PT3M33S"),
+        SearchResult(videoId: "9bZkp7q19f0", title: "GANGNAM STYLE", channel: "officialpsy", thumbnail: nil, duration: "PT4M13S"),
+        SearchResult(videoId: "kJQP7kiw5Fk", title: "Despacito", channel: "Luis Fonsi", thumbnail: URL(string: "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg"), duration: nil),
+        SearchResult(videoId: "OPf0YbXqDm0", title: "Uptown Funk", channel: "Mark Ronson", thumbnail: URL(string: "https://i.ytimg.com/vi/OPf0YbXqDm0/hqdefault.jpg"), duration: "PT4M31S"),
+        SearchResult(videoId: "fJ9rUzIMcZQ", title: "Bohemian Rhapsody (Remastered 2011) — a deliberately long title exercising the two-line truncation rule end to end", channel: "Queen Official", thumbnail: URL(string: "https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg"), duration: "PT5M55S"),
+        SearchResult(videoId: "JGwWNGJdvx8", title: "Shape of You", channel: "Ed Sheeran", thumbnail: URL(string: "https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg"), duration: "PT3M53S"),
+        SearchResult(videoId: "RgKAFK5djSk", title: "See You Again", channel: "Wiz Khalifa", thumbnail: URL(string: "https://i.ytimg.com/vi/RgKAFK5djSk/hqdefault.jpg"), duration: "PT3M57S"),
+        SearchResult(videoId: "hT_nvWreIhg", title: "Counting Stars", channel: "OneRepublic", thumbnail: URL(string: "https://i.ytimg.com/vi/hT_nvWreIhg/hqdefault.jpg"), duration: "PT4M18S")
+    ]
 
     private func hookStatusRow(name: String, installed: Bool) -> some View {
         HStack {
@@ -94,5 +148,34 @@ struct Debug: View {
 struct Debug_Previews: PreviewProvider {
     static var previews: some View {
         Debug()
+    }
+}
+
+// Constructs the same production SearchResultsViewController the CarPlay scene hosts,
+// driven purely by inline fixture state — no CarPlaySingleton, no network.
+private struct SearchResultsPreviewHost: UIViewControllerRepresentable {
+    let state: SearchResultsState
+    let onDismiss: () -> Void
+
+    func makeUIViewController(context: Context) -> SearchResultsViewController {
+        let controller = SearchResultsViewController(
+            onSelect: { videoId in
+                print("[Search Overlay Preview] onSelect videoId=\(videoId)")
+            },
+            onClose: { [onDismiss] in
+                print("[Search Overlay Preview] onClose")
+                onDismiss()
+            },
+            onRetry: { [onDismiss] in
+                print("[Search Overlay Preview] onRetry")
+                onDismiss()
+            }
+        )
+        controller.update(state)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: SearchResultsViewController, context: Context) {
+        uiViewController.update(state)
     }
 }
