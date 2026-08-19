@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_phase: 06
-current_phase_name: TestFlight Submission Package
+current_phase_name: testflight-submission-package
 status: executing
-stopped_at: Completed 05-03-PLAN.md
-last_updated: "2026-08-19T08:45:32.705Z"
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-08-19T09:21:57.102Z"
 last_activity: 2026-08-19
 last_activity_desc: Phase 03 complete, transitioned to Phase 04
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 4
   total_plans: 20
   completed_plans: 15
 ---
@@ -23,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18)
 
 **Core value:** A driver can open any YouTube video on their car screen — by voice, search, or share — with ads and sponsors skipped automatically.
-**Current focus:** Phase 05 — voice-input
+**Current focus:** Phase 06 — testflight-submission-package
 
 ## Current Position
 
-Phase: 06 — TestFlight Submission Package
-Plan: Not started
+Phase: 06 (testflight-submission-package) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-08-19 — Phase 05 complete, transitioned to Phase 06
+Last activity: 2026-08-19 — Phase 06 execution started
 
-Progress: [████████░░] 83%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -69,6 +69,7 @@ Progress: [████████░░] 83%
 | Phase 05 P01 | 45min | 3 tasks | 10 files |
 | Phase 05 P02 | 15min | 2 tasks | 3 files |
 | Phase 05 P03 | 35min | 3 tasks | 4 files |
+| Phase 06 P01 | 30min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -110,6 +111,8 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-01: Built MicButton's full idle/listening/hint surface and CarPlayViewController's complete wiring (transcript submit, hint display, availability re-check) in Task 1 rather than splitting hint-display wiring into Task 2 -- Task 2 and Task 3 touch neither CarPlayViewController.swift nor add new MicButton API, only pinning behavior with tests (SpeechAvailabilityGateTests, SilenceTimerTests) and hardening SpeechRecognizerService (Pitfall-6 error table, silence timer, interruption observer). — Task 2/3's file lists never include CarPlayViewController.swift, and CarPlayViewController is the only file wiring the mic button into production -- deferring hint-pill wiring to a later task would have left the UI-SPEC's 'Didn't catch that' / 'Voice search unavailable' hints unreachable in the shipped app for this plan. Building the complete vertical slice in the tracer task (Task 1) keeps VoiceSearchAvailability + MicButton + SpeechRecognizerService as a genuinely finished contract for 05-02/05-03 to build on.
 - [Phase 05]: 05-02: VoiceSearchSetup's stateContent renders through a single VoiceSearchSetup.copy(for:) static function driven by VoiceSearchAvailability.evaluate, and VoiceOnboardingStateTests asserts against that same function, not a parallel copy-string reimplementation — Keeps the onboarding screen, its tests, and the CarPlay mic button's gate reading from the identical evaluate() verdict (one source of truth per UI-SPEC/research)
 - [Phase 05]: 05-03: The plan's two-phrase Siri design ("Search YouTube for \(\.$query) in \(.applicationName)" + a parameterless fallback) fails real xcodebuild ExtractAppIntentsMetadata on Xcode 26.3 with "Invalid parameter type. AppEntity and AppEnum are the only allowed types for query" -- open-ended String parameters cannot be embedded in an AppShortcut phrase at all. Fixed by shipping only the parameterless phrase; requestValueDialog covers query capture as a Siri follow-up, fully preserving VOX-03's zero-setup goal. — Confirmed via a real xcodebuild build failure and corroborated by an identical error on Apple Developer Forums thread 770037 -- this disproves research's Assumption A1 (String phrase params, MEDIUM-confidence community belief) as a hard build-time constraint. The fallback phrase is exactly the contingency 05-RESEARCH.md Pattern 2 already designed for this scenario.
+- [Phase 06]: 06-01: GitHub update check hardened, not removed — typed GitHubRelease Codable decode gated on HTTPURLResponse 200, retargeted at fork phuongddx/CarTube via Constants.swift SCREAMING_SNAKE_CASE URLs, alert renders fixed local copy only (decoded body field never interpolated) — PITFALLS named both harden and remove as options; ROADMAP criterion 3 requires validation, and upstream Avangelista releases never match App Store builds
+- [Phase 06]: 06-01: activation pasteboard read deleted in favor of SwiftUI PasteButton (String payload, isYouTubeURL-gated) — zero UIPasteboard code remains in the repo; scenePhase environment removed from ContentView — PasteButton is the system paste affordance: no paste-permission banner, no pasteboard code in app logic; iOS 16 floor makes it available
 
 ### Pending Todos
 
@@ -125,6 +128,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-19T05:48:47.952Z
-Stopped at: Completed 05-03-PLAN.md
+Last session: 2026-08-19T09:21:26.579Z
+Stopped at: Completed 06-01-PLAN.md
 Resume file: None

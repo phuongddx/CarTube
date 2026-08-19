@@ -178,13 +178,13 @@ Plans:
   3. GitHub update-check responses are validated before display, and the pasteboard read on activation is replaced with an explicit paste interaction
   4. A final scan-clean archive of app + share extension is produced that uploads under standard signing (TestFlight-ready)
 
-**Plans**: 3 plans
+**Plans**: 1/3 plans executed
 **UI hint**: no
 
 Plans:
 **Wave 1**
 
-- [ ] 06-01-PLAN.md — Tracer: hardening fixes (typed fork-targeted GitHubRelease update check + PasteButton replacing activation pasteboard read) with MockURLProtocol tests and dual-binary scan proof (SHIP-03)
+- [x] 06-01-PLAN.md — Tracer: hardening fixes (typed fork-targeted GitHubRelease update check + PasteButton replacing activation pasteboard read) with MockURLProtocol tests and dual-binary scan proof (SHIP-03)
 - [ ] 06-02-PLAN.md — Submission docs: honest App Review notes under audio category with 2.3.1 disclosure, ad-block-free App Store metadata, fallback ladder rungs 0–2 (SHIP-01, SHIP-02)
 
 **Wave 2** *(blocked on Wave 1 completion)*
@@ -203,7 +203,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Search Core | 3/3 | Complete    | 2026-08-19 |
 | 4. CarPlay Search Surface | 2/2 | Complete    | 2026-08-19 |
 | 5. Voice Input | 3/3 | Complete    | 2026-08-19 |
-| 6. TestFlight Submission Package | 0/3 | Planning complete | - |
+| 6. TestFlight Submission Package | 1/3 | In Progress|  |
 
 ## Notes
 
