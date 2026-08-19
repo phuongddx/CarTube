@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 06
 current_phase_name: testflight-submission-package
 status: executing
-stopped_at: Completed 06-01-PLAN.md
-last_updated: "2026-08-19T09:21:57.102Z"
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-08-19T09:32:40.506Z"
 last_activity: 2026-08-19
 last_activity_desc: Phase 03 complete, transitioned to Phase 04
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 20
-  completed_plans: 15
+  completed_plans: 16
 ---
 
 # Project State
@@ -28,9 +28,9 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 ## Current Position
 
 Phase: 06 (testflight-submission-package) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3 (06-01 and 06-02 complete; 06-03 next)
 Status: Ready to execute
-Last activity: 2026-08-19 — Phase 06 execution started
+Last activity: 2026-08-19 — 06-02 submission docs completed (review notes, metadata, fallback ladder)
 
 Progress: [████████░░] 75%
 
@@ -70,6 +70,7 @@ Progress: [████████░░] 75%
 | Phase 05 P02 | 15min | 2 tasks | 3 files |
 | Phase 05 P03 | 35min | 3 tasks | 4 files |
 | Phase 06 P01 | 30min | 3 tasks | 6 files |
+| Phase 06 P02 | 9min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -113,6 +114,8 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-03: The plan's two-phrase Siri design ("Search YouTube for \(\.$query) in \(.applicationName)" + a parameterless fallback) fails real xcodebuild ExtractAppIntentsMetadata on Xcode 26.3 with "Invalid parameter type. AppEntity and AppEnum are the only allowed types for query" -- open-ended String parameters cannot be embedded in an AppShortcut phrase at all. Fixed by shipping only the parameterless phrase; requestValueDialog covers query capture as a Siri follow-up, fully preserving VOX-03's zero-setup goal. — Confirmed via a real xcodebuild build failure and corroborated by an identical error on Apple Developer Forums thread 770037 -- this disproves research's Assumption A1 (String phrase params, MEDIUM-confidence community belief) as a hard build-time constraint. The fallback phrase is exactly the contingency 05-RESEARCH.md Pattern 2 already designed for this scenario.
 - [Phase 06]: 06-01: GitHub update check hardened, not removed — typed GitHubRelease Codable decode gated on HTTPURLResponse 200, retargeted at fork phuongddx/CarTube via Constants.swift SCREAMING_SNAKE_CASE URLs, alert renders fixed local copy only (decoded body field never interpolated) — PITFALLS named both harden and remove as options; ROADMAP criterion 3 requires validation, and upstream Avangelista releases never match App Store builds
 - [Phase 06]: 06-01: activation pasteboard read deleted in favor of SwiftUI PasteButton (String payload, isYouTubeURL-gated) — zero UIPasteboard code remains in the repo; scenePhase environment removed from ContentView — PasteButton is the system paste affordance: no paste-permission banner, no pasteboard code in app logic; iOS 16 floor makes it available
+- [Phase 06]: 06-02: submission docs record team K2TYLYAWMK as ground truth — the plan's "team U67AKNW8PW" prerequisite was a stale fact from the pre-Phase-1 pattern map (pbxproj, STATE.md, and the entitlement grant all say K2TYLYAWMK); U67AKNW8PW appears in app-review-notes.md only as an explicit superseded-do-not-use note, which also satisfies the plan's grep gate honestly
+- [Phase 06]: 06-02: verification-gate commands inside the marker-block docs build marker names from a shell variable (M=METADATA / M=REVIEW-NOTES) — a literal MARKER-BEGIN in the docs' own gate section re-opens the sed range and corrupts mechanical paste-block extraction (caught when the metadata negative gate matched its own quoted regex)
 
 ### Pending Todos
 
@@ -128,6 +131,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-19T09:21:26.579Z
-Stopped at: Completed 06-01-PLAN.md
+Last session: 2026-08-19T09:32:40.506Z
+Stopped at: Completed 06-02-PLAN.md
 Resume file: None
