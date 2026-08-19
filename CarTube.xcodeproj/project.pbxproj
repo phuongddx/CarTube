@@ -44,10 +44,12 @@
 		688CBDDF4E9CA2F0C67BACE6 /* YouTubeSearchServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */; };
 		8AAC392329ADE61A5710CE53 /* videos-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 54D41EF84CD76B127E5040F1 /* videos-response.json */; };
 		8DE3E5A628DFBA1131F75B5D /* YouTubeSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B68141E9A01F1DB7444137 /* YouTubeSearchService.swift */; };
+		8F4A56C0ADB89FED357F8428 /* DurationFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78357C19619ED0FE8900BE40 /* DurationFormatterTests.swift */; };
 		992A0473455E1F83CE355B52 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1563B69A66BE62E3C62F10 /* MockURLProtocol.swift */; };
 		AC8E3F0FE62EE08C07828581 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FFBE724A4D84A3922E53C /* SearchResult.swift */; };
 		B0795DFFA0C359503ECE9E95 /* search-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 50F0AE1661E10332570072DF /* search-response.json */; };
 		B0E3E1ED70EEBCB81D923560 /* error-403-quota.json in Resources */ = {isa = PBXBuildFile; fileRef = AD7D34E537DBC05176F4EE1E /* error-403-quota.json */; };
+		B443B82B13F8CBE7E509EF00 /* DurationFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A7056CCD3B525E1770C8A /* DurationFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,11 +121,13 @@
 		25A2A5922967917B004A9AB1 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		25A2A59429679BF2004A9AB1 /* HowTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowTo.swift; sourceTree = "<group>"; };
 		25EED739295F059A00C0DF56 /* CustomLayout.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = CustomLayout.js; sourceTree = "<group>"; };
+		4E1A7056CCD3B525E1770C8A /* DurationFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DurationFormatter.swift; sourceTree = "<group>"; };
 		50F0AE1661E10332570072DF /* search-response.json */ = {isa = PBXFileReference; includeInIndex = 1; path = "search-response.json"; sourceTree = "<group>"; };
 		54D41EF84CD76B127E5040F1 /* videos-response.json */ = {isa = PBXFileReference; includeInIndex = 1; path = "videos-response.json"; sourceTree = "<group>"; };
 		60ECAF1B97DA4013F0A5C0DB /* YouTubeSearchServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = YouTubeSearchServiceTests.swift; sourceTree = "<group>"; };
 		62365F91ACA32CB20C2C19D2 /* LastQueryCacheTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LastQueryCacheTests.swift; path = LastQueryCacheTests.swift; sourceTree = "<group>"; };
 		704E1B837301BA308FA90283 /* UtilitiesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UtilitiesTests.swift; sourceTree = "<group>"; };
+		78357C19619ED0FE8900BE40 /* DurationFormatterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DurationFormatterTests.swift; sourceTree = "<group>"; };
 		7B49E1D589F14020616C760C /* Secrets.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		8516C03DA45E4929A33FE20F /* LastQueryCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LastQueryCache.swift; path = LastQueryCache.swift; sourceTree = "<group>"; };
 		89B68141E9A01F1DB7444137 /* YouTubeSearchService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = YouTubeSearchService.swift; sourceTree = "<group>"; };
@@ -326,6 +330,7 @@
 				89B68141E9A01F1DB7444137 /* YouTubeSearchService.swift */,
 				8516C03DA45E4929A33FE20F /* LastQueryCache.swift */,
 				A1498B80E5337C77D0990DCB /* SearchFallback.swift */,
+				4E1A7056CCD3B525E1770C8A /* DurationFormatter.swift */,
 			);
 			name = Search;
 			path = Search;
@@ -340,6 +345,7 @@
 				BC1563B69A66BE62E3C62F10 /* MockURLProtocol.swift */,
 				62365F91ACA32CB20C2C19D2 /* LastQueryCacheTests.swift */,
 				18A5BBEEBF80A1A29369D0D1 /* SearchFallbackTests.swift */,
+				78357C19619ED0FE8900BE40 /* DurationFormatterTests.swift */,
 			);
 			name = CarTubeTests;
 			path = CarTubeTests;
@@ -518,6 +524,7 @@
 				8DE3E5A628DFBA1131F75B5D /* YouTubeSearchService.swift in Sources */,
 				5C3BB9D3CF9481CC52293EEB /* LastQueryCache.swift in Sources */,
 				505A3D505C9743F373B334BE /* SearchFallback.swift in Sources */,
+				B443B82B13F8CBE7E509EF00 /* DurationFormatter.swift in Sources */,
 			);
 		};
 		257D148E297A58220095689E /* Sources */ = {
@@ -535,6 +542,7 @@
 				992A0473455E1F83CE355B52 /* MockURLProtocol.swift in Sources */,
 				2B6FB4E1A33C6809681F2019 /* LastQueryCacheTests.swift in Sources */,
 				4488EF7C0D4D682107E96B88 /* SearchFallbackTests.swift in Sources */,
+				8F4A56C0ADB89FED357F8428 /* DurationFormatterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
