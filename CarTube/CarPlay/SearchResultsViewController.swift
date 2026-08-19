@@ -196,7 +196,7 @@ private final class ResultCell: UITableViewCell {
         NSLayoutConstraint.activate([
             thumbnailImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             thumbnailImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            thumbnailImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            thumbnailImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
             thumbnailImageView.widthAnchor.constraint(equalToConstant: 106),
             thumbnailImageView.heightAnchor.constraint(equalToConstant: 60),
 
