@@ -133,7 +133,12 @@ final class SearchResultsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        guard case .results(let results) = state, indexPath.row < results.count else { return }
+        guard case .results(let results) = state else { return }
+        if results.isEmpty {
+            onRetry()
+            return
+        }
+        guard indexPath.row < results.count else { return }
         onSelect(results[indexPath.row].videoId)
     }
 }

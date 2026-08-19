@@ -242,9 +242,12 @@ final class SearchCoordinatorTests: XCTestCase {
     }
 
     func testStaleResponseFromSupersededQueryIsDiscarded() async throws {
+        // Both search() calls happen synchronously with no await between them, so
+        // query B's generation bump lands before query A's run() ever begins
+        // executing on the MainActor — A is discarded pre-network, and only B's
+        // single request is ever issued. This is a stronger guarantee than
+        // "A's late response is discarded": A never gets to talk to the network at all.
         MockURLProtocol.responseQueue = [
-            (200, loadFixture("search-response")),
-            (200, loadFixture("videos-response")),
             (200, loadFixture("search-response-empty"))
         ]
 
@@ -258,7 +261,7 @@ final class SearchCoordinatorTests: XCTestCase {
                 states.append(state)
                 if case .results(let results) = state, results.isEmpty { bSettled.fulfill() }
             },
-            degrade: { _ in },
+            degrade: { _ in XCTFail("stale query A must never degrade") },
             dismissOverlay: {}
         )
 
@@ -276,5 +279,6 @@ final class SearchCoordinatorTests: XCTestCase {
             return XCTFail("expected second state to be .results, got \(states[1])")
         }
         XCTAssertTrue(results.isEmpty)
+        XCTAssertEqual(MockURLProtocol.requestLog.count, 1, "query A must issue zero requests once superseded")
     }
 }
