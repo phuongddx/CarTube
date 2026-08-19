@@ -27,7 +27,19 @@ CarTube/CarTube/
 ├── CarPlay/
 │   ├── CarPlaySceneDelegate.swift
 │   ├── CarPlaySingleton.swift
-│   └── CarPlayViewController.swift
+│   ├── CarPlayViewController.swift
+│   ├── SearchResultsViewController.swift
+│   └── MicButton.swift
+├── Search/
+│   ├── SearchResult.swift
+│   ├── YouTubeSearchService.swift
+│   ├── LastQueryCache.swift
+│   ├── SearchFallback.swift
+│   ├── DurationFormatter.swift
+│   └── SearchCoordinator.swift
+├── Speech/
+│   ├── VoiceSearchAvailability.swift
+│   └── SpeechRecognizerService.swift
 ├── Views/
 │   ├── ContentView.swift
 │   ├── Debug.swift
@@ -79,6 +91,8 @@ CarTube/PlayOnCarTube/
 - CarPlay scene lifecycle → `CarTube/CarPlay/CarPlaySceneDelegate.swift`
 - Browser setup, scripts, keyboard, gestures, persistence → `CarTube/CarPlay/CarPlayViewController.swift`
 - Cross-surface command routing → `CarTube/CarPlay/CarPlaySingleton.swift`
+- YouTube Data API search + result funnel → `CarTube/Search/`
+- On-device speech recognition + voice-search availability gating → `CarTube/Speech/`
 - YouTube URL constants → `CarTube/Util/Constants.swift`
 - Private-system or URL helpers → `CarTube/Util/Utilities.swift`
 - Alerts and String error conformance → `CarTube/Extensions/`
