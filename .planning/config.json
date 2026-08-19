@@ -50,7 +50,8 @@
     "tdd_mode": true,
     "ui_review": true,
     "use_worktrees": true,
-    "_auto_chain_active": false
+    "_auto_chain_active": false,
+    "test_command": "xcodebuild test -scheme CarTube -destination \"platform=iOS Simulator,name=iPhone 17\""
   },
   "ship": {
     "pr_body_sections": [
