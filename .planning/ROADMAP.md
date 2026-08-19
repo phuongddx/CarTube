@@ -35,7 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. A restricted YouTube Data API key exists in a dedicated Google Cloud project (API + bundle-ID restrictions, never committed to the repo) with a build-time delivery mechanism decided, so search work never blocks on Google
   3. If Apple grants the entitlement during this phase, the new provisioning profile is wired into the project and the CarPlay scene connection is verified; if still pending, it is tracked as a dated blocker rather than silently blocking later phases
 
-**Plans**: 3/3 plans executed
+**Plans**: 3/3 plans executed; 2 gap-closure plans added after 01-VERIFICATION.md found the Google key and CarPlay grant-wiring gaps still open
 
 Plans:
 **Wave 1**
@@ -46,6 +46,11 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 01-03-PLAN.md — Google restricted key provisioning, build injection verification, Key Decisions, phase close-out
+
+**Gap Closure (from 01-VERIFICATION.md)**
+
+- [ ] 01-04-PLAN.md — Gap closure: create the restricted Google Cloud API key (checkpoint:human-action) + build/hygiene verification + STATE.md/PROJECT.md close-out
+- [ ] 01-05-PLAN.md — Gap closure: complete remaining CarPlay entitlement grant-wiring steps (checkpoint:human-action) + signing-config verification + STATE.md close-out
 
 ### Phase 2: Severance, Signing & Modernization
 
