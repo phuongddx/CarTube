@@ -26,12 +26,12 @@ A driver can open any YouTube video on their car screen — by voice, search, or
 - ✓ Permanent `strings` binary scan gate in CI catching private-API regression on both binaries — Phase 2
 - ✓ Settings applies in place (no `exit(0)`) — Phase 2
 - ✓ Stateless, unit-tested YouTube Data API v3 search client (`YouTubeSearchService`) with build-time-injected key, quota-deliberate single-page requests, last-query cache, and fail-closed degradation to the existing webview search on 403/quota/key/decode failure — Phase 3
+- ✓ Push-to-talk mic button on the CarPlay screen using on-device speech recognition, gated visibility, visible listening state, silence auto-stop, and phone-first mic/speech permission onboarding — Phase 5
+- ✓ Voice search via Siri: zero-setup App Shortcut landing on the same search funnel — Phase 5 (accepted override: ships as a two-turn conversation — trigger phrase, then a follow-up question — not a single "Search YouTube for X" utterance, because Xcode 26.3's `appintentsmetadataprocessor` rejects any AppShortcut phrase with an open-ended `String` parameter; only `AppEntity`/`AppEnum` types are allowed. Zero-setup and in-process funnel routing are unaffected.)
 
 ### Active
 
 - [ ] Official CarPlay entitlement: apply under the audio category (honest fit; video category requires parked-only + AirPlay which contradicts Core Value); submit the application day 1 — it gates all on-device CarPlay work including the simulator — Phase 1, submitted 2026-08-18 (Case-ID 21672656), **granted 2026-08-18**; entitlements-file wiring done, provisioning-profile creation/import + Xcode signing toggle + CarPlay Simulator scene verification remain human/portal steps (see docs/runbooks/carplay-entitlement-grant-wiring.md)
-- [ ] Voice search via Siri: "Search YouTube for X" hands-free while driving
-- [ ] Push-to-talk mic button on the CarPlay screen using on-device speech recognition
 - [ ] Native, glanceable results list on the CarPlay screen wired to the Phase 3 search backend; tap to play — Phase 4
 - [ ] Fix HideScrollBar Debug-row verification logic — compares against the wrong IMP and may always report PASS regardless of hook-install state (02-REVIEW.md CR-02, knowingly left unfixed in Phase 2)
 - [ ] Regenerate AGENTS.md / README.md — both still describe the removed `Dynamic` package, lock-screen dimming, and the retired exit-to-apply Settings contract (02-REVIEW.md WR-05/WR-06)
@@ -100,4 +100,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-08-19 after Phase 3*
+*Last updated: 2026-08-19 after Phase 5*
