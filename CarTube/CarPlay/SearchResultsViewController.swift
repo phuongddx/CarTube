@@ -35,7 +35,7 @@ final class SearchResultsViewController: UITableViewController {
         view.backgroundColor = .black
         tableView.backgroundColor = .black
         tableView.isOpaque = true
-        tableView.rowHeight = 68.0
+        tableView.rowHeight = 128.0
         tableView.separatorColor = UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1)
         tableView.separatorInset = .zero
         tableView.register(ResultCell.self, forCellReuseIdentifier: ResultCell.reuseIdentifier)
