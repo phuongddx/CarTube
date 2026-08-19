@@ -5,8 +5,8 @@ milestone_name: milestone
 current_phase: 04
 current_phase_name: CarPlay Search Surface
 status: executing
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-08-19T02:50:56.333Z"
+stopped_at: Halted 04-02-PLAN.md at Task 3 checkpoint (visual verification, gate=blocking)
+last_updated: "2026-08-19T03:07:38.279Z"
 last_activity: 2026-08-19
 last_activity_desc: Phase 03 complete, transitioned to Phase 04
 progress:
@@ -29,8 +29,8 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 
 Phase: 04 — CarPlay Search Surface
 Plan: 2 of 2
-Status: Ready to execute
-Last activity: 2026-08-19 — Phase 03 complete, transitioned to Phase 04
+Status: Halted at Task 3 checkpoint (visual verification, gate=blocking) — Tasks 1-2 complete
+Last activity: 2026-08-19 — 04-02 Tasks 1-2 complete (generation guard, retry tap, phone preview harness); Task 3 checkpoint pending human sign-off
 
 Progress: [██████░░░░] 61%
 
@@ -63,6 +63,7 @@ Progress: [██████░░░░] 61%
 | Phase 03 P01 | 18min | 2 tasks | 4 files |
 | Phase 03 P02 | 15min | 2 tasks | 10 files |
 | Phase 04 P01 | 55min | 2 tasks | 9 files |
+| Phase 04 P02 | 20min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,7 @@ Recent decisions affecting current work:
 - [Phase ?]: 04-01: submitSearchQuery(_:) on CarPlaySingleton individually marked @MainActor (not the whole class) to bridge synchronously into the @MainActor-isolated SearchCoordinator.shared.search(_:) — compiler's own suggested fix, honors the patterns doc's 'do NOT retrofit @MainActor onto CarPlaySingleton' rule since only one bridging method is annotated
 - [Phase ?]: 04-01: .fallback state and MessageCell.configureFallback() are implemented for switch-exhaustiveness but unreachable this plan — SearchCoordinator's degrade branch calls degrade(query) then dismissOverlay() immediately; 04-02 wires the fallback-row presentation with its own auto-dismiss timer
 - [Phase ?]: 04-01: visual end-to-end pass (keyboard submit -> overlay -> tap -> play -> dismiss) deferred to 04-02's phone-preview harness — no CarPlay entitlement/simulator scene available in this environment; funnel is fully unit-proven (46/46 tests) instead
+- [Phase ?]: 04-02: SearchCoordinator generation guard checked at top of run() means a superseded query issues zero network requests (stronger than late-response discard); autoDismissDelay is an injectable Duration seam (default .seconds(2)) so tests avoid awaiting real wall-clock time
 
 ### Pending Todos
 
@@ -110,9 +112,10 @@ None yet.
 - **Google shipping key not yet created (external, 2026-08-18)** — Runbook authored and committed (docs/runbooks/google-youtube-api-key.md); the Console actions are human-only behind Google login: dedicated project, enable YouTube Data API v3, create key, both restrictions (API: YouTube Data API v3 only; iOS: com.cartube.carplay + com.cartube.carplay.playon), quota alerting, paste the key into root Secrets.xcconfig (gitignored) replacing the sentinel. On resume: agent verifies via gcloud + plutil + git grep. Phase 3 search work blocks on this; nothing else does.
 - Phase 2 closed 2026-08-18: code review (2 of 3 critical findings fixed — idle-timer apply-in-place gap, bundle-ID/signing-team inconsistency; CR-02 HideScrollBar row + 7 warnings + 3 info left as tracked follow-up, see PROJECT.md Active), phase-goal verification passed, UAT 2/2 passed, security 0 threats open. CarPlay-connected end-to-end observation of the idle-timer fix remains deferred until the Phase 1 entitlement lands (see below).
 - 03-03 halted at Task 3 step 2 / Task 4: live smoke search and its blocking checkpoint need a human decision (provision cartube-dev key, spend 2 units on the shipping key, or skip smoke entirely) plus review of the 3 new Key Decision rows — see docs/runbooks/google-dev-key.md Section 4 'Status of this section' and PLAN.md Task 4
+- 04-02 halted at Task 3 checkpoint (gate=blocking, human-verify): Tasks 1-2 complete (generation guard, fallback wiring, retry tap, phone preview harness, 58/58 tests passing). Task 3 needs a human to walk every overlay state (contingency: Debug > Search Overlay Preview, since CarPlay entitlement's remaining Xcode-signing steps are still pending) and report the resume-signal (approved / defects).
 
 ## Session Continuity
 
-Last session: 2026-08-19T02:50:56.260Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-08-19T03:07:38.254Z
+Stopped at: Halted 04-02-PLAN.md at Task 3 checkpoint (visual verification, gate=blocking)
 Resume file: None
