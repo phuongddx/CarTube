@@ -152,6 +152,14 @@ final class SpeechRecognizerService {
         self.isAvailable = taskFactory.isOnDeviceSupported
     }
 
+    // If the owner drops its reference mid-session (e.g. the availability gate
+    // re-evaluates to non-.ready while actively listening), finalize the in-flight
+    // session and remove the interruption observer instead of leaking it.
+    deinit {
+        if isListening { finalize(outcome: .unavailable) }
+        removeInterruptionObserver()
+    }
+
     func startListening() {
         guard !isListening else { return }
         guard isAvailable, taskFactory.isOnDeviceSupported else { return }
