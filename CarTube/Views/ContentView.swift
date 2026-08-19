@@ -16,8 +16,7 @@ extension UIHostingController: SwiftUIController {}
 struct ContentView: View {
     
     @Environment(\.openURL) var openURL
-    @Environment(\.scenePhase) var scenePhase
-    
+
     @State private var urlString: String = ""
     @State private var showVoiceSetup = false
     
@@ -46,6 +45,11 @@ struct ContentView: View {
                 }.listRowBackground(Color.clear)
                 Section {
                     TextField("YouTube URL", text: $urlString, onCommit: { playVideo() })
+                    PasteButton(payloadType: String.self) { strings in
+                        if let pasted = strings.first, isYouTubeURL(pasted) {
+                            urlString = pasted
+                        }
+                    }
                     Button("Play on CarPlay") {
                         hideKeyboard()
                         playVideo()
@@ -80,17 +84,6 @@ struct ContentView: View {
                     }
                 }
             }.navigationBarTitle("", displayMode: .inline)
-        }.onChange(of: scenePhase) { newPhase in
-            if newPhase == .active {
-                let clipboard = UIPasteboard.general
-                if clipboard.hasURLs {
-                    if let clipboardUrl = clipboard.url?.absoluteString {
-                        if isYouTubeURL(clipboardUrl) {
-                            urlString = clipboardUrl
-                        }
-                    }
-                }
-            }
         }
         .onAppear {
             if SFSpeechRecognizer.authorizationStatus() == .notDetermined {
