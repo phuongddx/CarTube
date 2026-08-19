@@ -61,12 +61,14 @@ struct KeyboardView: View {
     }
     
     func dismiss() {
+        typedQuery = ""
         CarPlaySingleton.shared.toggleKeyboard()
     }
-    
+
     func submitSearch() {
+        let query = typedQuery
         dismiss()
-        CarPlaySingleton.shared.submitSearchQuery(typedQuery)
+        CarPlaySingleton.shared.submitSearchQuery(query)
     }
     
     func MakeKBBtn(label: String? = nil, affectedByShift: Bool = true, image: Image? = nil, maxWidth: CGFloat? = nil, action: (() -> Void)? = nil) -> KBBtn {
