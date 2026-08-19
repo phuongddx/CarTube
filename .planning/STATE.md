@@ -4,16 +4,16 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 05
 current_phase_name: voice-input
-status: executing
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-08-19T05:26:00.628Z"
+status: verifying
+stopped_at: Completed 05-03-PLAN.md
+last_updated: "2026-08-19T05:48:55.046Z"
 last_activity: 2026-08-19
 last_activity_desc: Phase 03 complete, transitioned to Phase 04
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 18
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 
 Phase: 05 (voice-input) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-19 — Phase 05 execution started
 
-Progress: [████████░░] 78%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -67,6 +67,7 @@ Progress: [████████░░] 78%
 | Phase 04 P02 | 20min | 2 tasks | 4 files |
 | Phase 05 P01 | 45min | 3 tasks | 10 files |
 | Phase 05 P02 | 15min | 2 tasks | 3 files |
+| Phase 05 P03 | 35min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-01: SpeechRecognizerService is construction-gated on SFSpeechRecognizer.supportsOnDeviceRecognition (checked at init and re-asserted at startListening()) with an audio-engine + audio-session + recognition-task-factory seam trio plus an injectable clock -- a request is never built past a failed gate, so no server-based recognition path exists anywhere. — Research Pitfall 5 verified that requiresOnDeviceRecognition alone fails silently to server recognition when unsupported; the three-protocol seam design lets the full push-to-talk lifecycle (including the 1.8s/10.0s silence timer and teardown ordering) be proven with zero live audio in CarTubeTests.
 - [Phase 05]: 05-01: Built MicButton's full idle/listening/hint surface and CarPlayViewController's complete wiring (transcript submit, hint display, availability re-check) in Task 1 rather than splitting hint-display wiring into Task 2 -- Task 2 and Task 3 touch neither CarPlayViewController.swift nor add new MicButton API, only pinning behavior with tests (SpeechAvailabilityGateTests, SilenceTimerTests) and hardening SpeechRecognizerService (Pitfall-6 error table, silence timer, interruption observer). — Task 2/3's file lists never include CarPlayViewController.swift, and CarPlayViewController is the only file wiring the mic button into production -- deferring hint-pill wiring to a later task would have left the UI-SPEC's 'Didn't catch that' / 'Voice search unavailable' hints unreachable in the shipped app for this plan. Building the complete vertical slice in the tracer task (Task 1) keeps VoiceSearchAvailability + MicButton + SpeechRecognizerService as a genuinely finished contract for 05-02/05-03 to build on.
 - [Phase 05]: 05-02: VoiceSearchSetup's stateContent renders through a single VoiceSearchSetup.copy(for:) static function driven by VoiceSearchAvailability.evaluate, and VoiceOnboardingStateTests asserts against that same function, not a parallel copy-string reimplementation — Keeps the onboarding screen, its tests, and the CarPlay mic button's gate reading from the identical evaluate() verdict (one source of truth per UI-SPEC/research)
+- [Phase 05]: 05-03: The plan's two-phrase Siri design ("Search YouTube for \(\.$query) in \(.applicationName)" + a parameterless fallback) fails real xcodebuild ExtractAppIntentsMetadata on Xcode 26.3 with "Invalid parameter type. AppEntity and AppEnum are the only allowed types for query" -- open-ended String parameters cannot be embedded in an AppShortcut phrase at all. Fixed by shipping only the parameterless phrase; requestValueDialog covers query capture as a Siri follow-up, fully preserving VOX-03's zero-setup goal. — Confirmed via a real xcodebuild build failure and corroborated by an identical error on Apple Developer Forums thread 770037 -- this disproves research's Assumption A1 (String phrase params, MEDIUM-confidence community belief) as a hard build-time constraint. The fallback phrase is exactly the contingency 05-RESEARCH.md Pattern 2 already designed for this scenario.
 
 ### Pending Todos
 
@@ -122,6 +124,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-19T05:24:33.486Z
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-08-19T05:48:47.952Z
+Stopped at: Completed 05-03-PLAN.md
 Resume file: None

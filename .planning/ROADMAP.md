@@ -144,7 +144,7 @@ Plans:
   3. User can say "Search YouTube for X" via a Siri App Shortcut with zero setup, and it produces results on the CarPlay screen
   4. When speech is unavailable or denied, the mic button is hidden and typed/Siri paths remain fully usable — no dead ends
 
-**Plans**: 2/3 plans executed
+**Plans**: 3/3 plans executed
 
 Plans:
 **Wave 1**
@@ -157,7 +157,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 05-03-PLAN.md — Siri App Shortcut: SearchCarTubeIntent + corrected phrase pair (app-name token + parameterless fallback) + no-dead-ends verification + phase-gate checkpoint (VOX-03, VOX-01)
+- [x] 05-03-PLAN.md — Siri App Shortcut: SearchCarTubeIntent + corrected phrase pair (app-name token + parameterless fallback) + no-dead-ends verification + phase-gate checkpoint (VOX-03, VOX-01)
 
 **UI hint**: yes
 
@@ -197,7 +197,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Severance, Signing & Modernization | 4/4 | Complete    | 2026-08-18 |
 | 3. Search Core | 3/3 | Complete    | 2026-08-19 |
 | 4. CarPlay Search Surface | 2/2 | Complete    | 2026-08-19 |
-| 5. Voice Input | 2/3 | In Progress|  |
+| 5. Voice Input | 3/3 | In Progress|  |
 | 6. TestFlight Submission Package | 0/3 | Planning complete | - |
 
 ## Notes
