@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WebKit
+import Speech
 
 // hacky, but mark any SwiftUI controller for easier identification later
 protocol SwiftUIController: AnyObject {}
@@ -18,6 +19,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     
     @State private var urlString: String = ""
+    @State private var showVoiceSetup = false
     
     func playVideo() {
         if let urlID = extractYouTubeVideoID(urlString) {
@@ -51,6 +53,7 @@ struct ContentView: View {
                 }
                 Section {
                     NavigationLink(destination: HowTo(), label: { Text("How to Use") })
+                    Button("Voice Search") { showVoiceSetup = true }
                     NavigationLink(destination: Settings(), label: { Text("Settings") })
                     NavigationLink(destination: Debug(), label: { Text("Debug") })
                 }
@@ -88,6 +91,14 @@ struct ContentView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            if SFSpeechRecognizer.authorizationStatus() == .notDetermined {
+                showVoiceSetup = true
+            }
+        }
+        .sheet(isPresented: $showVoiceSetup) {
+            VoiceSearchSetup()
         }
     }
 }
