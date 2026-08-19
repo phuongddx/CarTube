@@ -109,10 +109,7 @@ struct Debug: View {
     }
 
     private static func currentVoiceSearchState() -> VoiceSearchState {
-        let speechStatus = SFSpeechRecognizer.authorizationStatus()
-        let micStatus = AVAudioSession.sharedInstance().recordPermission
-        let onDeviceSupported = VoiceSearchAvailability.probeOnDeviceSupport()
-        return VoiceSearchAvailability.evaluate(speechStatus: speechStatus, micStatus: micStatus, onDeviceSupported: onDeviceSupported)
+        VoiceSearchAvailability.currentState()
     }
 
     // Real-funnel proof is execution-only (console/request log), never visual on the

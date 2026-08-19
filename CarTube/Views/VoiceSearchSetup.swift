@@ -126,11 +126,7 @@ struct VoiceSearchSetup: View {
     }
 
     private static func currentState() -> VoiceSearchState {
-        VoiceSearchAvailability.evaluate(
-            speechStatus: SFSpeechRecognizer.authorizationStatus(),
-            micStatus: AVAudioSession.sharedInstance().recordPermission,
-            onDeviceSupported: VoiceSearchAvailability.probeOnDeviceSupport()
-        )
+        VoiceSearchAvailability.currentState()
     }
 }
 

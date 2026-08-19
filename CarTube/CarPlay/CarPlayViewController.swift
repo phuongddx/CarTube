@@ -234,10 +234,7 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     // Re-evaluates the pure VoiceSearchAvailability gate against live system statuses
     // and shows/hides the mic button accordingly (VOX-01) — never touches the webview.
     func refreshMicButtonVisibility() {
-        let speechStatus = SFSpeechRecognizer.authorizationStatus()
-        let micStatus = AVAudioSession.sharedInstance().recordPermission
-        let onDeviceSupported = VoiceSearchAvailability.probeOnDeviceSupport()
-        let state = VoiceSearchAvailability.evaluate(speechStatus: speechStatus, micStatus: micStatus, onDeviceSupported: onDeviceSupported)
+        let state = VoiceSearchAvailability.currentState()
 
         guard state == .ready else {
             speechService = nil

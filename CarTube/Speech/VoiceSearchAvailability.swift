@@ -37,4 +37,15 @@ enum VoiceSearchAvailability {
     static func probeOnDeviceSupport(locale: Locale = .current) -> Bool {
         SFSpeechRecognizer(locale: locale)?.supportsOnDeviceRecognition ?? false
     }
+
+    // Single source of truth for reading live system status (CarPlayViewController,
+    // VoiceSearchSetup, and Debug all consumed this same four-line sequence
+    // independently before this was hoisted here).
+    static func currentState() -> VoiceSearchState {
+        evaluate(
+            speechStatus: SFSpeechRecognizer.authorizationStatus(),
+            micStatus: AVAudioSession.sharedInstance().recordPermission,
+            onDeviceSupported: probeOnDeviceSupport()
+        )
+    }
 }
