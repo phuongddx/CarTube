@@ -57,6 +57,7 @@
 		B0E3E1ED70EEBCB81D923560 /* error-403-quota.json in Resources */ = {isa = PBXBuildFile; fileRef = AD7D34E537DBC05176F4EE1E /* error-403-quota.json */; };
 		B443B82B13F8CBE7E509EF00 /* DurationFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A7056CCD3B525E1770C8A /* DurationFormatter.swift */; };
 		BAC9F378ACD1CB5C45889445 /* MicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72606373E18FF27210291BD9 /* MicButton.swift */; };
+		F47924C8D6E56CC9FE464D50 /* SpeechAvailabilityGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 
 /* Begin PBXFileReference section */
 		0E85E4159DA334E9ABB14D53 /* SpeechRecognizerServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerServiceTests.swift; sourceTree = "<group>"; };
+		0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpeechAvailabilityGateTests.swift; sourceTree = "<group>"; };
 		18A5BBEEBF80A1A29369D0D1 /* SearchFallbackTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SearchFallbackTests.swift; path = SearchFallbackTests.swift; sourceTree = "<group>"; };
 		250B50CC2953D12500397038 /* CarTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		250B50CF2953D12500397038 /* CarTubeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarTubeApp.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 				78357C19619ED0FE8900BE40 /* DurationFormatterTests.swift */,
 				CDEA05CF9DF56FEEC96D129E /* SearchCoordinatorTests.swift */,
 				0E85E4159DA334E9ABB14D53 /* SpeechRecognizerServiceTests.swift */,
+				0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */,
 			);
 			name = CarTubeTests;
 			path = CarTubeTests;
@@ -580,6 +583,7 @@
 				8F4A56C0ADB89FED357F8428 /* DurationFormatterTests.swift in Sources */,
 				6F29D4574E0E574EF4AF6A2E /* SearchCoordinatorTests.swift in Sources */,
 				A1754CA7A4DFBD84851E2838 /* SpeechRecognizerServiceTests.swift in Sources */,
+				F47924C8D6E56CC9FE464D50 /* SpeechAvailabilityGateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

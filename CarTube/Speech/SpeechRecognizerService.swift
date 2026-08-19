@@ -235,8 +235,8 @@ final class SpeechRecognizerService {
         }
     }
 
-    // Pitfall 6 error taxonomy: matches on domain/code strings, never on the legacy
-    // SFSpeechRecognizerErrorDomain constants (they do not compile against this SDK).
+    // Pitfall 6 error taxonomy: matches on domain/code strings — the legacy
+    // pre-modern-SDK error-domain constant this replaces does not compile here.
     static func mapError(_ error: Error) -> VoiceSearchOutcome {
         let nsError = error as NSError
         switch (nsError.domain, nsError.code) {
