@@ -7,6 +7,8 @@
 
 import WebKit
 import SwiftUI
+import Speech
+import AVFAudio
 
 // This is the view controller shown on an in car's head unit display with CarPlay.
 class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
@@ -15,6 +17,8 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     private var keyboardView: UIView = UIView()
     private var screenOffLabel: UIView = UIView()
     private var resultsController: SearchResultsViewController!
+    private var micButton: MicButton!
+    private var speechService: SpeechRecognizerService?
 
     // Build the WKWebViewConfiguration reflecting current settings — used by both
     // initial load (viewDidLoad) and in-place reconfiguration (applyConfigurationInPlace).
@@ -176,6 +180,28 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         resultsController.view.isHidden = true
         view.insertSubview(resultsController.view, belowSubview: screenOffLabel)
 
+        // Push-to-talk mic button — 16pt below the top safe-area edge, 16pt from the
+        // trailing edge; hidden until the availability gate says otherwise (VOX-01).
+        let micInset: CGFloat = 16.0
+        let micDiameter: CGFloat = 56.0
+        micButton = MicButton(frame: CGRect(
+            x: view.bounds.width - micInset - micDiameter,
+            y: view.safeAreaInsets.top + micInset,
+            width: micDiameter,
+            height: micDiameter
+        ))
+        micButton.isHidden = true
+        micButton.onTouchDown = { [weak self] in
+            self?.speechService?.startListening()
+            self?.micButton.setListening(true)
+        }
+        micButton.onTouchUp = { [weak self] in
+            self?.speechService?.stopListening()
+            self?.micButton.setListening(false)
+        }
+        view.insertSubview(micButton, belowSubview: screenOffLabel)
+        refreshMicButtonVisibility()
+
         let splashController = UIHostingController(rootView: SplashScreen())
         self.addChild(splashController)
         splashController.view.frame = view.bounds
@@ -190,6 +216,44 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshMicButtonVisibility()
+    }
+
+    // Re-evaluates the pure VoiceSearchAvailability gate against live system statuses
+    // and shows/hides the mic button accordingly (VOX-01) — never touches the webview.
+    func refreshMicButtonVisibility() {
+        let speechStatus = SFSpeechRecognizer.authorizationStatus()
+        let micStatus = AVAudioSession.sharedInstance().recordPermission
+        let onDeviceSupported = VoiceSearchAvailability.probeOnDeviceSupport()
+        let state = VoiceSearchAvailability.evaluate(speechStatus: speechStatus, micStatus: micStatus, onDeviceSupported: onDeviceSupported)
+
+        guard state == .ready else {
+            speechService = nil
+            micButton.isHidden = true
+            return
+        }
+
+        if speechService == nil {
+            speechService = SpeechRecognizerService(
+                onSubmit: { transcript in
+                    Task { @MainActor in
+                        CarPlaySingleton.shared.submitSearchQuery(transcript)
+                    }
+                },
+                onFailure: { [weak self] outcome in
+                    guard let self else { return }
+                    let hint: VoiceHint = (outcome == .unavailable) ? .unavailable : .noSpeech
+                    self.micButton.showHint(hint) { [weak self] in
+                        self?.refreshMicButtonVisibility()
+                    }
+                }
+            )
+        }
+        micButton.isHidden = !resultsController.view.isHidden
+    }
+
     // Refresh webpage
 //    @objc func reloadWebView(_ sender: UIRefreshControl) {
 //        webView.reload()
@@ -319,11 +383,13 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
     func showSearchResults(_ state: SearchResultsState) {
         resultsController.update(state)
         resultsController.view.isHidden = false
+        micButton.isHidden = true
     }
 
     // Dismiss the search results overlay — never touches the webview (UI-01)
     func dismissSearchResults() {
         resultsController.view.isHidden = true
+        refreshMicButtonVisibility()
     }
 
     // Helper func for JS to show or hide the keyboard

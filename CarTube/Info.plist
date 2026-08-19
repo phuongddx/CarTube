@@ -17,6 +17,10 @@
 	</array>
 	<key>YOUTUBE_API_KEY</key>
 <string>$(YOUTUBE_API_KEY)</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>CarTube uses the microphone so you can search YouTube by voice from CarPlay.</string>
+<key>NSSpeechRecognitionUsageDescription</key>
+<string>CarTube converts your speech to text on your device to search YouTube from CarPlay.</string>
 <key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
