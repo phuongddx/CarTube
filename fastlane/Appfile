@@ -1,0 +1,2 @@
+app_identifier(ENV["APP_IDENTIFIER"] || "com.cartube.carplay")
+team_id(ENV["TEAM_ID"] || "K2TYLYAWMK")

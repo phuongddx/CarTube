@@ -1,0 +1,180 @@
+# Fastlane for CarTube — TestFlight pipeline (mirrors NextGen-Limited/ios-stress-app setup)
+#
+# Usage:
+#   bundle exec fastlane tests        — Run the unit test suite on the iPhone 17 simulator
+#   bundle exec fastlane setup_match  — One-time: generate certs and profiles into the Match repo
+#   bundle exec fastlane build_only   — Build + scan-gate the IPA without uploading
+#   bundle exec fastlane upload_beta  — Build, scan-gate, and upload to TestFlight
+
+default_platform(:ios)
+
+platform :ios do
+  APP_IDENTIFIER = ENV["APP_IDENTIFIER"] || "com.cartube.carplay"
+  EXTENSION_IDENTIFIER = ENV["EXTENSION_IDENTIFIER"] || "com.cartube.carplay.playon"
+  TEAM_ID = ENV["TEAM_ID"] || "K2TYLYAWMK"
+  SCHEME = "CarTube"
+  PROJECT = "CarTube.xcodeproj"
+  REPO_ROOT = File.expand_path("..", __dir__)
+  ARCHIVE_PATH = File.join(REPO_ROOT, "build", "CarTube.xcarchive")
+  EXPORT_DIR = File.join(REPO_ROOT, "build", "export")
+  SCAN_SCRIPT = File.join(REPO_ROOT, "scripts", "scan-private-apis.sh")
+
+  def api_key
+    @api_key ||= begin
+      key_id = ENV["APP_STORE_CONNECT_API_KEY_ID"]
+      issuer_id = ENV["APP_STORE_CONNECT_ISSUER_ID"]
+      key_path = File.expand_path(ENV["APP_STORE_CONNECT_API_KEY_PATH"] || "~/.appstoreconnect/AuthKey.p8")
+
+      if key_id.to_s.empty? || issuer_id.to_s.empty?
+        UI.user_error!(<<~MSG)
+          Missing App Store Connect API credentials.
+          The .p8 key file is already at #{key_path} — only the identifiers are missing:
+            export APP_STORE_CONNECT_API_KEY_ID=<key id>
+            export APP_STORE_CONNECT_ISSUER_ID=<issuer id>
+          Find both in App Store Connect -> Users and Access -> Integrations -> Team Keys.
+        MSG
+      end
+
+      unless File.exist?(key_path)
+        # Write from env var if file doesn't exist (CI)
+        if ENV["APP_STORE_CONNECT_API_KEY_P8"].to_s.empty?
+          UI.user_error!(<<~MSG)
+            No App Store Connect API key file at #{key_path}.
+            Place the .p8 there, or set APP_STORE_CONNECT_API_KEY_PATH to its location,
+            or provide the key content via APP_STORE_CONNECT_API_KEY_P8 (CI).
+          MSG
+        end
+        FileUtils.mkdir_p(File.dirname(key_path))
+        File.write(key_path, ENV["APP_STORE_CONNECT_API_KEY_P8"])
+      end
+
+      app_store_connect_api_key(
+        key_id: key_id,
+        issuer_id: issuer_id,
+        key_filepath: key_path,
+        duration: 1200, # 20 min token
+        in_house: false
+      )
+    end
+  end
+
+  def require_match_config
+    return unless ENV["MATCH_GIT_URL"].to_s.empty?
+
+    UI.user_error!(<<~MSG)
+      MATCH_GIT_URL is not set. Match stores signing certs/profiles in a private git repo:
+        export MATCH_GIT_URL=<match repo url>
+        export MATCH_PASSWORD=<match encryption passphrase>
+      Use the same values as the stress-app's GitHub secrets (MATCH_GIT_URL / MATCH_PASSWORD).
+    MSG
+  end
+
+  def prepare_code_signing(key)
+    # Import Apple WWDR intermediate cert into tmp keychain before match validates
+    sh("curl -fsS 'https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer' -o /tmp/AppleWWDRCAG3.cer 2>/dev/null; security import /tmp/AppleWWDRCAG3.cer -k ~/Library/Keychains/fastlane_tmp_keychain-db 2>/dev/null || true")
+
+    match(
+      type: "appstore",
+      readonly: true,
+      api_key: key
+    )
+
+    {
+      "CarTube" => "match AppStore #{APP_IDENTIFIER}",
+      "PlayOnCarTube" => "match AppStore #{EXTENSION_IDENTIFIER}"
+    }.each do |target, profile_name|
+      update_code_signing_settings(
+        use_automatic_signing: false,
+        path: PROJECT,
+        team_id: TEAM_ID,
+        code_sign_identity: "iPhone Distribution",
+        targets: target,
+        profile_name: profile_name
+      )
+    end
+  end
+
+  def build_release_ipa
+    xcargs = [
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "COMPILER_INDEX_STORE_ENABLE=NO"
+    ]
+    # CI recipe from Config/Secrets.xcconfig.example: real key via override, never on disk
+    xcargs << "YOUTUBE_API_KEY=#{ENV['YOUTUBE_API_KEY']}" unless ENV["YOUTUBE_API_KEY"].to_s.empty?
+
+    gym(
+      project: PROJECT,
+      scheme: SCHEME,
+      configuration: "Release",
+      export_method: "app-store",
+      include_symbols: true,
+      output_directory: EXPORT_DIR,
+      output_name: "CarTube.ipa",
+      archive_path: ARCHIVE_PATH,
+      xcargs: xcargs.join(" "),
+      export_options: {
+        provisioningProfiles: {
+          APP_IDENTIFIER => "match AppStore #{APP_IDENTIFIER}",
+          EXTENSION_IDENTIFIER => "match AppStore #{EXTENSION_IDENTIFIER}"
+        }
+      },
+      suppress_xcode_output: false
+    )
+  end
+
+  def scan_private_apis
+    [
+      File.join(ARCHIVE_PATH, "Products", "Applications", "CarTube.app", "CarTube"),
+      File.join(ARCHIVE_PATH, "Products", "Applications", "CarTube.app", "PlugIns", "PlayOnCarTube.appex", "PlayOnCarTube")
+    ].each do |binary|
+      sh(SCAN_SCRIPT, binary)
+    end
+  end
+
+  # ────────────────────── SETUP MATCH ──────────────────────
+  desc "One-time local setup: generate certs and profiles into the Match repo"
+  lane :setup_match do
+    key = api_key
+    require_match_config
+
+    match(
+      type: "appstore",
+      readonly: false,
+      force: true,
+      api_key: key
+    )
+  end
+
+  # ────────────────────── BUILD ONLY ──────────────────────
+  desc "Build + private-API scan gate without uploading (for CI validation)"
+  lane :build_only do
+    setup_ci
+    key = api_key
+    require_match_config
+
+    prepare_code_signing(key)
+    build_release_ipa
+    scan_private_apis
+  end
+
+  # ────────────────────── UPLOAD BETA ──────────────────────
+  desc "Build, scan-gate, and upload to TestFlight (no distribution)"
+  lane :upload_beta do
+    setup_ci
+    key = api_key
+    require_match_config
+
+    prepare_code_signing(key)
+    build_release_ipa
+    scan_private_apis
+
+    pilot(
+      api_key: key,
+      app_identifier: APP_IDENTIFIER,
+      ipa: File.join(EXPORT_DIR, "CarTube.ipa"),
+      skip_submission: true,
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

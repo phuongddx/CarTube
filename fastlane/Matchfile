@@ -1,0 +1,8 @@
+git_url(ENV["MATCH_GIT_URL"])
+storage_mode("git")
+type("appstore")
+team_id("K2TYLYAWMK")
+app_identifier([
+  "com.cartube.carplay",
+  "com.cartube.carplay.playon"
+])
