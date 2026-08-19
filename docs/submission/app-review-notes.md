@@ -99,12 +99,17 @@ the honesty gate for store-facing copy lives in
 
 ## Verification gates
 
+The commands build the marker names from a variable so this section never re-opens the
+marker-scoped sed range itself (a naive literal here would corrupt mechanical
+extraction of the paste block):
+
 ```bash
-grep -q 'REVIEW-NOTES-BEGIN' docs/submission/app-review-notes.md
-grep -q 'REVIEW-NOTES-END' docs/submission/app-review-notes.md
-sed -n '/REVIEW-NOTES-BEGIN/,/REVIEW-NOTES-END/p' docs/submission/app-review-notes.md | grep -q 'WKWebView'
-sed -n '/REVIEW-NOTES-BEGIN/,/REVIEW-NOTES-END/p' docs/submission/app-review-notes.md | grep -q 'm.youtube.com'
-sed -n '/REVIEW-NOTES-BEGIN/,/REVIEW-NOTES-END/p' docs/submission/app-review-notes.md | grep -qi 'audio'
+M=REVIEW-NOTES
+grep -q "${M}-BEGIN" docs/submission/app-review-notes.md
+grep -q "${M}-END" docs/submission/app-review-notes.md
+sed -n "/${M}-BEGIN/,/${M}-END/p" docs/submission/app-review-notes.md | grep -q 'WKWebView'
+sed -n "/${M}-BEGIN/,/${M}-END/p" docs/submission/app-review-notes.md | grep -q 'm.youtube.com'
+sed -n "/${M}-BEGIN/,/${M}-END/p" docs/submission/app-review-notes.md | grep -qi 'audio'
 grep -q '2.3.1' docs/submission/app-review-notes.md
 grep -qi 'reconcil' docs/submission/app-review-notes.md
 ```
