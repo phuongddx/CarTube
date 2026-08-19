@@ -119,7 +119,7 @@ Plans:
   3. All search inputs funnel through a single SearchCoordinator (typed input now; voice surfaces land on it in Phase 5), adding ≤3 new passthrough methods to CarPlaySingleton
   4. The results list displays "Results from YouTube" attribution
 
-**Plans**: 1/2 plans executed
+**Plans**: 2/2 plans executed
 
 Plans:
 **Wave 1**
@@ -128,7 +128,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 04-02-PLAN.md — State completion: fallback row + ≤2s auto-dismiss, empty-state retry, stale-response guard, coordinator test matrix, phone-side preview harness + visual checkpoint (UI-01, UI-02, UI-03)
+- [x] 04-02-PLAN.md — State completion: fallback row + ≤2s auto-dismiss, empty-state retry, stale-response guard, coordinator test matrix, phone-side preview harness + visual checkpoint (UI-01, UI-02, UI-03)
 
 **UI hint**: yes
 
