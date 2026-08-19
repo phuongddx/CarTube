@@ -213,6 +213,41 @@ final class YouTubeSearchServiceTests: XCTestCase {
         }
     }
 
+    func testDuplicateVideoIdInVideosResponseDoesNotCrashAndLastDurationWins() throws {
+        let json = """
+        {
+          "items": [
+            { "id": "dup1", "snippet": { "title": "First" }, "contentDetails": { "duration": "PT1M" } },
+            { "id": "dup1", "snippet": { "title": "Second" }, "contentDetails": { "duration": "PT2M" } }
+          ]
+        }
+        """
+        let data = Data(json.utf8)
+        let durations = try SearchResult.decodeDurationsByVideoId(data)
+
+        XCTAssertEqual(durations["dup1"], "PT2M")
+    }
+
+    func testMalformed200ResponseBodyMapsToSearchErrorOtherInsteadOfEscapingAsDecodingError() async {
+        MockURLProtocol.responseQueue = [
+            (200, Data("<html>captive portal login</html>".utf8))
+        ]
+        let service = makeService(apiKey: dummyKey)
+
+        do {
+            _ = try await service.search(query: "lofi")
+            XCTFail("Expected .other to be thrown")
+        } catch let error as SearchError {
+            if case .other = error {
+                // expected
+            } else {
+                XCTFail("Expected .other, got \(error)")
+            }
+        } catch {
+            XCTFail("Unexpected error type escaped SearchError contract: \(error)")
+        }
+    }
+
     func testQueryWithSpacesAndAmpersandIsPercentEncodedInStubbedRequest() async throws {
         MockURLProtocol.responseQueue = [
             (200, loadFixture("search-response-empty"))

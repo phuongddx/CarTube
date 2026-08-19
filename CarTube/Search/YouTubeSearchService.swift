@@ -59,7 +59,7 @@ public final class YouTubeSearchService {
         let (searchData, searchResponse) = try await performRequest(searchRequestURL)
         try Self.checkForAPIError(data: searchData, response: searchResponse)
 
-        let results = try SearchResult.decodeSearchResponse(searchData)
+        let results = try Self.decode { try SearchResult.decodeSearchResponse(searchData) }
         guard !results.isEmpty else { return [] }
 
         let videoIds = results.map(\.videoId)
@@ -72,8 +72,21 @@ public final class YouTubeSearchService {
         let (videosData, videosResponse) = try await performRequest(videosRequestURL)
         try Self.checkForAPIError(data: videosData, response: videosResponse)
 
-        let durationsByVideoId = try SearchResult.decodeDurationsByVideoId(videosData)
-        return try SearchResult.decodeSearchResponse(searchData, durationsByVideoId: durationsByVideoId)
+        let durationsByVideoId = try Self.decode { try SearchResult.decodeDurationsByVideoId(videosData) }
+        return try Self.decode { try SearchResult.decodeSearchResponse(searchData, durationsByVideoId: durationsByVideoId) }
+    }
+
+    // Guarantees every throw out of search(query:) is a SearchError — JSONDecoder
+    // throws DecodingError, which does not conform to SearchError and would
+    // otherwise escape SearchFallback's typed Result<[SearchResult], SearchError> contract.
+    private static func decode<T>(_ body: () throws -> T) throws -> T {
+        do {
+            return try body()
+        } catch let error as SearchError {
+            throw error
+        } catch {
+            throw SearchError.other("Malformed API response: \(error.localizedDescription)")
+        }
     }
 
     private func performRequest(_ url: URL) async throws -> (Data, URLResponse) {

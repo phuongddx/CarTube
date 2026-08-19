@@ -69,6 +69,10 @@ extension SearchResult {
 
     static func decodeDurationsByVideoId(_ data: Data) throws -> [String: String] {
         let envelope = try JSONDecoder().decode(VideoResponseEnvelope.self, from: data)
-        return Dictionary(uniqueKeysWithValues: envelope.items.map { ($0.id, $0.contentDetails.duration) })
+        var durations: [String: String] = [:]
+        for item in envelope.items {
+            durations[item.id] = item.contentDetails.duration
+        }
+        return durations
     }
 }
