@@ -54,6 +54,7 @@
 		8DE3E5A628DFBA1131F75B5D /* YouTubeSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B68141E9A01F1DB7444137 /* YouTubeSearchService.swift */; };
 		8F4A56C0ADB89FED357F8428 /* DurationFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78357C19619ED0FE8900BE40 /* DurationFormatterTests.swift */; };
 		992A0473455E1F83CE355B52 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1563B69A66BE62E3C62F10 /* MockURLProtocol.swift */; };
+		590790A5E5ADB3BBF63C1B01 /* MicButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151430008F533102952930E2 /* MicButtonTests.swift */; };
 		A1754CA7A4DFBD84851E2838 /* SpeechRecognizerServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E85E4159DA334E9ABB14D53 /* SpeechRecognizerServiceTests.swift */; };
 		AC8E3F0FE62EE08C07828581 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52FFBE724A4D84A3922E53C /* SearchResult.swift */; };
 		B0795DFFA0C359503ECE9E95 /* search-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 50F0AE1661E10332570072DF /* search-response.json */; };
@@ -99,6 +100,7 @@
 		03FBA2D17C2AEB4215CE6F45 /* VoiceSearchSetup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VoiceSearchSetup.swift; sourceTree = "<group>"; };
 		0E6E22AEA7CACE652B5AEC46 /* CarTubeShortcuts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CarTubeShortcuts.swift; sourceTree = "<group>"; };
 		0E85E4159DA334E9ABB14D53 /* SpeechRecognizerServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerServiceTests.swift; sourceTree = "<group>"; };
+		151430008F533102952930E2 /* MicButtonTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MicButtonTests.swift; sourceTree = "<group>"; };
 		0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpeechAvailabilityGateTests.swift; sourceTree = "<group>"; };
 		18A5BBEEBF80A1A29369D0D1 /* SearchFallbackTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SearchFallbackTests.swift; path = SearchFallbackTests.swift; sourceTree = "<group>"; };
 		250B50CC2953D12500397038 /* CarTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -383,6 +385,7 @@
 				78357C19619ED0FE8900BE40 /* DurationFormatterTests.swift */,
 				CDEA05CF9DF56FEEC96D129E /* SearchCoordinatorTests.swift */,
 				0E85E4159DA334E9ABB14D53 /* SpeechRecognizerServiceTests.swift */,
+				151430008F533102952930E2 /* MicButtonTests.swift */,
 				0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */,
 				E374288C8BED1CD14D5834ED /* SilenceTimerTests.swift */,
 				969207FCD2F5EC4674BFA97E /* VoiceOnboardingStateTests.swift */,
@@ -604,6 +607,7 @@
 				8F4A56C0ADB89FED357F8428 /* DurationFormatterTests.swift in Sources */,
 				6F29D4574E0E574EF4AF6A2E /* SearchCoordinatorTests.swift in Sources */,
 				A1754CA7A4DFBD84851E2838 /* SpeechRecognizerServiceTests.swift in Sources */,
+				590790A5E5ADB3BBF63C1B01 /* MicButtonTests.swift in Sources */,
 				F47924C8D6E56CC9FE464D50 /* SpeechAvailabilityGateTests.swift in Sources */,
 				FC3030C2AACC03B040C8706F /* SilenceTimerTests.swift in Sources */,
 				B30232BC568B6F8A03AA63A2 /* VoiceOnboardingStateTests.swift in Sources */,

@@ -19,7 +19,9 @@ final class MicButton: UIView {
     private static let hintFadeDuration: TimeInterval = 0.2
 
     private let button = UIButton(type: .custom)
-    private let pillBackground = UIView()
+    // Internal (not private) so CarTubeTests can assert pill visibility transitions
+    // across setListening/showHint/stopListeningVisuals sequences (regression: CR-01).
+    let pillBackground = UIView()
     private let pillLabel = UILabel()
 
     var onTouchDown: (() -> Void)?
