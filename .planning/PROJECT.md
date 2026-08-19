@@ -25,13 +25,14 @@ A driver can open any YouTube video on their car screen — by voice, search, or
 - ✓ Now-playing takeover feature and lock-screen dimming removed; screen-off warning label survives — Phase 2
 - ✓ Permanent `strings` binary scan gate in CI catching private-API regression on both binaries — Phase 2
 - ✓ Settings applies in place (no `exit(0)`) — Phase 2
+- ✓ Stateless, unit-tested YouTube Data API v3 search client (`YouTubeSearchService`) with build-time-injected key, quota-deliberate single-page requests, last-query cache, and fail-closed degradation to the existing webview search on 403/quota/key/decode failure — Phase 3
 
 ### Active
 
-- [ ] Official CarPlay entitlement: apply under the audio category (honest fit; video category requires parked-only + AirPlay which contradicts Core Value); submit the application day 1 — it gates all on-device CarPlay work including the simulator — Phase 1, submitted 2026-08-18 (Case-ID 21672656), still pending
+- [ ] Official CarPlay entitlement: apply under the audio category (honest fit; video category requires parked-only + AirPlay which contradicts Core Value); submit the application day 1 — it gates all on-device CarPlay work including the simulator — Phase 1, submitted 2026-08-18 (Case-ID 21672656), **granted 2026-08-18**; entitlements-file wiring done, provisioning-profile creation/import + Xcode signing toggle + CarPlay Simulator scene verification remain human/portal steps (see docs/runbooks/carplay-entitlement-grant-wiring.md)
 - [ ] Voice search via Siri: "Search YouTube for X" hands-free while driving
 - [ ] Push-to-talk mic button on the CarPlay screen using on-device speech recognition
-- [ ] YouTube Data API search backend with results list on CarPlay screen; tap to play
+- [ ] Native, glanceable results list on the CarPlay screen wired to the Phase 3 search backend; tap to play — Phase 4
 - [ ] Fix HideScrollBar Debug-row verification logic — compares against the wrong IMP and may always report PASS regardless of hook-install state (02-REVIEW.md CR-02, knowingly left unfixed in Phase 2)
 - [ ] Regenerate AGENTS.md / README.md — both still describe the removed `Dynamic` package, lock-screen dimming, and the retired exit-to-apply Settings contract (02-REVIEW.md WR-05/WR-06)
 - [ ] `scan-private-apis.sh` marker-list/test gaps — missing `BKEnableALS` marker, only 3/14 markers have positive-match test coverage, BRE instead of fixed-string grep (02-REVIEW.md WR-01/WR-02/WR-03)
@@ -99,4 +100,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-08-18 after Phase 2*
+*Last updated: 2026-08-19 after Phase 3*
