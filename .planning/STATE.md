@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-08-18)
 Phase: 06 (testflight-submission-package) — EXECUTING
 Plan: 3 of 3 (06-01 and 06-02 complete; 06-03 next)
 Status: Ready to execute
-Last activity: 2026-08-19 — 06-02 submission docs completed (review notes, metadata, fallback ladder)
+Last activity: 2026-08-19 — Completed quick task 260819-tkz: fastlane TestFlight pipeline setup (match signing, scan gate, deploy workflow)
 
 Progress: [████████░░] 75%
 
@@ -128,6 +128,12 @@ None yet.
 - Phase 2 closed 2026-08-18: code review (2 of 3 critical findings fixed — idle-timer apply-in-place gap, bundle-ID/signing-team inconsistency; CR-02 HideScrollBar row + 7 warnings + 3 info left as tracked follow-up, see PROJECT.md Active), phase-goal verification passed, UAT 2/2 passed, security 0 threats open. CarPlay-connected end-to-end observation of the idle-timer fix remains deferred until the Phase 1 entitlement lands (see below).
 - 03-03 halted at Task 3 step 2 / Task 4: live smoke search and its blocking checkpoint need a human decision (provision cartube-dev key, spend 2 units on the shipping key, or skip smoke entirely) plus review of the 3 new Key Decision rows — see docs/runbooks/google-dev-key.md Section 4 'Status of this section' and PLAN.md Task 4
 - 04-02 halted at Task 3 checkpoint (gate=blocking, human-verify): Tasks 1-2 complete (generation guard, fallback wiring, retry tap, phone preview harness, 58/58 tests passing). Task 3 needs a human to walk every overlay state (contingency: Debug > Search Overlay Preview, since CarPlay entitlement's remaining Xcode-signing steps are still pending) and report the resume-signal (approved / defects).
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260819-tkz | Set up fastlane for TestFlight pipeline (Gemfile, Appfile, Fastfile lanes wired to ASC API key auth) | 2026-08-19 | aaf1cf5 | [260819-tkz-set-up-fastlane-for-testflight-pipeline-](./quick/260819-tkz-set-up-fastlane-for-testflight-pipeline-/) |
 
 ## Session Continuity
 
