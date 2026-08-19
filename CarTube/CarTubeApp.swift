@@ -44,19 +44,42 @@ struct CarTubeApp: App {
     }
     
     func checkNewVersions() {
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, let url = URL(string: "https://api.github.com/repos/Avangelista/CarTube/releases/latest") {
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, let url = URL(string: GITHUB_RELEASES_API_URL) {
             let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-                guard let data = data else { return }
-                
-                if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                    if (json["tag_name"] as? String)?.compare(version, options: .numeric) == .orderedDescending {
-                        UIApplication.shared.confirmAlert(title: "Update Available", body: "A new version of CarTube is available.\n\(json["body"] as? String ?? "Updating is recommended to avoid bugs.")\nWould you like to view the releases page?", onOK: {
-                            UIApplication.shared.open(URL(string: "https://github.com/Avangelista/CarTube/releases/latest")!)
-                        }, noCancel: false, window: .main)
+                guard let release = GitHubRelease.validated(data: data, response: response), release.isNewer(than: version) else { return }
+
+                UIApplication.shared.confirmAlert(title: "Update Available", body: GitHubRelease.updateAlertBody(for: release), onOK: {
+                    if let pageUrl = URL(string: GITHUB_RELEASES_PAGE_URL) {
+                        UIApplication.shared.open(pageUrl)
                     }
-                }
+                }, noCancel: false, window: .main)
             }
             task.resume()
         }
+    }
+}
+
+struct GitHubRelease: Codable {
+    let tagName: String
+    let body: String?
+
+    enum CodingKeys: String, CodingKey {
+        case tagName = "tag_name"
+        case body
+    }
+
+    static func validated(data: Data?, response: URLResponse?) -> GitHubRelease? {
+        guard let data = data,
+              let http = response as? HTTPURLResponse,
+              http.statusCode == 200 else { return nil }
+        return try? JSONDecoder().decode(GitHubRelease.self, from: data)
+    }
+
+    func isNewer(than installedVersion: String) -> Bool {
+        tagName.compare(installedVersion, options: .numeric) == .orderedDescending
+    }
+
+    static func updateAlertBody(for release: GitHubRelease) -> String {
+        "A new version of CarTube (\(release.tagName)) is available.\nUpdating is recommended to avoid bugs.\nWould you like to view the releases page?"
     }
 }
