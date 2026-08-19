@@ -220,7 +220,7 @@ private struct SearchResultsPreviewHost: UIViewControllerRepresentable {
 // the funnel unit tests carry the proof; this harness carries the visuals.
 private struct VoiceSearchPreviewHost: UIViewRepresentable {
     func makeUIView(context: Context) -> MicButton {
-        let button = MicButton(frame: CGRect(x: 0, y: 0, width: 56, height: 56))
+        let button = MicButton(origin: .zero)
         let service = SpeechRecognizerService(
             onSubmit: { transcript in
                 print("[Voice Search Preview] transcript=\"\(transcript)\" — routing through CarPlaySingleton.shared.submitSearchQuery")
@@ -235,12 +235,12 @@ private struct VoiceSearchPreviewHost: UIViewRepresentable {
             }
         )
         button.onTouchDown = {
-            service.startListening()
+            guard service.startListening() else { return }
             button.setListening(true)
         }
         button.onTouchUp = {
             service.stopListening()
-            button.setListening(false)
+            button.stopListeningVisuals()
         }
         return button
     }

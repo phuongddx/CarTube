@@ -184,20 +184,18 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         // trailing edge; hidden until the availability gate says otherwise (VOX-01).
         let micInset: CGFloat = 16.0
         let micDiameter: CGFloat = 56.0
-        micButton = MicButton(frame: CGRect(
+        micButton = MicButton(origin: CGPoint(
             x: view.bounds.width - micInset - micDiameter,
-            y: view.safeAreaInsets.top + micInset,
-            width: micDiameter,
-            height: micDiameter
+            y: view.safeAreaInsets.top + micInset
         ))
         micButton.isHidden = true
         micButton.onTouchDown = { [weak self] in
-            self?.speechService?.startListening()
+            guard self?.speechService?.startListening() == true else { return }
             self?.micButton.setListening(true)
         }
         micButton.onTouchUp = { [weak self] in
             self?.speechService?.stopListening()
-            self?.micButton.setListening(false)
+            self?.micButton.stopListeningVisuals()
         }
         view.insertSubview(micButton, belowSubview: screenOffLabel)
         refreshMicButtonVisibility()

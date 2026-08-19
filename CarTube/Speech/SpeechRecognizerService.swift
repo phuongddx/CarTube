@@ -160,14 +160,18 @@ final class SpeechRecognizerService {
         removeInterruptionObserver()
     }
 
-    func startListening() {
-        guard !isListening else { return }
-        guard isAvailable, taskFactory.isOnDeviceSupported else { return }
+    // Reports whether a session actually started so the caller never flips the mic
+    // button to the "Listening…" visual on a silent failure (e.g. the audio session
+    // can't activate because another app, like a phone call, owns the mic).
+    @discardableResult
+    func startListening() -> Bool {
+        guard !isListening else { return false }
+        guard isAvailable, taskFactory.isOnDeviceSupported else { return false }
 
         do {
             try audioSession.activateForRecording()
         } catch {
-            return
+            return false
         }
 
         isListening = true
@@ -187,7 +191,7 @@ final class SpeechRecognizerService {
             try audioEngine.start()
         } catch {
             finalize(outcome: .unavailable)
-            return
+            return false
         }
 
         taskFactory.startTask(
@@ -202,6 +206,7 @@ final class SpeechRecognizerService {
 
         observeInterruptions()
         startSilenceTimer()
+        return true
     }
 
     func stopListening() {

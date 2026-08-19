@@ -27,6 +27,13 @@ final class MicButton: UIView {
 
     private var hintDismissWorkItem: DispatchWorkItem?
 
+    // The button is fixed-size (56x56, per spec) — callers only ever choose where it
+    // sits. `init(origin:)` makes that contract explicit instead of accepting a width
+    // and height it would silently discard.
+    convenience init(origin: CGPoint) {
+        self.init(frame: CGRect(origin: origin, size: CGSize(width: Self.diameter, height: Self.diameter)))
+    }
+
     override init(frame: CGRect) {
         super.init(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: Self.diameter, height: Self.diameter))
         setUpButton()
@@ -82,10 +89,17 @@ final class MicButton: UIView {
             showPill(text: "Listening…")
             startPulse()
         } else {
-            button.backgroundColor = Self.idleFill
+            stopListeningVisuals()
             hidePill()
-            stopPulse()
         }
+    }
+
+    // Resets the button's idle appearance only — never touches the pill. A failure
+    // pill shown by `onFailure` during the same touch-up call stack must survive the
+    // caller's follow-up "stop listening" visual update, or the hint never renders.
+    func stopListeningVisuals() {
+        button.backgroundColor = Self.idleFill
+        stopPulse()
     }
 
     // Renders a transient hint pill ("Didn't catch that" / "Voice search unavailable"),
