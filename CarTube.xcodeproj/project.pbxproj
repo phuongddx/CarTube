@@ -58,6 +58,7 @@
 		B443B82B13F8CBE7E509EF00 /* DurationFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A7056CCD3B525E1770C8A /* DurationFormatter.swift */; };
 		BAC9F378ACD1CB5C45889445 /* MicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72606373E18FF27210291BD9 /* MicButton.swift */; };
 		F47924C8D6E56CC9FE464D50 /* SpeechAvailabilityGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */; };
+		FC3030C2AACC03B040C8706F /* SilenceTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E374288C8BED1CD14D5834ED /* SilenceTimerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		BC1563B69A66BE62E3C62F10 /* MockURLProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		CDEA05CF9DF56FEEC96D129E /* SearchCoordinatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorTests.swift; sourceTree = "<group>"; };
 		D40824D2652873ED55A6921D /* SearchResultsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		E374288C8BED1CD14D5834ED /* SilenceTimerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SilenceTimerTests.swift; sourceTree = "<group>"; };
 		E4C061FF86FFD24B71489A41 /* SearchCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		F587664409CE07CF24DFCA16 /* CarTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -369,6 +371,7 @@
 				CDEA05CF9DF56FEEC96D129E /* SearchCoordinatorTests.swift */,
 				0E85E4159DA334E9ABB14D53 /* SpeechRecognizerServiceTests.swift */,
 				0FBD153FA6F4AE777C80AC82 /* SpeechAvailabilityGateTests.swift */,
+				E374288C8BED1CD14D5834ED /* SilenceTimerTests.swift */,
 			);
 			name = CarTubeTests;
 			path = CarTubeTests;
@@ -584,6 +587,7 @@
 				6F29D4574E0E574EF4AF6A2E /* SearchCoordinatorTests.swift in Sources */,
 				A1754CA7A4DFBD84851E2838 /* SpeechRecognizerServiceTests.swift in Sources */,
 				F47924C8D6E56CC9FE464D50 /* SpeechAvailabilityGateTests.swift in Sources */,
+				FC3030C2AACC03B040C8706F /* SilenceTimerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

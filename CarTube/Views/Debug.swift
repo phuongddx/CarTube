@@ -8,6 +8,8 @@
 import SwiftUI
 import WebKit
 import ObjectiveC
+import Speech
+import AVFAudio
 
 struct Debug: View {
     @State private var autoResizeInstalled = false
@@ -17,6 +19,8 @@ struct Debug: View {
 
     @State private var isSearchPreviewPresented = false
     @State private var searchPreviewState: SearchResultsState = .loading
+
+    @State private var voiceAvailabilityState: VoiceSearchState = .denied
 
     var body: some View {
         Form {
@@ -62,11 +66,22 @@ struct Debug: View {
                         runRealFunnelIfKeyConfigured()
                     }
                 }
+                Section(header: Text("Voice Search Preview"), footer: Text("Embeds the production MicButton driven by a real SpeechRecognizerService — no CarPlay controller is attached, so a submitted transcript prints to the console instead of appearing in an overlay. The gate itself is the demo: this section shows the button only when the availability verdict is .ready.")) {
+                    if voiceAvailabilityState == .ready {
+                        VoiceSearchPreviewHost()
+                            .frame(height: 140)
+                    } else {
+                        Text(voiceAvailabilityLimitedNote)
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
         }
         .navigationBarTitle("Debug", displayMode: .inline)
         .onAppear {
             refreshHookStatus()
+            voiceAvailabilityState = Self.currentVoiceSearchState()
         }
         .fullScreenCover(isPresented: $isSearchPreviewPresented) {
             SearchResultsPreviewHost(state: searchPreviewState) {
@@ -78,6 +93,26 @@ struct Debug: View {
     private func presentSearchPreview(_ state: SearchResultsState) {
         searchPreviewState = state
         isSearchPreviewPresented = true
+    }
+
+    private var voiceAvailabilityLimitedNote: String {
+        switch voiceAvailabilityState {
+        case .needsOnboarding:
+            return "Voice search needs onboarding — grant Speech Recognition and Microphone access first."
+        case .limited:
+            return "Voice search is limited on this device — on-device recognition is unsupported."
+        case .denied:
+            return "Voice search is off — Speech Recognition or Microphone access was denied."
+        case .ready:
+            return ""
+        }
+    }
+
+    private static func currentVoiceSearchState() -> VoiceSearchState {
+        let speechStatus = SFSpeechRecognizer.authorizationStatus()
+        let micStatus = AVAudioSession.sharedInstance().recordPermission
+        let onDeviceSupported = VoiceSearchAvailability.probeOnDeviceSupport()
+        return VoiceSearchAvailability.evaluate(speechStatus: speechStatus, micStatus: micStatus, onDeviceSupported: onDeviceSupported)
     }
 
     // Real-funnel proof is execution-only (console/request log), never visual on the
@@ -178,4 +213,40 @@ private struct SearchResultsPreviewHost: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: SearchResultsViewController, context: Context) {
         uiViewController.update(state)
     }
+}
+
+// Embeds the production MicButton on the phone, driven by a real SpeechRecognizerService
+// — so the 56pt button, red pulse, and pills render regardless of the pending CarPlay
+// entitlement (05-RESEARCH.md entitlement contingency). onSubmit prints the transcript
+// and routes through the existing CarPlaySingleton.shared.submitSearchQuery passthrough,
+// which no-ops visually without a CarPlay controller attached — the console output and
+// the funnel unit tests carry the proof; this harness carries the visuals.
+private struct VoiceSearchPreviewHost: UIViewRepresentable {
+    func makeUIView(context: Context) -> MicButton {
+        let button = MicButton(frame: CGRect(x: 0, y: 0, width: 56, height: 56))
+        let service = SpeechRecognizerService(
+            onSubmit: { transcript in
+                print("[Voice Search Preview] transcript=\"\(transcript)\" — routing through CarPlaySingleton.shared.submitSearchQuery")
+                Task { @MainActor in
+                    CarPlaySingleton.shared.submitSearchQuery(transcript)
+                }
+            },
+            onFailure: { [weak button] outcome in
+                print("[Voice Search Preview] outcome=\(outcome)")
+                let hint: VoiceHint = (outcome == .unavailable) ? .unavailable : .noSpeech
+                button?.showHint(hint) {}
+            }
+        )
+        button.onTouchDown = {
+            service.startListening()
+            button.setListening(true)
+        }
+        button.onTouchUp = {
+            service.stopListening()
+            button.setListening(false)
+        }
+        return button
+    }
+
+    func updateUIView(_ uiView: MicButton, context: Context) {}
 }

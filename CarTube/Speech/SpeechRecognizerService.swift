@@ -191,6 +191,9 @@ final class SpeechRecognizerService {
                 self?.handleError(error)
             }
         )
+
+        observeInterruptions()
+        startSilenceTimer()
     }
 
     func stopListening() {
@@ -220,6 +223,7 @@ final class SpeechRecognizerService {
 
         silenceTimer?.invalidate()
         silenceTimer = nil
+        removeInterruptionObserver()
 
         audioEngine.removeInputTap()
         audioEngine.stop()
@@ -233,6 +237,52 @@ final class SpeechRecognizerService {
         case .noSpeech, .unavailable:
             onFailure(outcome)
         }
+    }
+
+    // No system end-of-speech detection exists for buffer-based recognition (Pitfall
+    // 2) — this repeating check is the app-side substitute. Finalizes through the
+    // exact same path as touch-up, so exactly one outcome is ever delivered per press.
+    private func startSilenceTimer() {
+        silenceTimer = Timer.scheduledTimer(withTimeInterval: Self.silenceCheckInterval, repeats: true) { [weak self] _ in
+            self?.evaluateSilence()
+        }
+    }
+
+    private func evaluateSilence() {
+        guard isListening else { return }
+        let now = clock()
+
+        if now.timeIntervalSince(sessionStart) >= Self.hardCapInterval {
+            finalize(outcome: lastTranscript.isEmpty ? .noSpeech : .transcript(lastTranscript))
+            return
+        }
+        if now.timeIntervalSince(lastTranscriptChange) >= Self.silenceInterval, !lastTranscript.isEmpty {
+            finalize(outcome: .transcript(lastTranscript))
+        }
+    }
+
+    // An interruption (phone call, Siri, another app) stops listening immediately —
+    // submitting whatever transcript exists — and never auto-resumes on `.ended`
+    // (Pitfall 4): resuming an abandoned recognition session without the driver
+    // re-pressing the button would be surprising and could reactivate the mic unasked.
+    private func observeInterruptions() {
+        interruptionObserver = NotificationCenter.default.addObserver(
+            forName: AVAudioSession.interruptionNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let self, self.isListening else { return }
+            guard let rawType = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+                  AVAudioSession.InterruptionType(rawValue: rawType) == .began else { return }
+            self.finalize(outcome: self.lastTranscript.isEmpty ? .noSpeech : .transcript(self.lastTranscript))
+        }
+    }
+
+    private func removeInterruptionObserver() {
+        if let interruptionObserver {
+            NotificationCenter.default.removeObserver(interruptionObserver)
+        }
+        interruptionObserver = nil
     }
 
     // Pitfall 6 error taxonomy: matches on domain/code strings — the legacy
