@@ -221,6 +221,16 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         refreshMicButtonVisibility()
     }
 
+    // viewDidLoad computes the mic button's y-position from view.safeAreaInsets.top
+    // before the view has been through a layout pass (it runs before
+    // window.makeKeyAndVisible()), so the initial value is unreliable on head units
+    // with a non-zero top safe area. Re-apply it here on every layout pass instead.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard micButton != nil else { return }
+        micButton.frame.origin.y = view.safeAreaInsets.top + 16.0
+    }
+
     // Re-evaluates the pure VoiceSearchAvailability gate against live system statuses
     // and shows/hides the mic button accordingly (VOX-01) — never touches the webview.
     func refreshMicButtonVisibility() {
