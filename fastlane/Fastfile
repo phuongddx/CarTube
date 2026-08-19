@@ -132,6 +132,16 @@ platform :ios do
     end
   end
 
+  # ────────────────────── TESTS ──────────────────────
+  desc "Run the unit test suite on the iPhone 17 simulator"
+  lane :tests do
+    run_tests(
+      project: PROJECT,
+      scheme: SCHEME,
+      destination: "platform=iOS Simulator,name=iPhone 17"
+    )
+  end
+
   # ────────────────────── SETUP MATCH ──────────────────────
   desc "One-time local setup: generate certs and profiles into the Match repo"
   lane :setup_match do

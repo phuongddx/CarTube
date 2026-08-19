@@ -1,0 +1,74 @@
+name: Deploy to TestFlight
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  XCODE_VERSION: "26.3"
+  SCHEME: "CarTube"
+  PROJECT: "CarTube.xcodeproj"
+  LANG: "en_US.UTF-8"
+
+jobs:
+  deploy:
+    name: Build & Deploy to TestFlight
+    runs-on: macos-15
+    timeout-minutes: 60
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode ${{ env.XCODE_VERSION }}
+        run: |
+          sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Cache Ruby Gems
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: gems-${{ runner.os }}-${{ hashFiles('**/Gemfile.lock') }}
+
+      - name: Install Dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Provision Secrets.xcconfig from example
+        run: cp Config/Secrets.xcconfig.example Secrets.xcconfig
+
+      - name: Free Disk Space
+        run: |
+          df -h /
+          sudo rm -rf /Applications/Xcode_15*.app 2>/dev/null || true
+          sudo rm -rf /Users/runner/Library/Android 2>/dev/null || true
+          df -h /
+
+      - name: Build & Deploy via Fastlane
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_P8: ${{ secrets.APP_STORE_CONNECT_API_KEY_P8 }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          APP_IDENTIFIER: "com.cartube.carplay"
+          EXTENSION_IDENTIFIER: "com.cartube.carplay.playon"
+          TEAM_ID: "K2TYLYAWMK"
+        run: bundle exec fastlane upload_beta
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-logs
+          path: |
+            ~/Library/Logs/gym/*.log
+            fastlane/report.xml
+          retention-days: 14
