@@ -32,7 +32,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Voice Input
 
 - [ ] **VOX-01**: Driver can push-to-talk: on-device speech recognition, mic button visible only when authorized, visible listening state, auto-stop on silence
-- [ ] **VOX-02**: User completes mic + speech permission onboarding on the phone before CarPlay use (both `NSMicrophoneUsageDescription` and `NSSpeechRecognitionUsageDescription` present)
+- [x] **VOX-02**: User completes mic + speech permission onboarding on the phone before CarPlay use (both `NSMicrophoneUsageDescription` and `NSSpeechRecognitionUsageDescription` present)
 - [ ] **VOX-03**: User can say "Search YouTube for X" via Siri App Shortcut (zero setup, in-process)
 
 ### Submission Package
@@ -88,7 +88,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-02 | Phase 4 | Complete |
 | UI-03 | Phase 4 | Complete |
 | VOX-01 | Phase 5 | Pending |
-| VOX-02 | Phase 5 | Pending |
+| VOX-02 | Phase 5 | Complete |
 | VOX-03 | Phase 5 | Pending |
 | SHIP-01 | Phase 6 | Pending |
 | SHIP-02 | Phase 6 | Pending |
