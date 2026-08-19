@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: External Dependencies & Project Setup** - Start the uncontrolled external clocks (CarPlay entitlement, Google API key) and wire the grant when it lands
 - [x] **Phase 2: Severance, Signing & Modernization** - Strip TrollStore/private-API surface, standard signing, iOS 16 target, scan gate (completed 2026-08-18)
 - [x] **Phase 3: Search Core** - YouTube Data API client with quota budget, webview fallback, first test target (completed 2026-08-19)
-- [ ] **Phase 4: CarPlay Search Surface** - Glanceable tappable results overlay + SearchCoordinator funnel
+- [x] **Phase 4: CarPlay Search Surface** - Glanceable tappable results overlay + SearchCoordinator funnel (completed 2026-08-19)
 - [ ] **Phase 5: Voice Input** - On-device push-to-talk, phone-first permissions, Siri App Shortcut
 - [ ] **Phase 6: TestFlight Submission Package** - Honest review notes/metadata, fallback ladder, hardening, coherent upload
 
@@ -196,7 +196,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. External Dependencies & Project Setup | 3/3 | In Progress|  |
 | 2. Severance, Signing & Modernization | 4/4 | Complete    | 2026-08-18 |
 | 3. Search Core | 3/3 | Complete    | 2026-08-19 |
-| 4. CarPlay Search Surface | 1/2 | In Progress|  |
+| 4. CarPlay Search Surface | 2/2 | Complete    | 2026-08-19 |
 | 5. Voice Input | 0/3 | Planning complete | - |
 | 6. TestFlight Submission Package | 0/3 | Planning complete | - |
 
