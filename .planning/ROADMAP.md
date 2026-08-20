@@ -210,3 +210,14 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 - **Entitlement dependency:** Until Apple grants the CarPlay entitlement, Phases 3–5 develop and verify against phone-side mocks; on-device CarPlay verification happens as soon as the grant lands (wired in Phase 1, re-verified in Phase 6 with the new provisioning profile and automatic signing off).
 - **Scan gate is permanent:** The `strings` gate created in Phase 2 runs in every subsequent phase's CI, catching private-API regression before upload.
 - **Research flags:** Phase 5 warrants `--research-phase` (Speech framework details are MEDIUM confidence); Phase 1 optionally benefits from a light pass on entitlement request-text positioning. Phases 2–4, 6 are codebase- or guidelines-driven and skip research-phase.
+
+## Backlog
+
+### Phase 999.1: Follow-up — Phase 1 incomplete plans (BACKLOG)
+
+**Goal:** Resolve Phase 1 gap-closure plans that never executed and close their two unresolved 01-VERIFICATION.md FAIL items (truth 6: shipping key still `BUILD_TIME_SENTINEL_REPLACE_WITH_REAL_KEY`; truth 7: built Info.plist carries the sentinel)
+**Source phase:** 1
+**Deferred at:** 2026-08-20 during /gsd-progress --next advancement to Phase 6
+**Plans:**
+- [ ] 01-04: create the restricted Google Cloud API key (checkpoint:human-action — Google Console) + build/hygiene verification + STATE.md/PROJECT.md close-out
+- [ ] 01-05: complete remaining CarPlay entitlement grant-wiring steps (checkpoint:human-action — Apple portal steps 1–7, 9–10 + Xcode signing change; entitlement itself granted 2026-08-18) + signing-config verification + STATE.md close-out
