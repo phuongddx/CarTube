@@ -326,6 +326,16 @@ class CarPlayViewController: UIViewController, WKNavigationDelegate, WKUIDelegat
         }
     }
     
+    // Releases the webview and breaks the WKUserContentController -> self message-handler
+    // reference, which otherwise keeps this controller alive for the process lifetime.
+    func tearDown() {
+        webView.stopLoading()
+        webView.navigationDelegate = nil
+        webView.uiDelegate = nil
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: "keyboard")
+        webView.removeFromSuperview()
+    }
+
     func disablePersistence() {
         UIApplication.shared.isIdleTimerDisabled = false
     }

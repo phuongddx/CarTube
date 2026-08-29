@@ -30,4 +30,17 @@ class CarPlaySceneDelegate: UIResponder, UIWindowSceneDelegate {
         CarPlaySingleton.shared.disablePersistence()
         CarPlaySingleton.shared.setCPWindowActive(false)
     }
+
+    func sceneDidDisconnect(_ scene: UIScene) {
+        // Unconditional, not gated on ScreenPersistenceOn: isIdleTimerDisabled is
+        // app-wide, so a stale `true` would also stop the phone from auto-locking.
+        UIApplication.shared.isIdleTimerDisabled = false
+
+        (viewController as? CarPlayViewController)?.tearDown()
+        viewController = nil
+        window = nil
+
+        CarPlaySingleton.shared.setCPWindowActive(false)
+        CarPlaySingleton.shared.removeCPVC()
+    }
 }
