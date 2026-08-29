@@ -259,6 +259,7 @@ final class SpeechRecognizerService {
         silenceTimer = Timer.scheduledTimer(withTimeInterval: Self.silenceCheckInterval, repeats: true) { [weak self] _ in
             self?.evaluateSilence()
         }
+        silenceTimer?.tolerance = Self.silenceCheckInterval * 0.1
     }
 
     private func evaluateSilence() {
