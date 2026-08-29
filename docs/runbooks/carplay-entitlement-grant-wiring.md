@@ -12,6 +12,20 @@
 
 If this runbook is ever executed against an older checkout where that phase has not yet run, finish that cleanup first: a standard-profile build signs against the entitlements file as-is, so signing fails until the file holds only grantable keys.
 
+## ⚠️ The wiring alone does not make CarPlay work (2026-08-29)
+
+Completing this runbook attaches the entitlement. It does **not** produce a working CarPlay
+surface: the app's scene manifest declares the undocumented `UIWindowSceneSessionRoleCarPlay`
+role, which iOS 26 does not vend a scene for. That is a separate code change — see
+`plans/reports/carplay-scene-regression-root-cause-260827-2356-template-migration-report.md`.
+
+**The simulator cannot validate any of this.** Xcode strips
+`com.apple.developer.carplay-audio` from simulator builds under ad-hoc "Sign to Run
+Locally" (verified: both the generated `.xcent` and the signed app carry an empty
+entitlements dict), yet the app still appears on the simulator's CarPlay home screen. A
+green simulator run therefore proves nothing about the entitlement path — only a device
+build signed with the real CarPlay provisioning profile does.
+
 ## Post-grant sequence
 
 1. Log in to **developer.apple.com/account**.

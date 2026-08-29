@@ -8,6 +8,28 @@ Guideline 2.3.1 (hidden or undocumented functionality) is the contract this docu
 serves: the notes describe the shipped CarPlay mechanism specifically, so a reviewer
 finds nothing in the binary that the notes did not already disclose.
 
+## ⛔ BLOCKED — do not submit (2026-08-29)
+
+**The mechanism these notes disclose does not function on iOS 26.** The reviewer notes
+below describe a CarPlay scene that installs `CarPlayViewController` and renders the
+YouTube surface on the car display. On iOS 26.3 that scene is never created: iOS vends
+CarPlay apps a `CPTemplateApplicationScene` hosted by `com.apple.CarPlayTemplateUIHost`,
+CarTube declares the undocumented `UIWindowSceneSessionRoleCarPlay` role, no delegate is
+instantiated, and the car display renders blank.
+
+Submitting these notes as written would describe functionality the binary does not have.
+
+The paste block is **left unchanged deliberately** — it is not edited to describe some
+other architecture, because no such architecture is implemented yet. It must be rewritten
+from whatever CarPlay surface actually ships, once that is decided.
+
+Evidence, options and the closed spike: `plans/reports/carplay-scene-regression-root-cause-260827-2356-template-migration-report.md`.
+
+Blocking decision: the granted **audio** entitlement cannot host an arbitrary `WKWebView`
+on the car screen under any scene role, so the on-screen video surface described below is
+not deliverable. Choosing between replacing the playback engine and scoping CarPlay out of
+v1.0 is a product call that must land before this document can be made accurate.
+
 ## Prerequisites
 
 1. **Team:** `K2TYLYAWMK` — the account's actual paid Apple Developer Program team, the

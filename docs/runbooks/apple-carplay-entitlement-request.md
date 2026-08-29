@@ -19,7 +19,9 @@
 ### Current state (for orientation — do not change anything in the repo for this submission)
 
 - Committed project file still carries the upstream IDs: `PRODUCT_BUNDLE_IDENTIFIER = com.avangelista.CarTube;` (app) and `PRODUCT_BUNDLE_IDENTIFIER = com.avangelista.CarTube.PlayOnCarTube;` (share extension); `DEVELOPMENT_TEAM = U67AKNW8PW;`. The `com.cartube.carplay` values are a known Phase 2 change, not a reason to hesitate at the Apple form.
-- The app already contains the CarPlay scene integration this request describes: a `UIWindowSceneSessionRoleCarPlay` scene configuration in `CarTube/Info.plist` with a dedicated scene delegate installing the playback UI on connect.
+- ~~The app already contains the CarPlay scene integration this request describes: a `UIWindowSceneSessionRoleCarPlay` scene configuration in `CarTube/Info.plist` with a dedicated scene delegate installing the playback UI on connect.~~
+  **Correction (2026-08-29):** that scene configuration exists but does not work on iOS 26. `UIWindowSceneSessionRoleCarPlay` is not a public `UISceneSession.Role`; iOS 26 vends a `CPTemplateApplicationScene` under `CPTemplateApplicationSceneSessionRoleApplication` instead, so the delegate is never instantiated and the car display renders blank. See `plans/reports/carplay-scene-regression-root-cause-260827-2356-template-migration-report.md`.
+  The REQUEST-TEXT block below is retained verbatim as the historical record of what was submitted to Apple on the strength of that belief, and of what the granted entitlement (Case-ID 21672656) was granted against. It is deliberately **not** retro-edited.
 
 ---
 
