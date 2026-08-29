@@ -36,6 +36,9 @@ struct Debug: View {
                         CarPlaySingleton.shared.toggleKeyboard()
                     }
                 }
+                Section(footer: Text("Loads a video in a phone-side webview to test whether background audio and Now Playing survive backgrounding — the assumption the CarPlay template migration rests on.")) {
+                    NavigationLink(destination: BackgroundAudioSpike(), label: { Text("Background Audio Spike") })
+                }
                 Section(header: Text("Hook Verification"), footer: Text("Live runtime status of every surviving hook at the current iOS floor.")) {
                     Button("Refresh Status") {
                         refreshHookStatus()
